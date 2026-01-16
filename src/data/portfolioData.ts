@@ -1,99 +1,95 @@
-import { PortfolioData } from '../types';
+import { 
+  PortfolioData, 
+  SocialLink, 
+  PersonalInfo, 
+  Hobby, 
+  TimelineItem, 
+  Skill, 
+  Certificate, 
+  Project 
+} from '../models/PortfolioModels';
 
-export const portfolioData: PortfolioData = {
-  name: 'Võ Anh Khải',
-  roles: [
-    'Software Engineering'
-  ],
-  tagline: "I'm a",
-  bio: 'Passionate about learning, exploring new technologies. With hard work and dedication, I believe it will be a solid foundation to help me achieve big career goals and positively impact the world.',
-  
-  avatars: {
-    hero: '/img/avt/avatar1.jpg',
-    about: '/img/avt/avatar.jpg',
-    skills: '/img/avt/avatar1.jpg',
-    contact: '/img/avt/avatar1.jpg',
+import avatar1 from '../assets/img/avt/avatar1.jpg';
+import avatar from '../assets/img/avt/avatar.jpg';
+import csharpCert from '../assets/img/cert/Csharp-cert.png';
+import jsCert from '../assets/img/cert/JavaScript-cert.png';
+import projectMedicare from '../assets/img/proj/project_medicare.png';
+import projectCaro from '../assets/img/proj/project_wm.png';
+import projectMedic from '../assets/img/proj/project_medic.png';
+import projectEvShare from '../assets/img/proj/project_evshare.png';
+
+export const portfolioData = new PortfolioData(
+  'Võ Anh Khải',
+  ['Software Engineering'],
+  "I'm a",
+  'Passionate about learning, exploring new technologies. With hard work and dedication, I believe it will be a solid foundation to help me achieve big career goals and positively impact the world.',
+  {
+    hero: avatar1,
+    about: avatar,
+    skills: avatar1,
+    contact: avatar1,
   },
-
-  socialLinks: [
-    { platform: 'linkedin', url: 'https://www.linkedin.com/in/kaitodeus/?locale=en_US', label: 'LinkedIn Profile' },
-    { platform: 'github', url: 'https://github.com/KaitoDeus', label: 'GitHub Profile' },
-    { platform: 'facebook', url: 'https://www.facebook.com/kaitovo8952/', label: 'Facebook Profile' },
-    { platform: 'instagram', url: 'https://www.instagram.com/_kai.desu/', label: 'Instagram Profile' },
+  [
+    new SocialLink('linkedin', 'https://www.linkedin.com/in/kaitodeus/?locale=en_US', 'LinkedIn Profile'),
+    new SocialLink('github', 'https://github.com/KaitoDeus', 'GitHub Profile'),
+    new SocialLink('facebook', 'https://www.facebook.com/kaitovo8952/', 'Facebook Profile'),
+    new SocialLink('instagram', 'https://www.instagram.com/_kai.desu/', 'Instagram Profile'),
   ],
-
-  personalInfo: {
-    fullname: 'Võ Anh Khải',
-    dateOfBirth: '30/06/2005',
-    major: 'Information Technology',
-    school: 'University of Transport Ho Chi Minh City',
-    careerObjective: "",
-  },
-
-  hobbies: [
-    { icon: 'game', titleKey: 'hobby.gaming' },
-    { icon: 'code', titleKey: 'hobby.programming' },
-    { icon: 'music', titleKey: 'hobby.music' },
-    { icon: 'book', titleKey: 'hobby.reading' },
-    { icon: 'football', titleKey: 'hobby.football' },
-    { icon: 'brain', titleKey: 'hobby.learning' },
+  new PersonalInfo(
+    'Võ Anh Khải',
+    '30/06/2005',
+    'Information Technology',
+    'University of Transport Ho Chi Minh City'
+  ),
+  [
+    new Hobby('game', 'hobby.gaming'),
+    new Hobby('code', 'hobby.programming'),
+    new Hobby('music', 'hobby.music'),
+    new Hobby('book', 'hobby.reading'),
+    new Hobby('football', 'hobby.football'),
+    new Hobby('brain', 'hobby.learning'),
   ],
-
-  education: [
-    { year: '2023', titleKey: 'about.uthSchool', locationKey: 'about.hcmCity' },
+  [
+    new TimelineItem('2023 - Present', 'about.uthSchool', null, 'about.gpa.uth', null),
+    new TimelineItem('2020 - 2022', 'about.vocationalSchool', null, 'about.ranking.goodMVP', null),
   ],
-
-  career: [
-    { year: '', title: '', location: '' },
+  [
+    new TimelineItem('', null, '', null, ''),
   ],
+  [
+    // Frontend
+    new Skill('React', 'react', '#61DAFB', 'frontend', 'Advanced', 'skills.desc.react'),
+    new Skill('TypeScript', 'typescript', '#3178C6', 'frontend', 'Intermediate', 'skills.desc.ts'),
+    new Skill('JavaScript', 'javascript', '#f7df1e', 'frontend', 'Advanced', 'skills.desc.js'),
+    new Skill('HTML5', 'html5', '#e44d26', 'frontend', 'Advanced', 'skills.desc.html'),
+    new Skill('CSS3', 'css3', '#1572b6', 'frontend', 'Intermediate', 'skills.desc.css'),
 
-  skills: [
-    { name: 'C++', icon: 'cpp', color: '#00599C', percentage: 80 },
-    { name: 'C#', icon: 'csharp', color: '#3f3f3f', percentage: 80 },
-    { name: 'HTML5', icon: 'html5', color: '#e44d26', percentage: 80 },
-    { name: 'CSS3', icon: 'css3', color: '#1572b6', percentage: 80 },
-    { name: 'JavaScript', icon: 'javascript', color: '#f7df1e', percentage: 80 },
-    { name: 'Java', icon: 'java', color: '#f89820', percentage: 70 },
-    { name: 'PostgreSQL', icon: 'postgresql', color: '#6b6b6b', percentage: 70 },
-    { name: 'Spring Boot', icon: 'spring', color: '#6DB33F', percentage: 60 },
-    { name: 'Python', icon: 'python', color: '#bd6d2b', percentage: 50 },
+    // Backend
+    new Skill('Java', 'java', '#f89820', 'backend', 'Advanced', 'skills.desc.java'),
+    new Skill('Spring Boot', 'spring', '#6DB33F', 'backend', 'Advanced', 'skills.desc.spring'),
+    new Skill('Spring Security', 'spring', '#6DB33F', 'backend', 'Intermediate', 'skills.desc.security'),
+    new Skill('JPA / Hibernate', 'spring', '#6DB33F', 'backend', 'Advanced', 'skills.desc.jpa'),
+
+    // Database
+    new Skill('MySQL', 'mysql', '#4479A1', 'database', 'Intermediate', 'skills.desc.mysql'),
+    new Skill('SQL Server', 'sql', '#CC2927', 'database', 'Intermediate', 'skills.desc.sqlserver'),
+    new Skill('MongoDB', 'mongodb', '#47A248', 'database', 'Beginner', 'skills.desc.mongodb'),
+
+    // DevOps & Tools
+    new Skill('Docker', 'docker', '#2496ED', 'devops', 'Intermediate', 'skills.desc.docker'),
+    new Skill('Git', 'git', '#F05032', 'devops', 'Advanced', 'skills.desc.git'),
+    new Skill('Vercel', 'vercel', '#000000', 'devops', 'Intermediate', 'skills.desc.vercel'),
+    new Skill('Render', 'render', '#46E3B7', 'devops', 'Intermediate', 'skills.desc.render'),
   ],
-
-  certificates: [
-    { image: '/img/cert/Csharp-cert.png', title: 'C# Basic', rating: 5, status: 'Completed' },
-    { image: '/img/cert/JavaScript-cert.png', title: 'JavaScript Basic', rating: 5, status: 'Completed' },
+  [
+    new Certificate('C# Basic', csharpCert, 5, 'Completed'),
+    new Certificate('JavaScript Basic', jsCert, 5, 'Completed'),
   ],
-
-  projects: [
-    {
-      image: '/img/proj/project_medicare.png',
-      title: 'Medicare Booking Webapp',
-      role: 'Project Manager & DevOps',
-      link: 'https://github.com/KaitoDeus/MediCare_Webapp',
-      status: 'completed',
-    },
-    {
-      image: '/img/proj/project_wm.png',
-      title: 'Caro',
-      role: 'Winforms Developer',
-      link: 'https://github.com/KaitoDeus/CARO',
-      status: 'completed',
-    },
-    {
-      image: '/img/proj/project_medic.png',
-      title: 'Medical Consultation Website',
-      role: 'UI/UX Design',
-      link: 'https://github.com/KaitoDeus/Medical-Consultation-Website',
-      status: 'in-progress',
-    },
-    {
-      image: '/img/proj/project_evshare.png',
-      title: 'EV-Co-ownership-Cost-sharing-System',
-      role: 'Backend Developer',
-      link: 'https://github.com/TheBlueStars/EV-Co-ownership-Cost-sharing-System',
-      status: 'in-progress',
-    },
+  [
+    new Project('Medicare Booking Webapp', projectMedicare, 'Project Manager & DevOps', 'https://github.com/KaitoDeus/MediCare_Webapp', 'completed'),
+    new Project('Caro', projectCaro, 'Winforms Developer', 'https://github.com/KaitoDeus/CARO', 'completed'),
+    new Project('Medical Consultation Website', projectMedic, 'UI/UX Design', 'https://github.com/KaitoDeus/Medical-Consultation-Website', 'in-progress'),
+    new Project('EV-Co-ownership-Cost-sharing-System', projectEvShare, 'Backend Developer', 'https://github.com/TheBlueStars/EV-Co-ownership-Cost-sharing-System', 'in-progress'),
   ],
-
-  cvDownloadUrl: 'https://drive.usercontent.google.com/u/0/uc?id=1Z22-lHjWJEq3R16EqIbo8aP0WbuleGiQ&export=download',
-};
+  'https://drive.usercontent.google.com/u/0/uc?id=1Z22-lHjWJEq3R16EqIbo8aP0WbuleGiQ&export=download'
+);
