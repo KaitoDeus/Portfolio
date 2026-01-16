@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Menu, X, Moon, Sun, Languages } from 'lucide-react';
-import { useTheme } from '../../context/ThemeContext';
-import { useLanguage } from '../../context/LanguageContext';
-import { useActiveSection } from '../../hooks/useActiveSection';
+import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
+import { useActiveSection } from '../hooks/useActiveSection';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils'; // Absolute path alias working fine within src
 
 const navItems = [
   { id: 'home', key: 'nav.home' },

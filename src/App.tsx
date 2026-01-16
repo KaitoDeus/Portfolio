@@ -1,28 +1,25 @@
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider } from './context/LanguageContext';
-import Header from './components/Header/Header';
-import Hero from './components/Hero/Hero';
-import About from './components/About/About';
-import Skills from './components/Skills/Skills';
-import Projects from './components/Projects/Projects';
-import Contact from './components/Contact/Contact';
-import Footer from './components/Footer/Footer';
-import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import MainLayout from './layout/MainLayout';
+import HomePage from './pages/Home/HomePage';
+import AboutPage from './pages/About/AboutPage';
+import SkillsPage from './pages/Skills/SkillsPage';
+import ProjectsPage from './pages/Projects/ProjectsPage';
+import ContactPage from './pages/Contact/ContactPage';
+import ScrollToTop from './components/common/ScrollToTop'; // Updated path
 import './index.css';
 
 function App() {
   return (
     <LanguageProvider>
       <ThemeProvider>
-        <Header />
-        <main>
-          <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Contact />
-        </main>
-        <Footer />
+        <MainLayout>
+          <HomePage />
+          <AboutPage />
+          <SkillsPage />
+          <ProjectsPage />
+          <ContactPage />
+        </MainLayout>
         <ScrollToTop />
       </ThemeProvider>
     </LanguageProvider>

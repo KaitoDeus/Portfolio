@@ -1,5 +1,5 @@
-import { useLanguage } from '../../context/LanguageContext';
-import { portfolioData } from '../../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
+import { portfolioData } from '../data/portfolioData';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
