@@ -8,10 +8,12 @@ import { Card, CardContent } from '@/components/ui/card';
 import { portfolioData } from '@/data/portfolioData';
 import { useLanguage } from '@/context/LanguageContext';
 import Section from '@/components/common/Section';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function ContactPage() {
   const { personalInfo } = portfolioData;
   const { t } = useLanguage();
+  usePageTitle('nav.contact');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',

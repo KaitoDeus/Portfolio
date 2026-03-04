@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { 
-  Terminal, Server, Database, Layout, Wrench, Code2, 
+  Server, Database, Layout, Wrench, Code2, 
   Circle
 } from 'lucide-react';
 import { 
@@ -19,6 +19,7 @@ import Section from '@/components/common/Section';
 import { portfolioData } from '@/data/portfolioData';
 import { Skill } from '@/models/PortfolioModels';
 import { cn } from '@/lib/utils';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 // Map icon strings to components
 const iconMap: Record<string, any> = {
@@ -86,6 +87,7 @@ const SkillCard = ({ skill, t }: { skill: Skill; t: (key: string) => string }) =
 
 export default function SkillsPage() {
   const { t } = useLanguage();
+  usePageTitle('nav.skills');
 
   // Group skills by category
   const skillsByCategory = portfolioData.skills.reduce((acc, skill) => {

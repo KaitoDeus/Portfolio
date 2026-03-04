@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { useTheme } from '@/context/ThemeContext';
 
 interface SectionProps {
   id: string;
@@ -12,8 +11,6 @@ interface SectionProps {
 }
 
 export default function Section({ id, title, children, className, noPadding = false }: SectionProps) {
-    const { theme } = useTheme();
-
   return (
     <section 
       id={id} 

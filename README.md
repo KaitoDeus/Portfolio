@@ -1,92 +1,142 @@
-# 🌐 Portfolio Website - Võ Anh Khải
+# Portfolio Website - Võ Anh Khải
 
-Welcome to my personal portfolio website! This project is a modern, responsive, and interactive showcase of my skills, projects, and professional journey as a Software Engineer.
+## Mục Lục
 
-## ✨ Features
+1. [Giới Thiệu](#1-giới-thiệu)
+2. [Công Nghệ Sử Dụng](#2-công-nghệ-sử-dụng)
+3. [Kiến Trúc Hệ Thống](#3-kiến-trúc-hệ-thống)
+4. [Giao Diện](#4-giao-diện)
+5. [Hướng Dẫn Cài Đặt (Local)](#5-hướng-dẫn-cài-đặt-local)
+6. [Tác Giả & Liên Hệ](#6-tác-giả--liên-hệ)
 
-- **Modern UI/UX**: Built with a dark-themed, glassmorphism design using **TailwindCSS**.
-- **Fully Responsive**: Optimized for all devices, from mobile phones to large desktop screens.
-- **Multi-language Support**: Seamless switching between **English** and **Vietnamese**.
-- **Smooth Animations**: Interactive elements and transitions powered by **Framer Motion**.
-- **Categorized Skills**: Clear breakdown of skills into Backend, Frontend, Database, and DevOps.
-- **Project Showcase**: Detailed view of my featured projects with links to demos and repositories.
+---
 
-## 🛠️ Tech Stack
+## 1. Giới Thiệu
 
-This project is built using the following technologies:
+Chào mừng bạn đến với trang web Portfolio cá nhân của **Võ Anh Khải**!
 
-- **Core**: [React 18](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/)
-- **Build Tool**: [Vite](https://vitejs.dev/)
-- **Styling**: [TailwindCSS v4](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **Icons**: [Lucide React](https://lucide.dev/) & [React Icons](https://react-icons.github.io/react-icons/)
-- **State Management**: React Context API (for Language & Theme)
+**Các tính năng nổi bật:**
 
-## 🚀 Getting Started
+- Phân trang (Pagination) mượt mà cho danh sách dự án.
+- Tự động thay đổi tiêu đề trang (Dynamic Document Title).
+- Chuyển đổi ngôn ngữ Anh / Việt (i18n) mượt mà không cần tải lại trang.
+- Chế độ Sáng / Tối (Light/Dark Mode).
+- Chuyển động và hiệu ứng (Animations/Transitions) đẹp mắt.
 
-Follow these steps to set up the project locally on your machine.
+---
 
-### Prerequisites
+## 2. Công Nghệ Sử Dụng
 
-Make sure you have **Node.js** (v18 or higher) installed.
+![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![React Router](https://img.shields.io/badge/React_Router_DOM-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
 
-### Installation
+---
 
-1.  **Clone the repository**:
+## 3. Kiến Trúc Hệ Thống
 
-    ```bash
-    git clone https://github.com/KaitoDeus/Portfolio.git
-    cd Portfolio
-    ```
+Dự án tuân thủ nghiêm ngặt chuẩn kiến trúc Client-side Rendering (CSR) và nguyên tắc lập trình **SOLID**, với sự phân tách rõ ràng giữa Logic, View và Service:
 
-2.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
+### Các Lớp Logic (Logic Layers)
 
-### Running the App
+```text
++-------------------+   +-------------------------+   +-------------------+
+|       VIEW        |   |       LOGIC / BUS       |   |   SERVICE / DAL   |
+| (React Components)|<->| (Custom Hooks/Context:  |<->| (Dữ Liệu & API:   |
+| - HomePage        |   | - useProjects           |   | - portfolioData.ts|
+| - ProjectsPage    |   | - usePagination         |   | - LocalStorage)   |
+| - Sidebar         |   | - Theme/Language Context|   |                   |
++-------------------+   +-------------------------+   +-------------------+
+```
 
-Start the development server:
+### Mô Hình Kiến Trúc (Architecture)
+
+```text
++-------------------+       +-------------------+
+|    MainLayout     |<----->|    ProjectsPage   |
+| (Bố Cục Toàn Cục) |       | (Trang Hiển Thị)  |
++-------------------+       +-------------------+
+          |                           |
+          | Outlet Layer              | Sử dụng Hook
+          v                           v
++-------------------+       +-------------------+
+|   React Router    |       |   useProjects     |
+|   (Navigation)    |       | (Logic & State)   |
++-------------------+       +-------------------+
+                                      |
+                                      | Nạp dữ liệu
+                                      v
+                            +-------------------+
+                            |  portfolioData.ts |
+                            |  (Dữ Liệu Tĩnh)   |
+                            +-------------------+
+```
+
+### Luồng Xử Lý Phân Trang (Pagination Flow)
+
+```text
+[ NGƯỜI DÙNG ]                [ HỆ THỐNG / APP ]
+      |                               |
+      | (1) Nhấn "Trang tiếp theo"    |
+      |------------------------------>|
+      |                               | (2) usePagination: Cập nhật biến current = current + 1
+      |                               |
+      |                               | (3) useProjects: slice(từ index A đến B)
+      | <-----------------------------|
+      | (4) Giao diện cập nhật dự án  |
+      |                               |
+```
+
+---
+
+## 4. Giao Diện
+
+![Preview Giao Diện](./public/preview.png)
+
+- **Sidebar Khối (Icon-only):** Sử dụng thanh điều hướng bên trái gọn gàng, để lại khung nền trung tâm lớn nhất cho trải nghiệm mượt mà.
+- **Tính Phản Hồi (Responsive):** Mọi thiết bị từ di động đến màn hình Desktop lớn đều được thiết kế tốt.
+- **Thẩm mỹ (Glassmorphism & Border-radius):** Giao diện mềm mại, góc bo tròn và bóng mờ vô hình nhằm tạo vẻ đẹp vô cùng hiện đại.
+
+---
+
+## 5. Hướng Dẫn Cài Đặt (Local)
+
+**Yêu cầu môi trường:** Đảm bảo máy tính đã cài đặt **Node.js** (Phiên bản v18 trở lên).
+
+**Bước 1: Clone repository**
+
+```bash
+git clone https://github.com/KaitoDeus/Portfolio.git
+cd Portfolio
+```
+
+**Bước 2: Cài đặt Dependencies**
+
+```bash
+npm install
+```
+
+**Bước 3: Khởi chạy Development Server**
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser to view the app.
+Sau đó truy cập vào [http://localhost:5173](http://localhost:5173) để xem dự án trên trình duyệt.
 
-### Building for Production
-
-To create a production-ready build:
+**Bước 4: Build cho Production**
 
 ```bash
 npm run build
 ```
 
-The output files will be in the `dist` directory.
+---
 
-## 📂 Project Structure
-
-```
-src/
-├── assets/          # Images, fonts, and static assets
-├── components/      # Reusable UI components
-│   ├── common/      # Common layout components (Section, etc.)
-│   └── ui/          # Generic UI elements (Buttons, Cards, Badges)
-├── context/         # Context providers (LanguageContext)
-├── data/            # Static data (portfolio content, translations)
-├── layout/          # Main layout structure (Navbar, Footer)
-├── lib/             # Utility functions
-├── models/          # TypeScript interfaces and classes
-└── pages/           # Page components (Home, About, Skills, Projects, Contact)
-```
-
-## 📬 Contact
-
-I am currently open to internship opportunities and collaborations!
+## 6. Tác Giả & Liên Hệ
 
 - **Email**: [khaivo300605@gmail.com](mailto:khaivo300605@gmail.com)
 - **LinkedIn**: [Võ Anh Khải](https://www.linkedin.com/in/kaitodeus/)
-
----
-
-© 2026 Võ Anh Khải. All Rights Reserved.
+- **GitHub**: [KaitoDeus](https://github.com/KaitoDeus)

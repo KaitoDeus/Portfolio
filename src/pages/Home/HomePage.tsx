@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { portfolioData } from '@/data/portfolioData';
 import { useLanguage } from '@/context/LanguageContext';
 import { Button } from '@/components/ui/button';
+import { usePageTitle } from '@/hooks/usePageTitle';
+import { Link } from 'react-router-dom';
 
 const socialIcons: any = {
   linkedin: Linkedin,
@@ -47,6 +49,7 @@ export default function HomePage() {
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const { language, t } = useLanguage();
+  usePageTitle('nav.home');
 
   const { name, avatars, socialLinks, cvDownloadUrl } = portfolioData;
   const currentRole = t('hero.role');
@@ -129,7 +132,7 @@ export default function HomePage() {
 
         <div className="flex gap-4 mt-8 flex-wrap justify-center">
           <Button asChild size="lg" className="shadow-lg shadow-primary/30 text-lg py-6 px-8 rounded-full">
-            <a href="#skills">{t('hero.viewSkills')}</a>
+            <Link to="/skills">{t('hero.viewSkills')}</Link>
           </Button>
           <Button variant="outline" size="lg" onClick={handleDownloadCV} className="text-lg py-6 px-8 rounded-full border-2 hover:bg-primary/5">
             {t('hero.downloadCV')}
