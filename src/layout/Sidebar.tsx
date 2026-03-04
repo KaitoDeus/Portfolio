@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Moon, Sun, Languages, Home, User, Lightbulb, FolderKanban, Mail } from 'lucide-react';
+import { Moon, Sun, Home, User, Lightbulb, FolderKanban, Mail } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 import { Button } from '@/components/ui/button';
@@ -56,16 +56,13 @@ export default function Sidebar() {
         <Button 
           variant="outline" 
           size="icon"
-          className="rounded-full flex-shrink-0 w-10 h-10 border-border/50"
+          className="rounded-full flex-shrink-0 w-10 h-10 border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
           onClick={toggleLanguage}
-          title={t(language === 'en' ? 'Tiếng Việt' : 'English')}
+          title={language === 'en' ? 'Tiếng Việt' : 'English'}
         >
-          <div className="relative flex items-center justify-center">
-            <Languages className="h-5 w-5" />
-            <span className="absolute -top-2 -right-2 text-[10px] font-bold bg-background border rounded px-0.5 pointer-events-none">
-              {language.toUpperCase()}
-            </span>
-          </div>
+          <span className="text-xs font-black tracking-tighter text-primary">
+            {language.toUpperCase()}
+          </span>
         </Button>
 
         {/* Theme Toggle */}

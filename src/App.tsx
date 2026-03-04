@@ -7,7 +7,6 @@ import AboutPage from './pages/About/AboutPage';
 import SkillsPage from './pages/Skills/SkillsPage';
 import ProjectsPage from './pages/Projects/ProjectsPage';
 import ContactPage from './pages/Contact/ContactPage';
-import ScrollToTop from './components/common/ScrollToTop';
 import './index.css';
 
 function App() {
@@ -21,10 +20,8 @@ function App() {
              <Route path="/skills" element={<SkillsPage />} />
              <Route path="/projects" element={<ProjectsPage />} />
              <Route path="/contact" element={<ContactPage />} />
-             {/* Note: In a real app we might want a 404 Not Found route here */}
           </Routes>
         </MainLayout>
-        <ScrollToTop />
       </ThemeProvider>
     </LanguageProvider>
   );

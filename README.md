@@ -96,10 +96,6 @@ Dự án tuân thủ nghiêm ngặt chuẩn kiến trúc Client-side Rendering (
 
 ![Preview Giao Diện](./public/preview.png)
 
-- **Sidebar Khối (Icon-only):** Sử dụng thanh điều hướng bên trái gọn gàng, để lại khung nền trung tâm lớn nhất cho trải nghiệm mượt mà.
-- **Tính Phản Hồi (Responsive):** Mọi thiết bị từ di động đến màn hình Desktop lớn đều được thiết kế tốt.
-- **Thẩm mỹ (Glassmorphism & Border-radius):** Giao diện mềm mại, góc bo tròn và bóng mờ vô hình nhằm tạo vẻ đẹp vô cùng hiện đại.
-
 ---
 
 ## 5. Hướng Dẫn Cài Đặt (Local)
