@@ -32,16 +32,16 @@ export default function HomePage() {
         <img 
           src={avatars.hero} 
           alt="Avatar" 
-          className="w-56 h-56 rounded-full object-cover border-4 border-primary shadow-lg shadow-primary/30 hover:scale-105 transition-transform"
+          className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover border-4 border-primary shadow-lg shadow-primary/30 hover:scale-105 transition-transform"
         />
         
-        <h1 className="text-5xl md:text-6xl font-bold text-primary mt-6">{name}</h1>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mt-6">{name}</h1>
         
-        <div className="flex gap-4 mt-8 flex-wrap justify-center">
-          <Button asChild size="lg" className="shadow-lg shadow-primary/30 text-lg py-6 px-8 rounded-full">
+        <div className="flex flex-col sm:flex-row gap-4 mt-8 flex-wrap justify-center w-full px-4 sm:px-0">
+          <Button asChild size="lg" className="shadow-lg shadow-primary/30 text-lg py-6 px-8 rounded-full w-full sm:w-auto">
             <Link to="/skills">{t('hero.viewSkills')}</Link>
           </Button>
-          <Button variant="outline" size="lg" onClick={handleDownloadCV} className="text-lg py-6 px-8 rounded-full border-2 hover:bg-primary/5">
+          <Button variant="outline" size="lg" onClick={handleDownloadCV} className="text-lg py-6 px-8 rounded-full border-2 hover:bg-primary/5 w-full sm:w-auto">
             {t('hero.downloadCV')}
           </Button>
         </div>
