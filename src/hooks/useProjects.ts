@@ -11,8 +11,6 @@ export function useProjects() {
     // Here we're simulating data fetching for SOLID principles (DIP)
     const fetchProjects = async () => {
       try {
-        // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 300));
         setProjects(portfolioData.projects);
       } catch (error) {
         console.error("Failed to fetch projects", error);

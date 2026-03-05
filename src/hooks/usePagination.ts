@@ -24,5 +24,11 @@ export function usePagination<T>(data: T[], itemsPerPage: number) {
     setCurrentPage(Math.min(pageNumber, totalPages));
   };
 
-  return { next, prev, jump, currentData, currentPage, totalPages };
+  useMemo(() => {
+    if (currentPage > Math.max(1, Math.ceil(data.length / itemsPerPage))) {
+      setCurrentPage(1);
+    }
+  }, [data.length, currentPage, itemsPerPage]);
+
+  return { next, prev, jump, currentData, currentPage, totalPages, setCurrentPage };
 }

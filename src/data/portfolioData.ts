@@ -13,10 +13,18 @@ import avatar1 from '../assets/img/avt/avatar1.jpg';
 import avatar from '../assets/img/avt/avatar.jpg';
 import csharpCert from '../assets/img/cert/Csharp-cert.png';
 import jsCert from '../assets/img/cert/JavaScript-cert.png';
-import projectMedicare from '../assets/img/proj/project_medicare.png';
-import projectCaro from '../assets/img/proj/project_wm.png';
-import projectMedic from '../assets/img/proj/project_medic.png';
-import projectEvShare from '../assets/img/proj/project_evshare.png';
+import projectCaro from '../assets/img/proj/project_caro.png';
+import projectEvWarranty from '../assets/img/proj/project_evwarranty.png';
+import projectPhotoPalette from '../assets/img/proj/project_photopalette.png';
+import projectNeoShop from '../assets/img/proj/project_neoshop.png';
+import projectFarmerStore from '../assets/img/proj/project_farmerstore.png';
+
+// Import project READMEs
+import caroReadme from './projects/caro.md?raw';
+import evWarrantyReadme from './projects/ev-warranty.md?raw';
+import photoPaletteReadme from './projects/photo-palette.md?raw';
+import neoshopReadme from './projects/neoshop.md?raw';
+import farmerStoreReadme from './projects/famer-kun.md?raw';
 
 export const portfolioData = new PortfolioData(
   'Võ Anh Khải',
@@ -86,10 +94,11 @@ export const portfolioData = new PortfolioData(
     new Certificate('JavaScript Basic', jsCert, 5, 'Completed'),
   ],
   [
-    new Project('Medicare Booking Webapp', projectMedicare, 'Project Manager & DevOps', 'https://github.com/KaitoDeus/MediCare_Webapp', 'completed'),
-    new Project('Caro', projectCaro, 'Winforms Developer', 'https://github.com/KaitoDeus/CARO', 'completed'),
-    new Project('Medical Consultation Website', projectMedic, 'UI/UX Design', 'https://github.com/KaitoDeus/Medical-Consultation-Website', 'in-progress'),
-    new Project('EV-Co-ownership-Cost-sharing-System', projectEvShare, 'Backend Developer', 'https://github.com/TheBlueStars/EV-Co-ownership-Cost-sharing-System', 'in-progress'),
+    new Project('caro', 'Game Caro', projectCaro, 'Desktop Application', 'https://gamecaro-uth.vercel.app/', 'https://github.com/KaitoDeus/CARO', 'completed', caroReadme, ['C#', '.NET', 'Windows Forms'], '2025-12-02'),
+    new Project('ev-warranty', 'EV Warranty System', projectEvWarranty, 'Dashboard Web Application', 'https://ev-warranty-system.up.railway.app/', 'https://github.com/KaitoDeus/EV-Warranty-System', 'completed', evWarrantyReadme, ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'], '2025-12-19'),
+    new Project('photo-palette', 'Photo Palette', projectPhotoPalette, 'Landing Page', 'https://photo-palette.vercel.app/', 'https://github.com/KaitoDeus/Photo-Palette', 'completed', photoPaletteReadme, ['React', 'TypeScript', 'Tailwind CSS'], '2026-02-04'),
+    new Project('neoshop', 'NeoShop E-commerce', projectNeoShop, 'E-commerce Fullstack Web Application', 'https://neoshop-ecommerce.vercel.app/', 'https://github.com/KaitoDeus/NeoShop', 'completed', neoshopReadme, ['React', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker'], '2026-01-22'),
+    new Project('famer-kun', 'FAMER-KUN Store', projectFarmerStore, 'E-commerce Web Application', 'https://kenkaneki395.wixsite.com/site', 'https://github.com/KaitoDeus/FAMER-KUN.Store', 'completed', farmerStoreReadme, ['Velo', 'JavaScript', 'Wix'], '2022-05-01'),
   ],
   'https://drive.usercontent.google.com/u/0/uc?id=1Z22-lHjWJEq3R16EqIbo8aP0WbuleGiQ&export=download'
 );

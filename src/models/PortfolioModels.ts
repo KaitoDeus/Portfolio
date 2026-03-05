@@ -18,11 +18,16 @@ export class PersonalInfo {
 
 export class Project {
   constructor(
+    public id: string,
     public title: string,
     public image: string,
     public role: string,
     public link: string,
-    public status: 'completed' | 'in-progress'
+    public githubLink: string,
+    public status: 'completed' | 'in-progress',
+    public readmeContent?: string,
+    public technologies: string[] = [],
+    public startDate: string = ''
   ) {}
 }
 

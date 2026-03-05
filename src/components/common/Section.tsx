@@ -28,12 +28,11 @@ export default function Section({ id, title, children, className, noPadding = fa
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12"
           >
-            <h2 className="text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-teal-600 dark:from-primary dark:to-teal-400 inline-block">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-4">
               {title}
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-4 rounded-full opacity-70" />
           </motion.div>
         )}
         
