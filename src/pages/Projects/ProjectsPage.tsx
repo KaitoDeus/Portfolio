@@ -77,8 +77,8 @@ export default function ProjectsPage() {
     return result;
   }, [projects, selectedTechs, searchQuery, sortOrder]);
 
-  // Set items per page (e.g. 4)
-  const ITEMS_PER_PAGE = 4;
+  // Set items per page (e.g. 6)
+  const ITEMS_PER_PAGE = 6;
   
   const { 
     currentData: paginatedProjects, 
@@ -99,7 +99,7 @@ export default function ProjectsPage() {
       ) : (
         <>
           {/* Search and Sort Bar */}
-          <div className="max-w-5xl mx-auto w-full px-4 mb-10">
+          <div className="max-w-6xl mx-auto w-full px-4 mb-10">
             <div className="bg-muted/30 dark:bg-muted/20 backdrop-blur-sm border border-border p-4 rounded-2xl shadow-sm flex flex-col md:flex-row gap-4 items-center">
               <div className="relative flex-grow w-full">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -138,7 +138,7 @@ export default function ProjectsPage() {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-8 max-w-5xl mx-auto px-4">
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-8 max-w-6xl mx-auto px-4">
             <Badge 
               variant={selectedTechs.length === 0 ? "default" : "outline"} 
               className="cursor-pointer text-sm px-3 py-1 transition-colors"
@@ -162,7 +162,7 @@ export default function ProjectsPage() {
           </div>
 
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 lg:px-0"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
