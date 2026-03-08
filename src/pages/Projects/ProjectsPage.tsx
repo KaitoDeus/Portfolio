@@ -33,6 +33,7 @@ export default function ProjectsPage() {
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<'default' | 'newest' | 'oldest'>('default');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'personal' | 'school'>('all');
 
   const allTechs = useMemo(() => {
     const techs = new Set<string>();
@@ -49,6 +50,10 @@ export default function ProjectsPage() {
 
   const filteredAndSortedProjects = useMemo(() => {
     let result = [...projects];
+
+    if (selectedCategory !== 'all') {
+      result = result.filter(p => p.category === selectedCategory);
+    }
 
     // Filter by tech
     if (selectedTechs.length > 0) {
@@ -75,7 +80,7 @@ export default function ProjectsPage() {
     }
 
     return result;
-  }, [projects, selectedTechs, searchQuery, sortOrder]);
+  }, [projects, selectedTechs, searchQuery, sortOrder, selectedCategory]);
 
   // Set items per page (e.g. 6)
   const ITEMS_PER_PAGE = 6;
@@ -98,6 +103,28 @@ export default function ProjectsPage() {
           </div>
       ) : (
         <>
+          {/* Category Tabs */}
+          <div className="flex justify-center mb-8 gap-2">
+            {(['all', 'personal', 'school'] as const).map(cat => (
+              <button
+                key={cat}
+                className={`px-6 py-2 rounded-full font-medium transition-colors ${
+                  selectedCategory === cat
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted/50 text-muted-foreground hover:bg-muted/80'
+                }`}
+                onClick={() => {
+                  setSelectedCategory(cat);
+                  setCurrentPage(1);
+                }}
+              >
+                {cat === 'all' && t('projects.filter.all')}
+                {cat === 'personal' && t('projects.category.personal')}
+                {cat === 'school' && t('projects.category.school')}
+              </button>
+            ))}
+          </div>
+
           {/* Search and Sort Bar */}
           <div className="max-w-6xl mx-auto w-full px-4 mb-10">
             <div className="bg-muted/30 dark:bg-muted/20 backdrop-blur-sm border border-border p-4 rounded-2xl shadow-sm flex flex-col md:flex-row gap-4 items-center">

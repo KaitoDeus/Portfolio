@@ -3,7 +3,7 @@
 **Role:** Backend Developer  
 **Timeline:** 19/12/2025 - 07/02/2026  
 **Status:** Completed  
-**Team Size:** Group Project
+**Team Size:** Group Project (5)
 
 ## 🌟 Overview
 

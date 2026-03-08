@@ -100,19 +100,19 @@ export const portfolioData = new PortfolioData(
     new Certificate('JavaScript Basic', jsCert, 5, 'Completed'),
   ],
   [
-    new Project('caro', 'Game Caro', projectCaro, 'Desktop Application', 'https://gamecaro-uth.vercel.app/', 'https://github.com/KaitoDeus/CARO', 'completed', caroReadme, ['C#', '.NET', 'Windows Forms'], '2025-12-02'),
-    new Project('ev-warranty', 'EV Warranty System', projectEvWarranty, 'Dashboard Web Application', 'https://ev-warranty-system.up.railway.app/', 'https://github.com/KaitoDeus/EV-Warranty-System', 'completed', evWarrantyReadme, ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'], '2025-12-19'),
+    new Project('caro', 'Game Caro', projectCaro, 'Desktop Application', 'https://gamecaro-uth.vercel.app/', 'https://github.com/KaitoDeus/CARO', 'completed', caroReadme, ['C#', '.NET', 'Windows Forms'], '2025-12-02', 'school'),
+    new Project('ev-warranty', 'EV Warranty System', projectEvWarranty, 'Dashboard Web Application', 'https://ev-warranty-system.up.railway.app/', 'https://github.com/KaitoDeus/EV-Warranty-System', 'completed', evWarrantyReadme, ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'], '2025-12-19', 'school'),
     new Project('photo-palette', 'Photo Palette', projectPhotoPalette, 'Landing Page', 'https://photo-palette.vercel.app/', 'https://github.com/KaitoDeus/Photo-Palette', 'completed', photoPaletteReadme, ['React', 'TypeScript', 'Tailwind CSS'], '2026-02-04'),
     new Project('neoshop', 'NeoShop E-commerce', projectNeoShop, 'E-commerce Fullstack Web Application', 'https://neoshop-ecommerce.vercel.app/', 'https://github.com/KaitoDeus/NeoShop', 'completed', neoshopReadme, ['React', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker'], '2026-01-22'),
-    new Project('famer-kun', 'FAMER-KUN Store', projectFarmerStore, 'E-commerce Web Application', 'https://kenkaneki395.wixsite.com/site', 'https://github.com/KaitoDeus/FAMER-KUN.Store', 'completed', farmerStoreReadme, ['Velo', 'JavaScript', 'Wix'], '2022-05-01'),
+    new Project('famer-kun', 'FAMER-KUN Store', projectFarmerStore, 'E-commerce Web Application', 'https://kenkaneki395.wixsite.com/site', 'https://github.com/KaitoDeus/FAMER-KUN.Store', 'completed', farmerStoreReadme, ['Velo', 'JavaScript', 'Wix'], '2022-05-01', 'school'),
   ],
   'https://drive.usercontent.google.com/u/0/uc?id=1Z22-lHjWJEq3R16EqIbo8aP0WbuleGiQ&export=download'
 );
 
 export const projectsVi: Project[] = [
-  new Project('caro', 'Game Caro', projectCaro, 'Desktop Application', 'https://gamecaro-uth.vercel.app/', 'https://github.com/KaitoDeus/CARO', 'completed', caroReadmeVi, ['C#', '.NET', 'Windows Forms'], '2025-12-02'),
-  new Project('ev-warranty', 'Hệ thống Bảo hành EV', projectEvWarranty, 'Dashboard Web Application', 'https://ev-warranty-system.up.railway.app/', 'https://github.com/KaitoDeus/EV-Warranty-System', 'completed', evWarrantyReadmeVi, ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'], '2025-12-19'),
+  new Project('caro', 'Game Caro', projectCaro, 'Desktop Application', 'https://gamecaro-uth.vercel.app/', 'https://github.com/KaitoDeus/CARO', 'completed', caroReadmeVi, ['C#', '.NET', 'Windows Forms'], '2025-12-02', 'school'),
+  new Project('ev-warranty', 'Hệ thống Bảo hành EV', projectEvWarranty, 'Dashboard Web Application', 'https://ev-warranty-system.up.railway.app/', 'https://github.com/KaitoDeus/EV-Warranty-System', 'completed', evWarrantyReadmeVi, ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'], '2025-12-19', 'school'),
   new Project('photo-palette', 'Photo Palette', projectPhotoPalette, 'Landing Page', 'https://photo-palette.vercel.app/', 'https://github.com/KaitoDeus/Photo-Palette', 'completed', photoPaletteReadmeVi, ['React', 'TypeScript', 'Tailwind CSS'], '2026-02-04'),
   new Project('neoshop', 'Thương mại điện tử NeoShop', projectNeoShop, 'E-commerce Fullstack Web Application', 'https://neoshop-ecommerce.vercel.app/', 'https://github.com/KaitoDeus/NeoShop', 'completed', neoshopReadmeVi, ['React', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker'], '2026-01-22'),
-  new Project('famer-kun', 'Cửa hàng FAMER-KUN', projectFarmerStore, 'E-commerce Web Application', 'https://kenkaneki395.wixsite.com/site', 'https://github.com/KaitoDeus/FAMER-KUN.Store', 'completed', farmerStoreReadmeVi, ['Velo', 'JavaScript', 'Wix'], '2022-05-01'),
+  new Project('famer-kun', 'Cửa hàng FAMER-KUN', projectFarmerStore, 'E-commerce Web Application', 'https://kenkaneki395.wixsite.com/site', 'https://github.com/KaitoDeus/FAMER-KUN.Store', 'completed', farmerStoreReadmeVi, ['Velo', 'JavaScript', 'Wix'], '2022-05-01', 'school'),
 ];

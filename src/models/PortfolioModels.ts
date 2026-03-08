@@ -27,7 +27,8 @@ export class Project {
     public status: 'completed' | 'in-progress',
     public readmeContent?: string,
     public technologies: string[] = [],
-    public startDate: string = ''
+    public startDate: string = '',
+    public category: 'personal' | 'school' = 'personal'
   ) {}
 }
 

@@ -2,7 +2,7 @@
 
 **Vai trò:** Thiết kế Website / Lập trình viên  
 **Thời gian:** 05/2022 - 07/2022  
-**Trạng thái:** Đã hoàn thành (Đồ án tốt nghiệp khóa học)  
+**Trạng thái:** Đã hoàn thành (Đồ án tốt nghiệp)  
 **Quy mô nhóm:** 1
 
 ## 🌟 Tổng quan
