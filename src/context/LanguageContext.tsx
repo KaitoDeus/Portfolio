@@ -19,8 +19,10 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.skills': 'Skills',
     'nav.projects': 'Projects',
     'nav.contact': 'Contact',
+    'nav.language': 'VIE',
     
     // Hero
+    'hero.hello': 'Hi, I am',
     'hero.greeting': "I'm a",
     'hero.role': 'Software Engineer',
     'hero.from': 'from Vietnam.',
@@ -135,6 +137,7 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.success': 'Thank you for your message! I will get back to you soon.',
     
     // Footer
+    'footer.builtWith': 'Built with',
     'footer.copyright': 'Copyright by {name} | © {year}',
   },
   vi: {
@@ -144,8 +147,10 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.skills': 'Kỹ năng',
     'nav.projects': 'Dự án',
     'nav.contact': 'Liên hệ',
+    'nav.language': 'EN',
     
     // Hero
+    'hero.hello': 'Xin chào, tôi là',
     'hero.greeting': "Tôi là một",
     'hero.role': 'Kỹ sư phần mềm',
     'hero.from': 'đến từ Việt Nam.',
@@ -260,6 +265,7 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.success': 'Cảm ơn bạn đã liên hệ! Mình sẽ phản hồi sớm nhất có thể.',
     
     // Footer
+    'footer.builtWith': 'Được xây dựng với',
     'footer.copyright': 'Bản quyền thuộc về {name} | © {year}',
   }
 };
@@ -279,7 +285,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   };
 
   const t = (key: string): string => {
-    return translations[language][key] || key;
+    return translations[language]?.[key] || key;
   };
 
   return (

@@ -11,7 +11,6 @@ import { Separator } from '@/components/ui/separator';
 import { portfolioData } from '@/data/portfolioData';
 import { useLanguage } from '@/context/LanguageContext';
 import Section from '@/components/common/Section';
-import { usePageTitle } from '@/hooks/usePageTitle';
 
 const hobbyIcons: Record<string, React.ElementType> = {
   game: Gamepad2,
@@ -25,7 +24,6 @@ const hobbyIcons: Record<string, React.ElementType> = {
 export default function AboutPage() {
   const { personalInfo, avatars, hobbies, education, career, certificates } = portfolioData;
   const { t } = useLanguage();
-  usePageTitle('nav.about');
   
   const targetRef = useRef(null);
   useScroll({

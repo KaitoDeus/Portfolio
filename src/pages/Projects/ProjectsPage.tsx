@@ -10,7 +10,6 @@ import Section from '@/components/common/Section';
 import Pagination from '@/components/common/Pagination';
 import { useProjects } from '@/hooks/useProjects';
 import { usePagination } from '@/hooks/usePagination';
-import { usePageTitle } from '@/hooks/usePageTitle';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -28,7 +27,6 @@ const cardVariants = {
 export default function ProjectsPage() {
   const { t } = useLanguage();
   const { projects, loading } = useProjects();
-  usePageTitle('nav.projects');
   
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');

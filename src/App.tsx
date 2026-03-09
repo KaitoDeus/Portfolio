@@ -1,27 +1,33 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider } from './context/LanguageContext';
 import MainLayout from './layout/MainLayout';
 import HomePage from './pages/Home/HomePage';
-import AboutPage from './pages/About/AboutPage';
-import SkillsPage from './pages/Skills/SkillsPage';
-import ProjectsPage from './pages/Projects/ProjectsPage';
 import ProjectDetailPage from './pages/Projects/ProjectDetailPage';
-import ContactPage from './pages/Contact/ContactPage';
+import { useEffect } from 'react';
 import './index.css';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   return (
     <LanguageProvider>
       <ThemeProvider>
         <MainLayout>
+          <ScrollToTop />
           <Routes>
              <Route path="/" element={<HomePage />} />
-             <Route path="/about" element={<AboutPage />} />
-             <Route path="/skills" element={<SkillsPage />} />
-             <Route path="/projects" element={<ProjectsPage />} />
              <Route path="/projects/:id" element={<ProjectDetailPage />} />
-             <Route path="/contact" element={<ContactPage />} />
+             {/* Redirect any other path to home since it's now a single page */}
+             <Route path="*" element={<HomePage />} />
           </Routes>
         </MainLayout>
       </ThemeProvider>
