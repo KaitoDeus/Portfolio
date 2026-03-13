@@ -3,7 +3,7 @@
 **Vai trò:** Windows Forms Developer  
 **Thời gian:** 02/12/2025 - 06/02/2026  
 **Trạng thái:** Đã hoàn thành  
-**Quy mô nhóm:** 1
+**Quy mô nhóm:** 2
 
 ## 🌟 Tổng quan
 

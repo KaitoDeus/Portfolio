@@ -106,6 +106,8 @@ const translations: Record<Language, Record<string, string>> = {
     'projects.btn.detail': 'Details',
     'projects.btn.demo': 'Demo',
     'projects.btn.source': 'Source',
+    'projects.btn.prevProject': 'Previous Project',
+    'projects.btn.nextProject': 'Next Project',
     'projects.notfound.title': 'Project Not Found',
     'projects.notfound.desc': 'The project you are looking for does not exist.',
     'projects.back': 'Back to Projects',
@@ -120,6 +122,8 @@ const translations: Record<Language, Record<string, string>> = {
     'role.Landing Page': 'Landing Page',
     'role.E-commerce Fullstack Web Application': 'E-commerce Fullstack Web Application',
     'role.E-commerce Web Application': 'E-commerce Web Application',
+    'role.Healthcare Web Application': 'Healthcare Web Application',
+    'role.Interactive 3D Website': 'Interactive 3D Website',
     
     // Contact
     'contact.title': 'Contact',
@@ -234,6 +238,8 @@ const translations: Record<Language, Record<string, string>> = {
     'projects.btn.detail': 'Mô tả',
     'projects.btn.demo': 'Demo',
     'projects.btn.source': 'Mã nguồn',
+    'projects.btn.prevProject': 'Dự án trước',
+    'projects.btn.nextProject': 'Dự án tiếp theo',
     'projects.notfound.title': 'Không tìm thấy dự án',
     'projects.notfound.desc': 'Dự án bạn đang tìm kiếm không tồn tại.',
     'projects.back': 'Quay lại Dự án',
@@ -245,9 +251,11 @@ const translations: Record<Language, Record<string, string>> = {
     'projects.sort.oldest': 'Cũ nhất',
     'role.Desktop Application': 'Ứng dụng Desktop',
     'role.Dashboard Web Application': 'Ứng dụng Web Dashboard',
-    'role.Landing Page': 'Trang Landing Page',
+    'role.Landing Page': 'Landing Page',
     'role.E-commerce Fullstack Web Application': 'Ứng dụng thương mại điện tử Fullstack',
     'role.E-commerce Web Application': 'Ứng dụng thương mại điện tử',
+    'role.Healthcare Web Application': 'Ứng dụng Y tế Web',
+    'role.Interactive 3D Website': 'Website 3D Tương tác',
     
     // Contact
     'contact.title': 'Liên hệ',

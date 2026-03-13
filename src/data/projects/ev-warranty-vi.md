@@ -3,7 +3,7 @@
 **Vai trò:** Backend Developer  
 **Thời gian:** 19/12/2025 - 07/02/2026  
 **Trạng thái:** Đã hoàn thành  
-**Quy mô nhóm:** Nhóm 5 người
+**Quy mô nhóm:** 5
 
 ## 🌟 Tổng quan
 

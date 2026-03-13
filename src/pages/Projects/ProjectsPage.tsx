@@ -30,7 +30,7 @@ export default function ProjectsPage() {
   
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortOrder, setSortOrder] = useState<'default' | 'newest' | 'oldest'>('default');
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'personal' | 'school'>('all');
 
   const allTechs = useMemo(() => {
@@ -145,11 +145,10 @@ export default function ProjectsPage() {
                     className="w-full bg-transparent border-none text-sm focus:outline-none cursor-pointer text-foreground appearance-none"
                     value={sortOrder}
                     onChange={(e) => {
-                      setSortOrder(e.target.value as any);
+                      setSortOrder(e.target.value as 'newest' | 'oldest');
                       setCurrentPage(1);
                     }}
                   >
-                    <option value="default" className="bg-card text-card-foreground">{t('projects.sort.default')}</option>
                     <option value="newest" className="bg-card text-card-foreground">{t('projects.sort.newest')}</option>
                     <option value="oldest" className="bg-card text-card-foreground">{t('projects.sort.oldest')}</option>
                   </select>

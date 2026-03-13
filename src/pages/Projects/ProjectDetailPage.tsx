@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Github, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Github, ExternalLink } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useProjects } from '@/hooks/useProjects';
@@ -14,7 +14,10 @@ export default function ProjectDetailPage() {
   const { projects, loading } = useProjects();
   const { t } = useLanguage();
 
-  const project = projects.find((p) => p.id === id);
+  const currentIndex = projects.findIndex((p) => p.id === id);
+  const project = currentIndex !== -1 ? projects[currentIndex] : undefined;
+  const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
+  const nextProject = currentIndex !== -1 && currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
 
   if (loading) {
     return (
@@ -30,7 +33,7 @@ export default function ProjectDetailPage() {
         <div className="flex flex-col items-center justify-center min-h-[50vh]">
           <p className="text-xl text-muted-foreground mb-6">{t('projects.notfound.desc')}</p>
           <Button asChild>
-            <Link to="/projects">
+            <Link to="/#projects">
               <ArrowLeft className="mr-2 h-4 w-4" /> {t('projects.back')}
             </Link>
           </Button>
@@ -49,7 +52,7 @@ export default function ProjectDetailPage() {
       >
         <div className="mb-8 flex flex-wrap gap-4 items-center justify-between">
           <Button variant="outline" asChild>
-            <Link to="/projects">
+            <Link to="/#projects">
               <ArrowLeft className="mr-2 h-4 w-4" /> {t('nav.projects')}
             </Link>
           </Button>
@@ -76,7 +79,7 @@ export default function ProjectDetailPage() {
           <img 
             src={project.image} 
             alt={project.title} 
-            className="w-full max-h-[400px] object-cover"
+            className="w-full max-h-[400px] object-fill"
           />
         </div>
 
@@ -95,6 +98,28 @@ export default function ProjectDetailPage() {
           ) : (
             <p className="text-muted-foreground italic">{t('projects.noDescription')}</p>
           )}
+        </div>
+
+        <div className="mt-12 flex justify-between items-center border-t border-border pt-6">
+          {prevProject ? (
+            <Button variant="ghost" asChild className="group">
+              <Link to={`/projects/${prevProject.id}`}>
+                <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                {t('projects.btn.prevProject')}
+                <span className="sr-only">: {prevProject.title}</span>
+              </Link>
+            </Button>
+          ) : <div></div>}
+
+          {nextProject ? (
+            <Button variant="ghost" asChild className="group">
+              <Link to={`/projects/${nextProject.id}`}>
+                {t('projects.btn.nextProject')}
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <span className="sr-only">: {nextProject.title}</span>
+              </Link>
+            </Button>
+          ) : <div></div>}
         </div>
       </motion.div>
     </Section>

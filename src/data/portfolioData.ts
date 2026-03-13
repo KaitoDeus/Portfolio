@@ -18,6 +18,9 @@ import projectEvWarranty from '../assets/img/proj/project_evwarranty.png';
 import projectPhotoPalette from '../assets/img/proj/project_photopalette.png';
 import projectNeoShop from '../assets/img/proj/project_neoshop.png';
 import projectFarmerStore from '../assets/img/proj/project_farmerstore.png';
+import projectChristmas from '../assets/img/proj/project_christmas.png';
+import projectMedicare from '../assets/img/proj/project_medicare.png';
+import projectUthwm from '../assets/img/proj/project_uthwm.png';
 
 // Import project READMEs
 import caroReadme from './projects/caro.md?raw';
@@ -31,6 +34,14 @@ import evWarrantyReadmeVi from './projects/ev-warranty-vi.md?raw';
 import photoPaletteReadmeVi from './projects/photo-palette-vi.md?raw';
 import neoshopReadmeVi from './projects/neoshop-vi.md?raw';
 import farmerStoreReadmeVi from './projects/famer-kun-vi.md?raw';
+
+import uthWmReadme from './projects/uth-wm.md?raw';
+import medicareReadme from './projects/medicare.md?raw';
+import merryChristmasReadme from './projects/merry-christmas.md?raw';
+
+import uthWmReadmeVi from './projects/uth-wm-vi.md?raw';
+import medicareReadmeVi from './projects/medicare-vi.md?raw';
+import merryChristmasReadmeVi from './projects/merry-christmas-vi.md?raw';
 
 export const portfolioData = new PortfolioData(
   'Võ Anh Khải',
@@ -105,6 +116,9 @@ export const portfolioData = new PortfolioData(
     new Project('photo-palette', 'Photo Palette', projectPhotoPalette, 'Landing Page', 'https://photo-palette.vercel.app/', 'https://github.com/KaitoDeus/Photo-Palette', 'completed', photoPaletteReadme, ['React', 'TypeScript', 'Tailwind CSS'], '2026-02-04'),
     new Project('neoshop', 'NeoShop E-commerce', projectNeoShop, 'E-commerce Fullstack Web Application', 'https://neoshop-ecommerce.vercel.app/', 'https://github.com/KaitoDeus/NeoShop', 'completed', neoshopReadme, ['React', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker'], '2026-01-22'),
     new Project('famer-kun', 'FAMER-KUN Store', projectFarmerStore, 'E-commerce Web Application', 'https://kenkaneki395.wixsite.com/site', 'https://github.com/KaitoDeus/FAMER-KUN.Store', 'completed', farmerStoreReadme, ['Velo', 'JavaScript', 'Wix'], '2022-05-01', 'school'),
+    new Project('uth-wm', 'UTH - Work Management', projectUthwm, 'Desktop Application', '', 'https://github.com/KaitoDeus/UTH-WM', 'completed', uthWmReadme, ['C#', '.NET', 'Windows Forms'], '2024-12-19', 'school'),
+    new Project('medicare', 'Medicare Webapp', projectMedicare, 'Healthcare Web Application', 'https://medicare-webapp-goll.onrender.com/', 'https://github.com/KaitoDeus/MediCare_Webapp', 'completed', medicareReadme, ['React', 'Vite', 'Tailwind CSS'], '2025-11-01', 'school'),
+    new Project('merry-christmas', 'Merry Christmas 3D AI', projectChristmas, 'Interactive 3D Website', 'https://merry-christmas-khai-25.vercel.app', 'https://github.com/KaitoDeus/Merry-Christmas-25', 'completed', merryChristmasReadme, ['Three.js', 'Python', 'FastAPI', 'MediaPipe AI'], '2025-12-24', 'personal'),
   ],
   'https://drive.usercontent.google.com/u/0/uc?id=1Z22-lHjWJEq3R16EqIbo8aP0WbuleGiQ&export=download'
 );
@@ -115,4 +129,7 @@ export const projectsVi: Project[] = [
   new Project('photo-palette', 'Photo Palette', projectPhotoPalette, 'Landing Page', 'https://photo-palette.vercel.app/', 'https://github.com/KaitoDeus/Photo-Palette', 'completed', photoPaletteReadmeVi, ['React', 'TypeScript', 'Tailwind CSS'], '2026-02-04'),
   new Project('neoshop', 'Thương mại điện tử NeoShop', projectNeoShop, 'E-commerce Fullstack Web Application', 'https://neoshop-ecommerce.vercel.app/', 'https://github.com/KaitoDeus/NeoShop', 'completed', neoshopReadmeVi, ['React', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker'], '2026-01-22'),
   new Project('famer-kun', 'Cửa hàng FAMER-KUN', projectFarmerStore, 'E-commerce Web Application', 'https://kenkaneki395.wixsite.com/site', 'https://github.com/KaitoDeus/FAMER-KUN.Store', 'completed', farmerStoreReadmeVi, ['Velo', 'JavaScript', 'Wix'], '2022-05-01', 'school'),
+  new Project('uth-wm', 'UTH - Quản Lý Công Việc', projectUthwm, 'Desktop Application', '', 'https://github.com/KaitoDeus/UTH-WM', 'completed', uthWmReadmeVi, ['C#', '.NET', 'Windows Forms'], '2024-12-19', 'school'),
+  new Project('medicare', 'Medicare Webapp', projectMedicare, 'Healthcare Web Application', 'https://medicare-webapp-goll.onrender.com/', 'https://github.com/KaitoDeus/MediCare_Webapp', 'completed', medicareReadmeVi, ['React', 'Vite', 'Tailwind CSS'], '2025-11-01', 'school'),
+  new Project('merry-christmas', 'Merry Christmas 3D AI', projectChristmas, 'Interactive 3D Website', 'https://merry-christmas-khai-25.vercel.app', 'https://github.com/KaitoDeus/Merry-Christmas-25', 'completed', merryChristmasReadmeVi, ['Three.js', 'Python', 'FastAPI', 'MediaPipe AI'], '2025-12-24', 'personal'),
 ];

@@ -3,7 +3,7 @@
 **Role:** Windows Forms Developer  
 **Timeline:** 02/12/2025 - 06/02/2026  
 **Status:** Completed  
-**Team Size:** 1
+**Team Size:** 2
 
 ## 🌟 Overview
 
