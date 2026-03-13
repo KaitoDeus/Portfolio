@@ -9,8 +9,8 @@ import { cn } from '@/lib/utils';
 const navItems = [
   { id: 'home', key: 'nav.home', icon: Home },
   { id: 'about', key: 'nav.about', icon: User },
-  { id: 'projects', key: 'nav.projects', icon: FolderKanban },
   { id: 'skills', key: 'nav.skills', icon: Lightbulb },
+  { id: 'projects', key: 'nav.projects', icon: FolderKanban },
   { id: 'contact', key: 'nav.contact', icon: Mail },
 ];
 
