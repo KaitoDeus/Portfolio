@@ -1,31 +1,30 @@
-# Portfolio Website - Võ Anh Khải
+# Portfolio Website - Vo Anh Khai
 
-## Mục Lục
+## Table of Contents
 
-1. [Giới Thiệu](#1-giới-thiệu)
-2. [Công Nghệ Sử Dụng](#2-công-nghệ-sử-dụng)
-3. [Kiến Trúc Hệ Thống](#3-kiến-trúc-hệ-thống)
-4. [Giao Diện](#4-giao-diện)
-5. [Hướng Dẫn Cài Đặt (Local)](#5-hướng-dẫn-cài-đặt-local)
-6. [Tác Giả & Liên Hệ](#6-tác-giả--liên-hệ)
-
----
-
-## 1. Giới Thiệu
-
-Chào mừng bạn đến với trang web Portfolio cá nhân của **Võ Anh Khải**!
-
-**Các tính năng nổi bật:**
-
-- Phân trang (Pagination) mượt mà cho danh sách dự án.
-- Tự động thay đổi tiêu đề trang (Dynamic Document Title).
-- Chuyển đổi ngôn ngữ Anh / Việt (i18n) mượt mà không cần tải lại trang.
-- Chế độ Sáng / Tối (Light/Dark Mode).
-- Chuyển động và hiệu ứng (Animations/Transitions) đẹp mắt.
+1. [Introduction](#1-introduction)
+2. [Tech Stack](#2-tech-stack)
+3. [System Architecture](#3-system-architecture)
+4. [Interface](#4-interface)
+5. [Installation Guide (Local)](#5-installation-guide-local)
 
 ---
 
-## 2. Công Nghệ Sử Dụng
+## 1. Introduction
+
+Welcome to **Vo Anh Khai's** personal Portfolio website!
+
+**Key Features:**
+
+- Smooth Pagination for the project list.
+- Dynamic Document Title updates.
+- Seamless English / Vietnamese language switching (i18n) without page reload.
+- Light / Dark Mode support.
+- Eye-catching Animations & Transitions.
+
+---
+
+## 2. Tech Stack
 
 ![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
@@ -36,103 +35,95 @@ Chào mừng bạn đến với trang web Portfolio cá nhân của **Võ Anh Kh
 
 ---
 
-## 3. Kiến Trúc Hệ Thống
+## 3. System Architecture
 
-Dự án tuân thủ nghiêm ngặt chuẩn kiến trúc Client-side Rendering (CSR) và nguyên tắc lập trình **SOLID**, với sự phân tách rõ ràng giữa Logic, View và Service:
+The project strictly follows the **Client-side Rendering (CSR)** architecture and **SOLID** principles, with a clear separation between Logic, View, and Service:
 
-### Các Lớp Logic (Logic Layers)
+### Logic Layers
 
 ```text
 +-------------------+   +-------------------------+   +-------------------+
 |       VIEW        |   |       LOGIC / BUS       |   |   SERVICE / DAL   |
-| (React Components)|<->| (Custom Hooks/Context:  |<->| (Dữ Liệu & API:   |
+| (React Components)|<->| (Custom Hooks/Context): |<->| (Data & API):     |
 | - HomePage        |   | - useProjects           |   | - portfolioData.ts|
 | - ProjectsPage    |   | - usePagination         |   | - LocalStorage)   |
 | - Sidebar         |   | - Theme/Language Context|   |                   |
 +-------------------+   +-------------------------+   +-------------------+
 ```
 
-### Mô Hình Kiến Trúc (Architecture)
+### Architecture Model
 
 ```text
 +-------------------+       +-------------------+
 |    MainLayout     |<----->|    ProjectsPage   |
-| (Bố Cục Toàn Cục) |       | (Trang Hiển Thị)  |
+| (Global Layout)   |       | (Display Page)    |
 +-------------------+       +-------------------+
           |                           |
-          | Outlet Layer              | Sử dụng Hook
+          | Outlet Layer              | Uses Hook
           v                           v
 +-------------------+       +-------------------+
 |   React Router    |       |   useProjects     |
 |   (Navigation)    |       | (Logic & State)   |
 +-------------------+       +-------------------+
                                       |
-                                      | Nạp dữ liệu
+                                      | Load Data
                                       v
                             +-------------------+
                             |  portfolioData.ts |
-                            |  (Dữ Liệu Tĩnh)   |
+                            |  (Static Data)    |
                             +-------------------+
 ```
 
-### Luồng Xử Lý Phân Trang (Pagination Flow)
+### Pagination Flow
 
 ```text
-[ NGƯỜI DÙNG ]                [ HỆ THỐNG / APP ]
-      |                               |
-      | (1) Nhấn "Trang tiếp theo"    |
-      |------------------------------>|
-      |                               | (2) usePagination: Cập nhật biến current = current + 1
-      |                               |
-      |                               | (3) useProjects: slice(từ index A đến B)
-      | <-----------------------------|
-      | (4) Giao diện cập nhật dự án  |
-      |                               |
+[ USER ]                      [ SYSTEM / APP ]
+    |                               |
+    | (1) Clicks "Next Page"        |
+    |------------------------------>|
+    |                               | (2) usePagination: Update current = current + 1
+    |                               |
+    |                               | (3) useProjects: slice(from index A to B)
+    | <-----------------------------|
+    | (4) UI updates project list   |
+    |                               |
 ```
 
 ---
 
-## 4. Giao Diện
+## 4. Interface
 
-![Preview Giao Diện](./public/preview.png)
+![Interface Preview](./public/preview.png)
 
 ---
 
-## 5. Hướng Dẫn Cài Đặt (Local)
+## 5. Installation Guide (Local)
 
-**Yêu cầu môi trường:** Đảm bảo máy tính đã cài đặt **Node.js** (Phiên bản v18 trở lên).
+**Prerequisites:** Ensure **Node.js** (v18 or higher) is installed on your machine.
 
-**Bước 1: Clone repository**
+**Step 1: Clone the repository**
 
 ```bash
 git clone https://github.com/KaitoDeus/Portfolio.git
 cd Portfolio
 ```
 
-**Bước 2: Cài đặt Dependencies**
+**Step 2: Install Dependencies**
 
 ```bash
 npm install
 ```
 
-**Bước 3: Khởi chạy Development Server**
+**Step 3: Launch Development Server**
 
 ```bash
 npm run dev
 ```
 
-Sau đó truy cập vào [http://localhost:5173](http://localhost:5173) để xem dự án trên trình duyệt.
+Then visit [http://localhost:5173](http://localhost:5173) to view the project in your browser.
 
-**Bước 4: Build cho Production**
+**Step 4: Build for Production**
 
 ```bash
 npm run build
 ```
-
----
-
-## 6. Tác Giả & Liên Hệ
-
-- **Email**: [khaivo300605@gmail.com](mailto:khaivo300605@gmail.com)
-- **LinkedIn**: [Võ Anh Khải](https://www.linkedin.com/in/kaitodeus/)
-- **GitHub**: [KaitoDeus](https://github.com/KaitoDeus)
