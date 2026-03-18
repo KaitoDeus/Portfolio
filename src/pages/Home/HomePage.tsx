@@ -89,7 +89,7 @@ export default function HomePage() {
             <Button 
               size="lg" 
               className="shadow-xl shadow-primary/20 text-lg py-7 px-10 rounded-full w-full sm:w-auto hover:scale-105 transition-all"
-              onClick={() => scrollToSection('projects')}
+              onClick={() => scrollToSection('skills')}
             >
               {t('hero.viewSkills')}
             </Button>

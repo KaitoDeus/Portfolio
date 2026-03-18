@@ -156,12 +156,6 @@ export default function AboutPage() {
                         />
                         <div>
                           <h4 className="font-semibold">{cert.title}</h4>
-                          <div className="flex items-center gap-1 mt-1">
-                            {[...Array(cert.rating)].map((_, i) => (
-                              <span key={i} className="text-yellow-400">★</span>
-                            ))}
-                          </div>
-                          <Badge variant="secondary" className="mt-1 text-xs">{cert.status}</Badge>
                         </div>
                       </div>
                     ))}

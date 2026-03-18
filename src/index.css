@@ -7,33 +7,7 @@
 :root {
   --radius: 0.625rem;
   
-  /* Portfolio theme colors */
-  --teal: 172 66% 50%;
-  --teal-dark: 172 50% 45%;
-  --orange: 36 98% 50%;
-  
-  /* Shadcn defaults with teal primary */
-  --background: 0 0% 98%;
-  --foreground: 0 0% 20%;
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 20%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 20%;
-  --primary: 172 66% 50%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 0 0% 96%;
-  --secondary-foreground: 0 0% 20%;
-  --muted: 0 0% 96%;
-  --muted-foreground: 0 0% 45%;
-  --accent: 172 66% 50%;
-  --accent-foreground: 0 0% 100%;
-  --destructive: 0 84% 60%;
-  --border: 172 30% 80%;
-  --input: 0 0% 90%;
-  --ring: 172 66% 50%;
-}
-
-.dark {
+  /* Portfolio Dark theme colors as DEFAULT */
   --background: 230 53% 7%;
   --foreground: 0 0% 98%;
   --card: 230 40% 10%;
@@ -52,6 +26,10 @@
   --border: 172 30% 25%;
   --input: 230 30% 20%;
   --ring: 172 66% 50%;
+
+  /* Custom colors */
+  --teal: 172 66% 50%;
+  --orange: 36 98% 50%;
 }
 
 @theme inline {
@@ -110,15 +88,6 @@ body {
   body {
     @apply text-foreground;
     min-height: 100vh;
-    background: 
-      radial-gradient(ellipse at 20% 0%, rgba(200, 230, 255, 0.8) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 20%, rgba(230, 210, 255, 0.6) 0%, transparent 40%),
-      radial-gradient(ellipse at 40% 80%, rgba(200, 240, 255, 0.7) 0%, transparent 50%),
-      radial-gradient(ellipse at 100% 100%, rgba(220, 230, 255, 0.5) 0%, transparent 40%),
-      linear-gradient(180deg, #f0f8ff 0%, #e8f4fc 50%, #f5f0ff 100%);
-    background-attachment: fixed;
-  }
-  .dark body {
     background: 
       radial-gradient(ellipse at 20% 30%, rgba(180, 50, 120, 0.4) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 10%, rgba(30, 180, 200, 0.35) 0%, transparent 45%),

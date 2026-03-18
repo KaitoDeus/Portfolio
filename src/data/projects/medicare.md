@@ -1,6 +1,6 @@
 # MediCare Webapp
 
-**Role:** Project Manager & Backend Developer
+**Role:** Project Manager & Backend Developer  
 **Timeline:** 01/11/2025 - 30/11/2025  
 **Status:** Completed  
 **Team Size:** 5

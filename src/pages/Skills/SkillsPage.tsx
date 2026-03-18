@@ -12,7 +12,6 @@ import {
 } from 'react-icons/si';
 import { DiMsqlServer } from "react-icons/di";
 import { FaJava } from 'react-icons/fa';
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/context/LanguageContext';
 import Section from '@/components/common/Section';
@@ -21,7 +20,7 @@ import { Skill } from '@/models/PortfolioModels';
 import { cn } from '@/lib/utils';
 
 // Map icon strings to components
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
   java: FaJava,
   spring: SiSpringboot,
   react: SiReact,
@@ -43,44 +42,30 @@ const iconMap: Record<string, any> = {
 };
 
 // Skill Card Component
-const SkillCard = ({ skill, t }: { skill: Skill; t: (key: string) => string }) => {
+const SkillCard = ({ skill }: { skill: Skill }) => {
   const Icon = iconMap[skill.icon] || Code2;
 
   return (
-    <motion.div
-      whileHover={{ y: -5 }}
-      className="h-full"
-    >
-      <Card className="h-full border-primary/20 bg-card/50 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
-        <CardContent className="p-5 flex flex-col h-full relative z-10">
-          <div className="flex items-start justify-between mb-4">
-            <div className="p-3 rounded-xl bg-primary/10">
-              <Icon 
-                className="w-8 h-8 transition-transform group-hover:scale-110 duration-300" 
-                style={{ color: skill.color }}
-              />
-            </div>
-            <Badge 
-              variant="outline" 
-              className={cn(
-                "ml-auto text-xs font-medium",
-                skill.level === 'Advanced' && "border-green-500/50 text-green-500 bg-green-500/10",
-                skill.level === 'Intermediate' && "border-blue-500/50 text-blue-500 bg-blue-500/10",
-                skill.level === 'Beginner' && "border-yellow-500/50 text-yellow-500 bg-yellow-500/10",
-              )}
-            >
+    <Card className="h-full min-w-[200px] border-primary/20 bg-card/40 backdrop-blur-sm hover:border-primary/60 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300">
+      <CardContent className="p-4 flex items-center gap-4">
+        <div className="p-2.5 rounded-lg bg-primary/10 flex-shrink-0">
+          <Icon className="w-6 h-6" style={{ color: skill.color }} />
+        </div>
+        <div className="flex flex-col min-w-0">
+          <h4 className="font-bold text-base truncate">{skill.name}</h4>
+          <div className="flex items-center gap-2">
+            <span className={cn(
+              "text-[10px] font-bold px-1.5 py-0.5 rounded uppercase border",
+              skill.level === 'Advanced' && "border-green-500/50 text-green-500 bg-green-500/5",
+              skill.level === 'Intermediate' && "border-blue-500/50 text-blue-500 bg-blue-500/5",
+              skill.level === 'Beginner' && "border-yellow-500/50 text-yellow-500 bg-yellow-500/5",
+            )}>
               {skill.level}
-            </Badge>
+            </span>
           </div>
-          
-          <h3 className="font-bold text-lg mb-1">{skill.name}</h3>
-          
-          <p className="text-sm text-muted-foreground mt-auto">
-            {t(skill.descriptionKey)}
-          </p>
-        </CardContent>
-      </Card>
-    </motion.div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -181,7 +166,7 @@ export default function SkillsPage() {
            </motion.div>
         </div>
 
-        {/* Skills Grid */}
+        {/* Skills Layout */}
         <motion.div 
           variants={container}
           initial="hidden"
@@ -203,10 +188,15 @@ export default function SkillsPage() {
                     <h3 className="text-2xl font-bold">{cat.title}</h3>
                   </div>
                   
-                  <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  <div className="flex flex-wrap gap-4">
                     {categorySkills.map((skill) => (
-                      <motion.div key={skill.name} variants={item}>
-                        <SkillCard skill={skill} t={t} />
+                      <motion.div 
+                        key={skill.name} 
+                        variants={item}
+                        whileHover={{ y: -5, scale: 1.02 }}
+                        className="flex-grow sm:flex-grow-0"
+                      >
+                        <SkillCard skill={skill} />
                       </motion.div>
                     ))}
                   </div>
