@@ -5,22 +5,23 @@
 1. [Introduction](#1-introduction)
 2. [Tech Stack](#2-tech-stack)
 3. [System Architecture](#3-system-architecture)
-4. [Interface](#4-interface)
+4. [Project Structure](#4-project-structure)
 5. [Installation Guide (Local)](#5-installation-guide-local)
 
 ---
 
 ## 1. Introduction
 
-Welcome to **Vo Anh Khai's** personal Portfolio website!
+Welcome to **Vo Anh Khai's** personal Portfolio website! This project is a modern, high-performance web application designed to showcase my software engineering journey, skills, and projects.
 
 **Key Features:**
 
-- Smooth Pagination for the project list.
-- Dynamic Document Title updates.
-- Seamless English / Vietnamese language switching (i18n) without page reload.
-- Light / Dark Mode support.
-- Eye-catching Animations & Transitions.
+- **Clean & Modern UI**: Built with the **Montserrat** font family for a premium feel.
+- **Singleton Service Architecture**: Centralized data management via `PortfolioService`.
+- **Responsive Design**: Fully optimized for mobile, tablet, and desktop screens.
+- **Dynamic Animations**: Smooth transitions powered by **Framer Motion**.
+- **SEO Optimized**: Properly structured meta tags and semantic HTML for visibility.
+- **Seamless Navigation**: Single-page scrolling experience with dedicated project micro-pages.
 
 ---
 
@@ -29,77 +30,59 @@ Welcome to **Vo Anh Khai's** personal Portfolio website!
 ![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
-![React Router](https://img.shields.io/badge/React_Router_DOM-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
+![Lucide Icons](https://img.shields.io/badge/Lucide_Icons-FF5733?style=for-the-badge&logo=lucide&logoColor=white)
 
 ---
 
 ## 3. System Architecture
 
-The project strictly follows the **Client-side Rendering (CSR)** architecture and **SOLID** principles, with a clear separation between Logic, View, and Service:
+The project follows the **Clean Architecture** principles with a focus on **SOLID** and **Design Patterns**:
 
-### Logic Layers
+- **Singleton Pattern**: Managed via `PortfolioService` to ensure a single source of truth for all data.
+- **Repository Pattern**: Abstracted data access layer that decouples components from the data source.
+- **Dependency Inversion**: UI components depend on abstract interfaces (`IPortfolioData`, `IProject`) rather than concrete implementations.
 
-```text
-+-------------------+   +-------------------------+   +-------------------+
-|       VIEW        |   |       LOGIC / BUS       |   |   SERVICE / DAL   |
-| (React Components)|<->| (Custom Hooks/Context): |<->| (Data & API):     |
-| - HomePage        |   | - useProjects           |   | - portfolioData.ts|
-| - ProjectsPage    |   | - usePagination         |   | - LocalStorage)   |
-| - Sidebar         |   | - Theme/Language Context|   |                   |
-+-------------------+   +-------------------------+   +-------------------+
-```
-
-### Architecture Model
+### Logic Flow
 
 ```text
-+-------------------+       +-------------------+
-|    MainLayout     |<----->|    ProjectsPage   |
-| (Global Layout)   |       | (Display Page)    |
-+-------------------+       +-------------------+
-          |                           |
-          | Outlet Layer              | Uses Hook
-          v                           v
-+-------------------+       +-------------------+
-|   React Router    |       |   useProjects     |
-|   (Navigation)    |       | (Logic & State)   |
-+-------------------+       +-------------------+
-                                      |
-                                      | Load Data
-                                      v
-                            +-------------------+
-                            |  portfolioData.ts |
-                            |  (Static Data)    |
-                            +-------------------+
-```
-
-### Pagination Flow
-
-```text
-[ USER ]                      [ SYSTEM / APP ]
-    |                               |
-    | (1) Clicks "Next Page"        |
-    |------------------------------>|
-    |                               | (2) usePagination: Update current = current + 1
-    |                               |
-    |                               | (3) useProjects: slice(from index A to B)
-    | <-----------------------------|
-    | (4) UI updates project list   |
-    |                               |
++-------------------+       +-----------------------+       +-------------------+
+|       VIEW        |       |        SHARED         |       |       CORE        |
+| (React Pages)     | <---> | (Hooks & Utilities)   | <---> | (Logic & Data)    |
+| - HomePage        |       | - useProjects.ts      |       | - PortfolioService|
+| - ProjectsPage    |       | - usePageTitle.ts     |       | - portfolioData.ts|
++-------------------+       +-----------------------+       +-------------------+
 ```
 
 ---
 
-## 4. Interface
+## 4. Project Structure
 
-![Interface Preview](./public/preview.png)
+The project was refactored into a **Core/Shared** architecture for better maintainability:
+
+```text
+src/
+├── core/           # The "Brain" of the application
+│   ├── data/       # Static configuration and project READMEs
+│   ├── models/     # TypeScript Interfaces (ISP/DIP)
+│   └── services/   # Business Logic & Data Services (Singleton)
+├── shared/         # Reusable global utilities
+│   ├── hooks/      # Custom React Hooks
+│   └── lib/        # Helper functions (utils.ts)
+├── components/     # UI Building Blocks
+│   ├── common/     # Generic components (Section, Pagination)
+│   ├── layout/     # Global layout (Header, MainLayout)
+│   └── ui/         # Base UI elements (Shadcn-like)
+├── pages/          # Main application views/screens
+└── assets/         # Static assets (images, fonts)
+```
 
 ---
 
 ## 5. Installation Guide (Local)
 
-**Prerequisites:** Ensure **Node.js** (v18 or higher) is installed on your machine.
+**Prerequisites:** Ensure **Node.js** (v18 or higher) is installed.
 
 **Step 1: Clone the repository**
 
@@ -120,10 +103,8 @@ npm install
 npm run dev
 ```
 
-Then visit [http://localhost:5173](http://localhost:5173) to view the project in your browser.
+Visit [http://localhost:5173](http://localhost:5173) to view the project.
 
-**Step 4: Build for Production**
+---
 
-```bash
-npm run build
-```
+**Author:** [Vo Anh Khai](https://github.com/KaitoDeus)
