@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Project } from '../models/PortfolioModels';
-import { portfolioData } from '../data/portfolioData';
+import { IProject } from '@/core/models/PortfolioModels';
+import { portfolioService } from '@/core/services/PortfolioService';
 
 export function useProjects() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<IProject[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ export function useProjects() {
     const fetchProjects = async () => {
       setLoading(true);
       try {
-        setProjects(portfolioData.projects);
+        setProjects(portfolioService.getProjects());
       } catch (error) {
         console.error("Failed to fetch projects", error);
       } finally {

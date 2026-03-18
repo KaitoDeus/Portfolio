@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
-import { portfolioData } from '@/data/portfolioData';
-import { useLanguage } from '@/context/LanguageContext';
+import { portfolioService } from '@/core/services/PortfolioService';
 import { Button } from '@/components/ui/button';
-import { usePageTitle } from '@/hooks/usePageTitle';
+import { usePageTitle } from '@/shared/hooks/usePageTitle';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import AboutPage from '../About/AboutPage';
@@ -11,11 +10,10 @@ import ProjectsPage from '../Projects/ProjectsPage';
 import ContactPage from '../Contact/ContactPage';
 
 export default function HomePage() {
-  const { t } = useLanguage();
-  usePageTitle('nav.home');
+  usePageTitle('Home');
   const location = useLocation();
 
-  const { name, avatars, cvDownloadUrl } = portfolioData;
+  const { name, avatars, cvDownloadUrl } = portfolioService.getRawData();
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -74,7 +72,7 @@ export default function HomePage() {
             transition={{ delay: 0.3, duration: 0.5 }}
           >
             <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight mt-8">
-              <span className="text-foreground">{t('hero.hello')} </span>
+              <span className="text-foreground">Hi, I am </span>
               <span className="text-primary bg-clip-text bg-gradient-to-r from-primary to-primary/70">
                 {name}
               </span>
@@ -82,7 +80,7 @@ export default function HomePage() {
           </motion.div>
 
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            {t('hero.greeting')} <span className="text-primary font-semibold">{t('hero.role')}</span> {t('hero.from')}
+            I'm a <span className="text-primary font-semibold">Software Engineer</span> from Vietnam.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mt-10 flex-wrap justify-center w-full px-4 sm:px-0">
@@ -91,7 +89,7 @@ export default function HomePage() {
               className="shadow-xl shadow-primary/20 text-lg py-7 px-10 rounded-full w-full sm:w-auto hover:scale-105 transition-all"
               onClick={() => scrollToSection('skills')}
             >
-              {t('hero.viewSkills')}
+              View my Skills
             </Button>
             <Button 
               variant="outline" 
@@ -99,7 +97,7 @@ export default function HomePage() {
               onClick={handleDownloadCV} 
               className="text-lg py-7 px-10 rounded-full border-2 hover:bg-primary/5 w-full sm:w-auto hover:scale-105 transition-all"
             >
-              {t('hero.downloadCV')}
+              Download CV
             </Button>
           </div>
         </motion.div>

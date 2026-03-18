@@ -1,6 +1,5 @@
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/context/LanguageContext';
 
 interface PaginationProps {
   currentPage: number;
@@ -17,7 +16,6 @@ export default function Pagination({
   onPrev,
   onJump
 }: PaginationProps) {
-  const { t } = useLanguage();
   
   // Array of page numbers to show
   const getPageNumbers = () => {
@@ -47,7 +45,7 @@ export default function Pagination({
         size="icon"
         onClick={() => onJump(1)}
         disabled={currentPage === 1}
-        aria-label={t('pagination.first')}
+        aria-label="First Page"
       >
         <ChevronsLeft className="h-4 w-4" />
       </Button>
@@ -57,7 +55,7 @@ export default function Pagination({
         size="icon"
         onClick={onPrev}
         disabled={currentPage === 1}
-        aria-label={t('pagination.prev')}
+        aria-label="Previous Page"
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
@@ -81,7 +79,7 @@ export default function Pagination({
         size="icon"
         onClick={onNext}
         disabled={currentPage === totalPages}
-        aria-label={t('pagination.next')}
+        aria-label="Next Page"
       >
         <ChevronRight className="h-4 w-4" />
       </Button>
@@ -91,7 +89,7 @@ export default function Pagination({
         size="icon"
         onClick={() => onJump(totalPages)}
         disabled={currentPage === totalPages}
-        aria-label={t('pagination.last')}
+        aria-label="Last Page"
       >
         <ChevronsRight className="h-4 w-4" />
       </Button>

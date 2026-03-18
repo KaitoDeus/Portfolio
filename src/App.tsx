@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { LanguageProvider } from './context/LanguageContext';
-import MainLayout from './layout/MainLayout';
+import MainLayout from './components/layout/MainLayout';
 import HomePage from './pages/Home/HomePage';
 import ProjectDetailPage from './pages/Projects/ProjectDetailPage';
 import { useEffect } from 'react';
@@ -28,17 +27,15 @@ function ScrollToTop() {
 
 function App() {
   return (
-    <LanguageProvider>
-      <MainLayout>
-        <ScrollToTop />
-        <Routes>
-           <Route path="/" element={<HomePage />} />
-           <Route path="/projects/:id" element={<ProjectDetailPage />} />
-           {/* Redirect any other path to home since it's now a single page */}
-           <Route path="*" element={<HomePage />} />
-        </Routes>
-      </MainLayout>
-    </LanguageProvider>
+    <MainLayout>
+      <ScrollToTop />
+      <Routes>
+         <Route path="/" element={<HomePage />} />
+         <Route path="/projects/:id" element={<ProjectDetailPage />} />
+         {/* Redirect any other path to home since it's now a single page */}
+         <Route path="*" element={<HomePage />} />
+      </Routes>
+    </MainLayout>
   );
 }
 

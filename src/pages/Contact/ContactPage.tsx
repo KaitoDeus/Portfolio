@@ -5,8 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
-import { portfolioData } from '@/data/portfolioData';
-import { useLanguage } from '@/context/LanguageContext';
+import { portfolioService } from '@/core/services/PortfolioService';
 import Section from '@/components/common/Section';
 
 const socialIcons: Record<string, React.ElementType> = {
@@ -15,8 +14,7 @@ const socialIcons: Record<string, React.ElementType> = {
 };
 
 export default function ContactPage() {
-  const { socialLinks, name } = portfolioData;
-  const { t } = useLanguage();
+  const { socialLinks, name } = portfolioService.getRawData();
   const currentYear = new Date().getFullYear();
   const [formData, setFormData] = useState({
     fullName: '',
@@ -51,13 +49,13 @@ export default function ContactPage() {
       });
 
       if (response.ok) {
-        alert("Cảm ơn! Tin nhắn của bạn đã được gửi trực tiếp đến tôi.");
+        alert("Thank you! Your message has been sent directly to me.");
         setFormData({ fullName: '', email: '', subject: '', message: '' });
       } else {
-        alert("Đã có lỗi xảy ra. Vui lòng thử lại sau.");
+        alert("Oops! There was a problem. Please try again later.");
       }
     } catch (error) {
-      alert("Lỗi kết nối mạng.");
+      alert("Network error. Please check your connection.");
     } finally {
       setIsSubmitting(false);
     }
@@ -78,7 +76,7 @@ export default function ContactPage() {
           >
             <div>
               <h2 className="text-5xl lg:text-7xl font-extrabold mb-8 tracking-tighter leading-[1] text-white">
-                {t('contact.heading').replace('{name}', name.split(' ').pop() || '')}
+                Connect with {name.split(' ').pop()}
               </h2>
             </div>
 
@@ -109,7 +107,7 @@ export default function ContactPage() {
                     {name} <span className="text-cyan-400/30 font-thin mx-3">/</span> © {currentYear}
                  </p>
                  <div className="flex flex-wrap items-center gap-3 text-[10px] font-bold text-muted-foreground/60 uppercase tracking-[0.3em]">
-                    <span>{t('footer.builtWith')}</span>
+                    <span>Built with</span>
                     <div className="flex items-center gap-2">
                       <span className="text-white">React</span>
                       <span className="w-1 h-1 rounded-full bg-cyan-400" />
@@ -133,9 +131,9 @@ export default function ContactPage() {
             <Card className="border-white/5 bg-white/[0.03] backdrop-blur-xl shadow-2xl rounded-[2rem] overflow-hidden">
               <CardContent className="p-8 md:p-10">
                 <div className="mb-8">
-                  <h3 className="text-2xl font-bold mb-2 text-white">{t('contact.formTitle')}</h3>
+                  <h3 className="text-2xl font-bold mb-2 text-white">Send Message</h3>
                   <p className="text-muted-foreground text-base">
-                    {t('contact.formDescription')}
+                    I'm always open to discussing new projects, creative ideas or prospects to be part of your visions.
                   </p>
                 </div>
                 
@@ -143,12 +141,12 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 ml-1">
-                        Full Name <span className="text-red-500">*</span>
+                        Full Name
                       </label>
                       <Input
                         type="text"
                         name="fullName"
-                        placeholder={t('contact.fullName')}
+                        placeholder="Your Full Name"
                         value={formData.fullName}
                         onChange={handleChange}
                         required
@@ -157,12 +155,12 @@ export default function ContactPage() {
                     </div>
                     <div className="space-y-2">
                       <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 ml-1">
-                        Email Address <span className="text-red-500">*</span>
+                        Email Address
                       </label>
                       <Input
                         type="email"
                         name="email"
-                        placeholder={t('contact.email')}
+                        placeholder="Your Email Address"
                         value={formData.email}
                         onChange={handleChange}
                         required
@@ -173,12 +171,12 @@ export default function ContactPage() {
                   
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 ml-1">
-                      Subject <span className="text-red-500">*</span>
+                      Subject
                     </label>
                     <Input
                       type="text"
                       name="subject"
-                      placeholder={t('contact.subject')}
+                      placeholder="How can I help you?"
                       value={formData.subject}
                       onChange={handleChange}
                       required
@@ -188,11 +186,11 @@ export default function ContactPage() {
                   
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 ml-1">
-                      Message <span className="text-red-500">*</span>
+                      Message
                     </label>
                     <Textarea
                       name="message"
-                      placeholder={t('contact.message')}
+                      placeholder="Your Message..."
                       value={formData.message}
                       onChange={handleChange}
                       rows={5}
@@ -208,7 +206,7 @@ export default function ContactPage() {
                     className="w-full text-lg font-bold h-14 rounded-xl bg-cyan-400 hover:bg-cyan-300 disabled:bg-gray-600 disabled:cursor-not-allowed text-black shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                   >
                     <Send className="w-5 h-5 mr-3" />
-                    {isSubmitting ? "Sending..." : t('contact.send')}
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </CardContent>

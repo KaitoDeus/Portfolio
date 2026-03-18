@@ -5,11 +5,10 @@ import { FileText, Globe, Search, Calendar } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { useLanguage } from '@/context/LanguageContext';
 import Section from '@/components/common/Section';
 import Pagination from '@/components/common/Pagination';
-import { useProjects } from '@/hooks/useProjects';
-import { usePagination } from '@/hooks/usePagination';
+import { useProjects } from '@/shared/hooks/useProjects';
+import { usePagination } from '@/shared/hooks/usePagination';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -25,7 +24,6 @@ const cardVariants = {
 };
 
 export default function ProjectsPage() {
-  const { t } = useLanguage();
   const { projects, loading } = useProjects();
   
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
@@ -94,7 +92,7 @@ export default function ProjectsPage() {
   } = usePagination(filteredAndSortedProjects, ITEMS_PER_PAGE);
 
   return (
-    <Section id="projects" title={t('projects.title')}>
+    <Section id="projects" title="My Projects">
       {loading ? (
           <div className="flex justify-center items-center h-48">
              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -116,9 +114,9 @@ export default function ProjectsPage() {
                   setCurrentPage(1);
                 }}
               >
-                {cat === 'all' && t('projects.filter.all')}
-                {cat === 'personal' && t('projects.category.personal')}
-                {cat === 'school' && t('projects.category.school')}
+                {cat === 'all' && 'All'}
+                {cat === 'personal' && 'Personal Projects'}
+                {cat === 'school' && 'School Projects'}
               </button>
             ))}
           </div>
@@ -130,7 +128,7 @@ export default function ProjectsPage() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input 
                   className="pl-10 bg-background/50 border-border/50 focus:bg-background transition-all" 
-                  placeholder={t('projects.search.placeholder')}
+                  placeholder="Search projects..."
                   value={searchQuery}
                   onChange={(e) => {
                     setSearchQuery(e.target.value);
@@ -149,8 +147,8 @@ export default function ProjectsPage() {
                       setCurrentPage(1);
                     }}
                   >
-                    <option value="newest" className="bg-card text-card-foreground">{t('projects.sort.newest')}</option>
-                    <option value="oldest" className="bg-card text-card-foreground">{t('projects.sort.oldest')}</option>
+                    <option value="newest" className="bg-card text-card-foreground">Newest First</option>
+                    <option value="oldest" className="bg-card text-card-foreground">Oldest First</option>
                   </select>
                   <div className="pointer-events-none">
                     <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -171,7 +169,7 @@ export default function ProjectsPage() {
                 setCurrentPage(1);
               }}
             >
-              {t('projects.filter.all')}
+              All
             </Badge>
             {allTechs.map(tech => (
               <Badge 
@@ -228,7 +226,7 @@ export default function ProjectsPage() {
                           className="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground py-2 px-2 rounded-md text-sm font-medium transition-colors"
                         >
                           <FileText className="w-4 h-4" />
-                          <span>{t('projects.btn.detail')}</span>
+                          <span>Details</span>
                         </Link>
                         {project.link ? (
                           <a 
@@ -238,12 +236,12 @@ export default function ProjectsPage() {
                             className="flex items-center justify-center gap-1.5 bg-primary/10 hover:bg-primary/20 text-primary py-2 px-2 rounded-md text-sm font-medium transition-colors"
                           >
                             <Globe className="w-4 h-4" />
-                            <span>{t('projects.btn.demo')}</span>
+                            <span>Demo</span>
                           </a>
                         ) : (
                           <div className="flex items-center justify-center gap-1.5 bg-muted text-muted-foreground py-2 px-2 rounded-md text-sm font-medium cursor-not-allowed">
                             <Globe className="w-4 h-4" />
-                            <span>{t('projects.btn.demo')}</span>
+                            <span>Demo</span>
                           </div>
                         )}
                       </div>

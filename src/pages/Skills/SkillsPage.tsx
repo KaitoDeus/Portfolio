@@ -13,11 +13,10 @@ import {
 import { DiMsqlServer } from "react-icons/di";
 import { FaJava } from 'react-icons/fa';
 import { Card, CardContent } from '@/components/ui/card';
-import { useLanguage } from '@/context/LanguageContext';
 import Section from '@/components/common/Section';
-import { portfolioData } from '@/data/portfolioData';
-import { Skill } from '@/models/PortfolioModels';
-import { cn } from '@/lib/utils';
+import { portfolioService } from '@/core/services/PortfolioService';
+import { ISkill } from '@/core/models/PortfolioModels';
+import { cn } from '@/shared/lib/utils';
 
 // Map icon strings to components
 const iconMap: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
@@ -42,7 +41,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string; style?: 
 };
 
 // Skill Card Component
-const SkillCard = ({ skill }: { skill: Skill }) => {
+const SkillCard = ({ skill }: { skill: ISkill }) => {
   const Icon = iconMap[skill.icon] || Code2;
 
   return (
@@ -70,21 +69,19 @@ const SkillCard = ({ skill }: { skill: Skill }) => {
 };
 
 export default function SkillsPage() {
-  const { t } = useLanguage();
-
   // Group skills by category
-  const skillsByCategory = portfolioData.skills.reduce((acc, skill) => {
+  const skillsByCategory = portfolioService.getSkills().reduce((acc, skill) => {
     if (!acc[skill.category]) acc[skill.category] = [];
     acc[skill.category].push(skill);
     return acc;
-  }, {} as Record<string, Skill[]>);
+  }, {} as Record<string, ISkill[]>);
 
   // Define category layout order and display info
   const categories = [
-    { key: 'backend', icon: Server, title: t('skills.category.backend') },
-    { key: 'frontend', icon: Layout, title: t('skills.category.frontend') },
-    { key: 'database', icon: Database, title: t('skills.category.database') },
-    { key: 'devops', icon: Wrench, title: t('skills.category.devops') },
+    { key: 'backend', icon: Server, title: 'Backend' },
+    { key: 'frontend', icon: Layout, title: 'Frontend' },
+    { key: 'database', icon: Database, title: 'Database' },
+    { key: 'devops', icon: Wrench, title: 'DevOps & Tools' },
   ];
 
   const container = {
@@ -108,10 +105,10 @@ export default function SkillsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
            <div className="space-y-6">
               <h2 className="text-4xl lg:text-5xl font-bold">
-                 {t('skills.title')}
+                 My Skills
               </h2>
               <p className="text-xl text-muted-foreground border-l-4 border-primary pl-4">
-                 {t('skills.tagline')}
+                 Passionate developer who loves to explore every tech stack
               </p>
               
 
@@ -189,7 +186,7 @@ export default function SkillsPage() {
                   </div>
                   
                   <div className="flex flex-wrap gap-4">
-                    {categorySkills.map((skill) => (
+                    {categorySkills.map((skill: ISkill) => (
                       <motion.div 
                         key={skill.name} 
                         variants={item}

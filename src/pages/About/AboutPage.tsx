@@ -8,8 +8,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { portfolioData } from '@/data/portfolioData';
-import { useLanguage } from '@/context/LanguageContext';
+import { portfolioService } from '@/core/services/PortfolioService';
 import Section from '@/components/common/Section';
 
 const hobbyIcons: Record<string, React.ElementType> = {
@@ -20,10 +19,8 @@ const hobbyIcons: Record<string, React.ElementType> = {
   book: BookOpen,
   football: CircleDot,
 };
-
 export default function AboutPage() {
-  const { personalInfo, avatars, hobbies, education, career, certificates } = portfolioData;
-  const { t } = useLanguage();
+  const { personalInfo, avatars, hobbies, education, career, certificates } = portfolioService.getRawData();
   
   const targetRef = useRef(null);
   useScroll({
@@ -32,7 +29,7 @@ export default function AboutPage() {
   });
 
   return (
-    <Section id="about" title={t('about.title')}>
+    <Section id="about" title="About Me">
       <div className="max-w-6xl mx-auto space-y-12" ref={targetRef}>
         {/* Hero Bio Section */}
         <motion.div 
@@ -48,19 +45,17 @@ export default function AboutPage() {
           />
           <div className="flex-1 text-center lg:text-left">
             <h3 className="text-3xl font-bold mb-4 text-primary">
-              {t('about.tagline')}
+              Using technology to change the world
             </h3>
             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              {t('about.bio')
-                .replace('{name}', personalInfo.fullname)
-                .replace('{school}', t('about.uthSchool'))}
+              I'm {personalInfo.fullname}, an IT student at University of Transport Ho Chi Minh City. I'm passionate about game development and software engineering, always eager to learn new technologies to create innovative and useful products.
             </p>
             <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
               <Badge variant="outline" className="text-sm py-1 px-3">
-                <GraduationCap className="w-4 h-4 mr-1" /> {t('about.infoTech')}
+                <GraduationCap className="w-4 h-4 mr-1" /> Information Technology
               </Badge>
               <Badge variant="outline" className="text-sm py-1 px-3">
-                <MapPin className="w-4 h-4 mr-1" /> {t('about.hcmCity')}
+                <MapPin className="w-4 h-4 mr-1" /> Hồ Chí Minh
               </Badge>
             </div>
           </div>
@@ -73,31 +68,37 @@ export default function AboutPage() {
           <InfoCard delay={0.1}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-primary">
-                <Calendar className="w-5 h-5" /> {t('about.personalInfo')}
+                <Calendar className="w-5 h-5" /> Personal Information
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-               <InfoRow label={t('about.fullname')} value={personalInfo.fullname} />
-               <InfoRow label={t('about.dob')} value={personalInfo.dateOfBirth} />
-               <InfoRow label={t('about.major')} value={t('about.infoTech')} />
-               <InfoRow label={t('about.school')} value={t('about.uthSchool')} />
+               <InfoRow label="Full Name" value={personalInfo.fullname} />
+               <InfoRow label="Date of Birth" value={personalInfo.dateOfBirth} />
+               <InfoRow label="Major" value="Information Technology" />
+               <InfoRow label="School" value={personalInfo.school} />
             </CardContent>
           </InfoCard>
 
           <InfoCard delay={0.2}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-orange">
-                <Target className="w-5 h-5" /> {t('about.careerGoals')}
+                <Target className="w-5 h-5" /> Career Goals
               </CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3 text-muted-foreground">
-                {[1, 2, 3].map(num => (
-                  <li key={num} className="flex items-start gap-2">
-                    <span className="text-orange">•</span>
-                    <span>{t(`about.goal${num}`)}</span>
-                  </li>
-                ))}
+                <li className="flex items-start gap-2">
+                  <span className="text-orange">•</span>
+                  <span>Complete a Software Engineer internship at a tech company in 2026.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-orange">•</span>
+                  <span>Develop problem-solving skills through real-world projects.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-orange">•</span>
+                  <span>Learn best practices and professional software development processes.</span>
+                </li>
               </ul>
             </CardContent>
           </InfoCard>
@@ -105,7 +106,7 @@ export default function AboutPage() {
           <InfoCard delay={0.3}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-primary">
-                <Gamepad2 className="w-5 h-5" /> {t('about.hobbies')}
+                <Gamepad2 className="w-5 h-5" /> Hobbies
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -119,7 +120,7 @@ export default function AboutPage() {
                       className="py-2 px-3 hover:bg-primary hover:text-primary-foreground transition-colors cursor-default"
                     >
                       <Icon className="w-4 h-4 mr-1" />
-                      {t(hobby.titleKey)}
+                      {hobby.title}
                     </Badge>
                   );
                 })}
@@ -139,7 +140,7 @@ export default function AboutPage() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-orange">
-                    <Award className="w-5 h-5" /> {t('about.certificates')}
+                    <Award className="w-5 h-5" /> Certificates
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -166,17 +167,15 @@ export default function AboutPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <TimelineCard 
-                    title={t('about.education')} 
+                    title="Education" 
                     icon={GraduationCap} 
                     items={education} 
-                    t={t}
                     colorClass="text-primary"
                 />
                 <TimelineCard 
-                    title={t('about.careerTimeline')} 
+                    title="Career Timeline" 
                     icon={Briefcase} 
                     items={career} 
-                    t={t}
                     colorClass="text-orange"
                 />
             </div>
@@ -209,7 +208,7 @@ function InfoRow({ label, value }: { label: string, value: string }) {
     );
 }
 
-function TimelineCard({ title, icon: Icon, items, t, colorClass }: any) {
+function TimelineCard({ title, icon: Icon, items, colorClass }: { title: string, icon: React.ElementType, items: any[], colorClass: string }) {
     return (
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -225,7 +224,7 @@ function TimelineCard({ title, icon: Icon, items, t, colorClass }: any) {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-4">
-                {items.map((item: any, index: number) => (
+                {items.map((item, index) => (
                   <div 
                     key={index} 
                     className={`timeline-item ${colorClass.replace('text-', 'hover:border-')}`}
@@ -233,9 +232,9 @@ function TimelineCard({ title, icon: Icon, items, t, colorClass }: any) {
                     <Badge variant="secondary" className="mb-2">
                         {item.year || 'Now'}
                     </Badge>
-                    <h4 className="font-semibold">{item.titleKey ? t(item.titleKey) : item.title}</h4>
+                    <h4 className="font-semibold">{item.title}</h4>
                     <p className="text-sm text-muted-foreground mt-1">
-                        {item.locationKey ? t(item.locationKey) : item.location}
+                        {item.location}
                     </p>
                   </div>
                 ))}

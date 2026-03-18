@@ -1,19 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Home, User, Lightbulb, FolderKanban, Mail } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useLanguage } from '../context/LanguageContext';
-import { cn } from '@/lib/utils';
-
+import { cn } from '@/shared/lib/utils';
 const navItems = [
-  { id: 'home', key: 'nav.home', icon: Home },
-  { id: 'about', key: 'nav.about', icon: User },
-  { id: 'skills', key: 'nav.skills', icon: Lightbulb },
-  { id: 'projects', key: 'nav.projects', icon: FolderKanban },
-  { id: 'contact', key: 'nav.contact', icon: Mail },
+  { id: 'home', label: 'Home', icon: Home },
+  { id: 'about', label: 'About', icon: User },
+  { id: 'skills', label: 'Skills', icon: Lightbulb },
+  { id: 'projects', label: 'Projects', icon: FolderKanban },
+  { id: 'contact', label: 'Contact', icon: Mail },
 ];
 
 export default function Header() {
-  const { t } = useLanguage();
   const [activeSection, setActiveSection] = useState('home');
   const location = useLocation();
   const navigate = useNavigate();
@@ -71,7 +68,7 @@ export default function Header() {
                   : "text-muted-foreground hover:text-foreground hover:bg-white/5"
               )}
             >
-              {t(item.key)}
+              {item.label}
             </button>
           ))}
         </nav>
@@ -94,7 +91,7 @@ export default function Header() {
               >
                 <Icon className={cn("w-5 h-5 transition-all", isActive && "scale-110 stroke-[2.5px]")} />
                 <span className={cn("text-[9px] font-bold uppercase mt-1 hidden sm:block", isActive ? "opacity-100" : "opacity-0")}>
-                  {t(item.key)}
+                  {item.label}
                 </span>
                 {isActive && <div className="absolute -bottom-1 w-1 h-1 bg-primary rounded-full" />}
               </button>

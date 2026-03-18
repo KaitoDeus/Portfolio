@@ -3,16 +3,13 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Github, ExternalLink } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { useProjects } from '@/hooks/useProjects';
+import { useProjects } from '@/shared/hooks/useProjects';
 import Section from '@/components/common/Section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { useLanguage } from '@/context/LanguageContext';
-
 export default function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { projects, loading } = useProjects();
-  const { t } = useLanguage();
 
   const currentIndex = projects.findIndex((p) => p.id === id);
   const project = currentIndex !== -1 ? projects[currentIndex] : undefined;
@@ -29,12 +26,12 @@ export default function ProjectDetailPage() {
 
   if (!project) {
     return (
-      <Section id="project-not-found" title={t('projects.notfound.title')}>
+      <Section id="project-not-found" title="Project Not Found">
         <div className="flex flex-col items-center justify-center min-h-[50vh]">
-          <p className="text-xl text-muted-foreground mb-6">{t('projects.notfound.desc')}</p>
+          <p className="text-xl text-muted-foreground mb-6">The project you are looking for does not exist.</p>
           <Button asChild>
             <Link to="/#projects">
-              <ArrowLeft className="mr-2 h-4 w-4" /> {t('projects.back')}
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Projects
             </Link>
           </Button>
         </div>
@@ -53,7 +50,7 @@ export default function ProjectDetailPage() {
         <div className="mb-8 flex flex-wrap gap-4 items-center justify-between">
           <Button variant="outline" asChild>
             <Link to="/#projects">
-              <ArrowLeft className="mr-2 h-4 w-4" /> {t('nav.projects')}
+              <ArrowLeft className="mr-2 h-4 w-4" /> Projects
             </Link>
           </Button>
           
@@ -61,14 +58,14 @@ export default function ProjectDetailPage() {
             {project.githubLink && (
               <Button asChild variant="outline">
                 <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
-                  <Github className="mr-2 h-4 w-4" /> {t('projects.btn.source')}
+                  <Github className="mr-2 h-4 w-4" /> Source
                 </a>
               </Button>
             )}
             {project.link && (
               <Button asChild>
                 <a href={project.link} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="mr-2 h-4 w-4" /> {t('projects.btn.demo')}
+                  <ExternalLink className="mr-2 h-4 w-4" /> Demo
                 </a>
               </Button>
             )}
@@ -85,9 +82,9 @@ export default function ProjectDetailPage() {
 
         <div className="flex items-center gap-3 mb-8">
           <Badge variant={project.status === 'completed' ? 'default' : 'secondary'} className="text-sm px-3 py-1">
-            {project.status === 'completed' ? t('projects.status.completed') : t('projects.status.inProgress')}
+            {project.status === 'completed' ? 'Completed' : 'In Progress'}
           </Badge>
-          <span className="text-muted-foreground font-medium">{t(`role.${project.role}`)}</span>
+          <span className="text-muted-foreground font-medium">{project.role}</span>
         </div>
 
         <div className="prose prose-neutral dark:prose-invert max-w-none prose-img:rounded-xl prose-img:shadow-md prose-headings:text-foreground prose-a:text-primary hover:prose-a:text-primary/80">
@@ -96,7 +93,7 @@ export default function ProjectDetailPage() {
               {project.readmeContent}
             </ReactMarkdown>
           ) : (
-            <p className="text-muted-foreground italic">{t('projects.noDescription')}</p>
+            <p className="text-muted-foreground italic">No detailed description available for this project.</p>
           )}
         </div>
 
@@ -105,7 +102,7 @@ export default function ProjectDetailPage() {
             <Button variant="ghost" asChild className="group">
               <Link to={`/projects/${prevProject.id}`}>
                 <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                {t('projects.btn.prevProject')}
+                Previous Project
                 <span className="sr-only">: {prevProject.title}</span>
               </Link>
             </Button>
@@ -114,7 +111,7 @@ export default function ProjectDetailPage() {
           {nextProject ? (
             <Button variant="ghost" asChild className="group">
               <Link to={`/projects/${nextProject.id}`}>
-                {t('projects.btn.nextProject')}
+                Next Project
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 <span className="sr-only">: {nextProject.title}</span>
               </Link>
