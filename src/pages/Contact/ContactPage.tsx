@@ -76,7 +76,7 @@ export default function ContactPage() {
           >
             <div>
               <h2 className="text-5xl lg:text-7xl font-extrabold mb-8 tracking-tighter leading-[1] text-white">
-                Connect with {name.split(' ').pop()}
+                Connect with me!
               </h2>
             </div>
 

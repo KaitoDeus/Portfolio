@@ -1,10 +1,8 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileText, Globe, Search, Calendar } from 'lucide-react';
+import { FileText, Globe } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
 import Section from '@/components/common/Section';
 import Pagination from '@/components/common/Pagination';
 import { useProjects } from '@/shared/hooks/useProjects';
@@ -26,46 +24,14 @@ const cardVariants = {
 export default function ProjectsPage() {
   const { projects, loading } = useProjects();
   
-  const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
+  const [sortOrder] = useState<'newest' | 'oldest'>('newest');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'personal' | 'school'>('all');
-
-  const allTechs = useMemo(() => {
-    const techs = new Set<string>();
-    projects.forEach(p => p.technologies?.forEach(t => techs.add(t)));
-    return Array.from(techs).sort();
-  }, [projects]);
-
-  const toggleTech = (tech: string) => {
-    setSelectedTechs(prev => 
-      prev.includes(tech) ? prev.filter(t => t !== tech) : [...prev, tech]
-    );
-    setCurrentPage(1);
-  };
 
   const filteredAndSortedProjects = useMemo(() => {
     let result = [...projects];
 
     if (selectedCategory !== 'all') {
       result = result.filter(p => p.category === selectedCategory);
-    }
-
-    // Filter by tech
-    if (selectedTechs.length > 0) {
-      result = result.filter(p => 
-        selectedTechs.some(tech => p.technologies?.includes(tech))
-      );
-    }
-
-    // Filter by search
-    if (searchQuery.trim() !== '') {
-      const query = searchQuery.toLowerCase();
-      result = result.filter(p => 
-        p.title.toLowerCase().includes(query) || 
-        p.role.toLowerCase().includes(query) ||
-        p.technologies?.some(t => t.toLowerCase().includes(query))
-      );
     }
 
     // Sort
@@ -76,7 +42,7 @@ export default function ProjectsPage() {
     }
 
     return result;
-  }, [projects, selectedTechs, searchQuery, sortOrder, selectedCategory]);
+  }, [projects, sortOrder, selectedCategory]);
 
   // Set items per page (e.g. 6)
   const ITEMS_PER_PAGE = 6;
@@ -100,7 +66,7 @@ export default function ProjectsPage() {
       ) : (
         <>
           {/* Category Tabs */}
-          <div className="flex justify-center mb-8 gap-2">
+          <div className="flex justify-center mb-12 gap-2">
             {(['all', 'personal', 'school'] as const).map(cat => (
               <button
                 key={cat}
@@ -121,75 +87,13 @@ export default function ProjectsPage() {
             ))}
           </div>
 
-          {/* Search and Sort Bar */}
-          <div className="max-w-6xl mx-auto w-full px-4 mb-10">
-            <div className="bg-muted/30 dark:bg-muted/20 backdrop-blur-sm border border-border p-4 rounded-2xl shadow-sm flex flex-col md:flex-row gap-4 items-center">
-              <div className="relative flex-grow w-full">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input 
-                  className="pl-10 bg-background/50 border-border/50 focus:bg-background transition-all" 
-                  placeholder="Search projects..."
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    setCurrentPage(1);
-                  }}
-                />
-              </div>
-              <div className="flex items-center gap-2 min-w-[200px] w-full md:w-auto">
-                <div className="bg-background/50 border border-border/50 rounded-md flex items-center px-3 py-2 w-full focus-within:ring-2 focus-within:ring-primary/20 focus-within:bg-background transition-all">
-                  <Calendar className="w-4 h-4 text-muted-foreground shrink-0 mr-2" />
-                  <select 
-                    className="w-full bg-transparent border-none text-sm focus:outline-none cursor-pointer text-foreground appearance-none"
-                    value={sortOrder}
-                    onChange={(e) => {
-                      setSortOrder(e.target.value as 'newest' | 'oldest');
-                      setCurrentPage(1);
-                    }}
-                  >
-                    <option value="newest" className="bg-card text-card-foreground">Newest First</option>
-                    <option value="oldest" className="bg-card text-card-foreground">Oldest First</option>
-                  </select>
-                  <div className="pointer-events-none">
-                    <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-8 max-w-6xl mx-auto px-4">
-            <Badge 
-              variant={selectedTechs.length === 0 ? "default" : "outline"} 
-              className="cursor-pointer text-sm px-3 py-1 transition-colors"
-              onClick={() => {
-                setSelectedTechs([]);
-                setCurrentPage(1);
-              }}
-            >
-              All
-            </Badge>
-            {allTechs.map(tech => (
-              <Badge 
-                key={tech}
-                variant={selectedTechs.includes(tech) ? "default" : "outline"}
-                className="cursor-pointer text-sm px-3 py-1 transition-colors"
-                onClick={() => toggleTech(tech)}
-              >
-                {tech}
-              </Badge>
-            ))}
-          </div>
-
           <motion.div 
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 lg:px-0"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
             // We use key here to force re-render/re-animation when page changes
-            key={`${currentPage}-${selectedTechs.join(',')}`} 
+            key={`${currentPage}-${selectedCategory}`} 
           >
             <AnimatePresence mode='popLayout'>
               {paginatedProjects.map((project, index) => (

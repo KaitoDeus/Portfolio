@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { portfolioService } from '@/core/services/PortfolioService';
+import { ITimelineItem } from '@/core/models/PortfolioModels';
 import Section from '@/components/common/Section';
 
 const hobbyIcons: Record<string, React.ElementType> = {
@@ -208,7 +209,7 @@ function InfoRow({ label, value }: { label: string, value: string }) {
     );
 }
 
-function TimelineCard({ title, icon: Icon, items, colorClass }: { title: string, icon: React.ElementType, items: any[], colorClass: string }) {
+function TimelineCard({ title, icon: Icon, items, colorClass }: { title: string, icon: React.ElementType, items: ITimelineItem[], colorClass: string }) {
     return (
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -216,31 +217,57 @@ function TimelineCard({ title, icon: Icon, items, colorClass }: { title: string,
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
         >
-          <Card className="h-full">
+          <Card className="h-full border-primary/10 bg-card/50 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className={`flex items-center gap-2 ${colorClass}`}>
-                <Icon className="w-5 h-5" /> {title}
+                <Icon className="w-6 h-6" /> {title}
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-4">
-                {items.map((item, index) => (
-                  <div 
-                    key={index} 
-                    className={`timeline-item ${colorClass.replace('text-', 'hover:border-')}`}
-                  >
-                    <Badge variant="secondary" className="mb-2">
-                        {item.year || 'Now'}
-                    </Badge>
-                    <h4 className="font-semibold">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground mt-1">
-                        {item.location}
-                    </p>
+            <CardContent className="space-y-8">
+              {items.map((item, index) => (
+                <div key={index} className="flex gap-4 group">
+                  <div className="flex-shrink-0">
+                    <div className="w-16 h-16 rounded-xl bg-primary/5 flex items-center justify-center border border-primary/10 group-hover:border-primary/30 transition-colors">
+                       <GraduationCap className="w-8 h-8 text-primary/40 group-hover:text-primary transition-colors" />
+                    </div>
                   </div>
-                ))}
-              </div>
+                  
+                  <div className="flex-grow space-y-1">
+                    <h4 className="text-lg font-bold group-hover:text-primary transition-colors leading-tight">
+                      {item.title}
+                    </h4>
+                    
+                    {item.subtitle && (
+                      <p className="text-muted-foreground text-sm font-medium">
+                        {item.subtitle}
+                      </p>
+                    )}
+                    
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground/80">
+                      <span className="font-semibold">{item.year}</span>
+                    </div>
+
+                    {item.extra && (
+                      <p className="text-sm font-medium text-foreground/80">
+                        {item.extra}
+                      </p>
+                    )}
+
+                    {item.details && item.details.length > 0 && (
+                      <ul className="mt-3 space-y-1">
+                        {item.details.map((detail: string, dIdx: number) => (
+                          <li key={dIdx} className="text-sm text-muted-foreground flex items-center gap-2">
+                             <div className="w-1 h-1 rounded-full bg-primary/40 shrink-0" />
+                             {detail}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+              ))}
             </CardContent>
           </Card>
         </motion.div>
-    )
+    );
 }

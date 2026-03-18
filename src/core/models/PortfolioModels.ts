@@ -53,6 +53,8 @@ export interface ITimelineItem {
   location: string | null;
   subtitle?: string | null;
   extra?: string | null;
+  logo?: string;
+  details?: string[];
 }
 
 export interface IPortfolioData {

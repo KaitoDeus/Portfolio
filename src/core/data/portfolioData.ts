@@ -26,8 +26,8 @@ import medicareReadme from './projects/medicare.md?raw';
 import merryChristmasReadme from './projects/merry-christmas.md?raw';
 
 export const portfolioData: IPortfolioData = {
-  name: 'Võ Anh Khải',
-  roles: ['Software Engineering'],
+  name: 'Anh Khai',
+  roles: ['Software Engineer', 'AI Engineer', 'Frontend Developer', 'Game Developer'],
   tagline: "I'm a",
   bio: 'Passionate about learning, exploring new technologies. With hard work and dedication, I believe it will be a solid foundation to help me achieve big career goals and positively impact the world.',
   avatars: {
@@ -41,7 +41,7 @@ export const portfolioData: IPortfolioData = {
     { platform: 'github', url: 'https://github.com/KaitoDeus', label: 'GitHub Profile' },
   ],
   personalInfo: {
-    fullname: 'Võ Anh Khải',
+    fullname: 'Vo Anh Khai',
     dateOfBirth: '30/06/2005',
     major: 'Information Technology',
     school: 'University of Transport Ho Chi Minh City',
@@ -56,8 +56,21 @@ export const portfolioData: IPortfolioData = {
     { icon: 'brain', title: 'Learning new Tech' },
   ],
   education: [
-    { year: '2023 - Present', title: 'University of Transport Ho Chi Minh City', location: 'Hồ Chí Minh', subtitle: 'GPA: 3.2/4', extra: 'Information Technology' },
-    { year: '2020 - 2022', title: 'Vocational College Ho Chi Minh City', location: 'Hồ Chí Minh', subtitle: 'Very Good', extra: 'Information Technology' },
+    { 
+      year: '2023 - 2026', 
+      title: 'UTH - University of Transport Ho Chi Minh City', 
+      location: 'Hồ Chí Minh', 
+      subtitle: "Bachelor's degree, Information Technology", 
+      extra: 'Grade: 3.2/4' 
+    },
+    { 
+      year: '2020 - 2022', 
+      title: 'Ho Chi Minh Vocational College', 
+      location: 'Hồ Chí Minh', 
+      subtitle: 'Intermediate Degree, IT (Software Application)', 
+      extra: 'Grade: 8.7/10',
+      details: ['Top Graduate', 'Class President']
+    },
   ],
   career: [
     { year: '', title: null, location: '', subtitle: null, extra: '' },
@@ -69,21 +82,29 @@ export const portfolioData: IPortfolioData = {
     { name: 'JavaScript', icon: 'javascript', color: '#f7df1e', category: 'frontend', level: 'Advanced', description: 'ES6+, Async/Await, DOM Manipulation' },
     { name: 'HTML5', icon: 'html5', color: '#e44d26', category: 'frontend', level: 'Advanced', description: 'Semantic Structure, Accessibility' },
     { name: 'CSS3', icon: 'css3', color: '#1572b6', category: 'frontend', level: 'Intermediate', description: 'Flexbox, Grid, Responsive Design' },
+    { name: 'Tailwind CSS', icon: 'tailwindcss', color: '#06B6D4', category: 'frontend', level: 'Advanced', description: 'Utility-first, Responsive Layouts' },
+    { name: 'Three.js', icon: 'threejs', color: '#ffffff', category: 'frontend', level: 'Intermediate', description: '3D Web Experiences, WebGL' },
 
     // Backend
     { name: 'Java', icon: 'java', color: '#f89820', category: 'backend', level: 'Advanced', description: 'OOP, Stream, Exception, JVM basics' },
     { name: 'Spring Boot', icon: 'spring', color: '#6DB33F', category: 'backend', level: 'Advanced', description: 'REST API, Validation, Pagination' },
-    { name: 'Spring Security', icon: 'spring', color: '#6DB33F', category: 'backend', level: 'Intermediate', description: 'JWT, Role-based Authorization' },
-    { name: 'JPA / Hibernate', icon: 'spring', color: '#6DB33F', category: 'backend', level: 'Advanced', description: 'Entity, Mapping, Query Optimization' },
+    { name: 'C#', icon: 'csharp', color: '#239120', category: 'backend', level: 'Advanced', description: 'Desktop App, Windows Forms, LINQ' },
+    { name: '.NET', icon: 'dotnet', color: '#512BD4', category: 'backend', level: 'Intermediate', description: 'Enterprise Framework, CLR' },
+    { name: 'Python', icon: 'python', color: '#3776AB', category: 'backend', level: 'Intermediate', description: 'Data Science, FastAPI, Automation' },
+    { name: 'FastAPI', icon: 'fastapi', color: '#05998B', category: 'backend', level: 'Intermediate', description: 'High Performance Python Backend' },
 
     // Database
     { name: 'MySQL', icon: 'mysql', color: '#4479A1', category: 'database', level: 'Intermediate', description: 'Indexing, Transaction, Query Optimization' },
     { name: 'SQL Server', icon: 'sql', color: '#CC2927', category: 'database', level: 'Intermediate', description: 'Stored Procedures, Triggers' },
+    { name: 'PostgreSQL', icon: 'postgresql', color: '#4169E1', category: 'database', level: 'Intermediate', description: 'Relational Database, JSONB' },
     { name: 'MongoDB', icon: 'mongodb', color: '#47A248', category: 'database', level: 'Beginner', description: 'NoSQL, Aggregation Framework' },
 
     // DevOps & Tools
     { name: 'Docker', icon: 'docker', color: '#2496ED', category: 'devops', level: 'Intermediate', description: 'Containerization (Backend focus)' },
     { name: 'Git', icon: 'git', color: '#F05032', category: 'devops', level: 'Advanced', description: 'Version Control, Branching Strategies' },
+    { name: 'Vite', icon: 'vite', color: '#646CFF', category: 'devops', level: 'Advanced', description: 'Modern Frontend Build Tool' },
+    { name: 'MediaPipe AI', icon: 'mediapipe', color: '#0070F3', category: 'devops', level: 'Beginner', description: 'On-device Machine Learning' },
+    { name: 'Velo (Wix)', icon: 'wix', color: '#ffffff', category: 'devops', level: 'Intermediate', description: 'Wix Fullstack Platform' },
     { name: 'Vercel', icon: 'vercel', color: '#000000', category: 'devops', level: 'Intermediate', description: 'Deployment, CI/CD Integration' },
     { name: 'Render', icon: 'render', color: '#46E3B7', category: 'devops', level: 'Intermediate', description: 'Cloud Hosting, Auto-deploy' },
   ],

@@ -1,19 +1,59 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { portfolioService } from '@/core/services/PortfolioService';
 import { Button } from '@/components/ui/button';
 import { usePageTitle } from '@/shared/hooks/usePageTitle';
 import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 import AboutPage from '../About/AboutPage';
 import SkillsPage from '../Skills/SkillsPage';
 import ProjectsPage from '../Projects/ProjectsPage';
 import ContactPage from '../Contact/ContactPage';
 
+const Typewriter = ({ texts, speed = 100, waitTime = 2000 }: { texts: string[], speed?: number, waitTime?: number }) => {
+  const [displayText, setDisplayText] = useState('');
+  const [index, setIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    const currentText = texts[index];
+
+    // Handle switching modes
+    if (!isDeleting && displayText === currentText) {
+      timer = setTimeout(() => setIsDeleting(true), waitTime);
+    } else if (isDeleting && displayText === '') {
+      // Use setTimeout to avoid synchronous setState in effect body
+      timer = setTimeout(() => {
+        setIsDeleting(false);
+        setIndex((prev) => (prev + 1) % texts.length);
+      }, 0);
+    } else {
+      // Typing or Deleting logic
+      timer = setTimeout(() => {
+        setDisplayText(prev => 
+          isDeleting 
+            ? currentText.substring(0, prev.length - 1)
+            : currentText.substring(0, prev.length + 1)
+        );
+      }, isDeleting ? speed / 2 : speed);
+    }
+
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, index, texts, speed, waitTime]);
+
+  return (
+    <span className="text-primary font-bold">
+      {displayText}
+      <span className="animate-pulse ml-0.5 border-r-2 border-primary h-8 inline-block align-middle" />
+    </span>
+  );
+};
+
 export default function HomePage() {
   usePageTitle('Home');
   const location = useLocation();
 
-  const { name, avatars, cvDownloadUrl } = portfolioService.getRawData();
+  const { name, avatars, cvDownloadUrl, roles } = portfolioService.getRawData();
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -53,8 +93,8 @@ export default function HomePage() {
 
         <motion.div 
           className="flex flex-col items-center text-center max-w-4xl relative z-10"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
         >
           <div className="relative group">
@@ -67,11 +107,11 @@ export default function HomePage() {
           </div>
           
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight mt-8">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight mt-8 mb-6">
               <span className="text-foreground">Hi, I am </span>
               <span className="text-primary bg-clip-text bg-gradient-to-r from-primary to-primary/70">
                 {name}
@@ -79,11 +119,13 @@ export default function HomePage() {
             </h1>
           </motion.div>
 
-          <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            I'm a <span className="text-primary font-semibold">Software Engineer</span> from Vietnam.
-          </p>
+          {/* Typewriter Effect */}
+          <div className="flex flex-wrap items-center justify-center gap-x-1 text-2xl md:text-3xl lg:text-3xl text-muted-foreground font-medium h-18">
+             <span>I'm a </span>
+             <Typewriter texts={roles} />
+          </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 mt-10 flex-wrap justify-center w-full px-4 sm:px-0">
+          <div className="flex flex-col sm:flex-row gap-4 mt-12 flex-wrap justify-center w-full px-4 sm:px-0">
             <Button 
               size="lg" 
               className="shadow-xl shadow-primary/20 text-lg py-7 px-10 rounded-full w-full sm:w-auto hover:scale-105 transition-all"
