@@ -8,6 +8,7 @@ import AboutPage from '../About/AboutPage';
 import SkillsPage from '../Skills/SkillsPage';
 import ProjectsPage from '../Projects/ProjectsPage';
 import ContactPage from '../Contact/ContactPage';
+import backgroundHero from '@/assets/img/avt/background-hero.gif';
 
 const Typewriter = ({ texts, speed = 100, waitTime = 2000 }: { texts: string[], speed?: number, waitTime?: number }) => {
   const [displayText, setDisplayText] = useState('');
@@ -50,10 +51,10 @@ const Typewriter = ({ texts, speed = 100, waitTime = 2000 }: { texts: string[], 
 };
 
 export default function HomePage() {
-  usePageTitle('Home');
+  usePageTitle('Portfolio');
   const location = useLocation();
 
-  const { name, avatars, cvDownloadUrl, roles } = portfolioService.getRawData();
+  const { name, cvDownloadUrl, roles } = portfolioService.getRawData();
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -88,8 +89,18 @@ export default function HomePage() {
     <div className="flex flex-col w-full">
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center pt-20 px-[5%] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-orange/5 blur-3xl rounded-full -translate-x-1/2 translate-y-1/2 pointer-events-none" />
+        {/* Background GIF Layer with Fade Out Mask */}
+        <div className="absolute inset-0 z-0 pointer-events-none [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]">
+          <img 
+            src={backgroundHero} 
+            alt="Background" 
+            className="w-full h-full object-cover opacity-20 filter brightness-50"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-transparent" />
+        </div>
+
+        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none z-1" />
+        <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-orange/5 blur-3xl rounded-full -translate-x-1/2 translate-y-1/2 pointer-events-none z-1" />
 
         <motion.div 
           className="flex flex-col items-center text-center max-w-4xl relative z-10"
@@ -97,21 +108,21 @@ export default function HomePage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary to-orange rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-            <img 
-              src={avatars.hero} 
-              alt="Avatar" 
-              className="relative w-40 h-40 md:w-56 md:h-56 rounded-full object-cover border-4 border-background shadow-2xl hover:scale-105 transition-transform duration-500"
-            />
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="px-6 py-2 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-semibold tracking-widest uppercase mb-4"
+          >
+            Welcome to my Portfolio
+          </motion.div>
           
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight mt-8 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight mt-4 mb-6">
               <span className="text-foreground">Hi, I am </span>
               <span className="text-primary bg-clip-text bg-gradient-to-r from-primary to-primary/70">
                 {name}
@@ -124,11 +135,20 @@ export default function HomePage() {
              <span>I'm a </span>
              <Typewriter texts={roles} />
           </div>
+
+          <motion.p 
+            className="mt-4 text-muted-foreground/80 italic text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            "The best way to predict the future is to create it."
+          </motion.p>
           
           <div className="flex flex-col sm:flex-row gap-4 mt-12 flex-wrap justify-center w-full px-4 sm:px-0">
             <Button 
               size="lg" 
-              className="shadow-xl shadow-primary/20 text-lg py-7 px-10 rounded-full w-full sm:w-auto hover:scale-105 transition-all"
+               className="shadow-xl shadow-primary/20 text-lg py-7 px-10 rounded-full w-full sm:w-auto hover:scale-105 transition-all"
               onClick={() => scrollToSection('skills')}
             >
               View my Skills

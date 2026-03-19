@@ -10,7 +10,8 @@ import {
   SiMysql, SiMongodb, SiDocker,
   SiVercel, SiRender, SiMarkdown,
   SiDotnet, SiSharp, SiThreedotjs, SiFastapi, SiGooglegemini, SiWix,
-  SiPostgresql, SiTailwindcss, SiVite
+  SiPostgresql, SiTailwindcss, SiVite,
+  SiNodedotjs, SiExpress
 } from 'react-icons/si';
 import { DiMsqlServer } from "react-icons/di";
 import { FaJava } from 'react-icons/fa';
@@ -48,6 +49,8 @@ const iconMap: Record<string, React.ComponentType<{ className?: string; style?: 
   postgresql: SiPostgresql,
   tailwindcss: SiTailwindcss,
   vite: SiVite,
+  nodejs: SiNodedotjs, 
+  express: SiExpress 
 };
 
 const SkillItem = ({ skill }: { skill: ISkill }) => {

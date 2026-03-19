@@ -7,7 +7,10 @@ import { useProjects } from '@/shared/hooks/useProjects';
 import Section from '@/components/common/Section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { usePageTitle } from '@/shared/hooks/usePageTitle';
+
 export default function ProjectDetailPage() {
+  usePageTitle('Portfolio');
   const { id } = useParams<{ id: string }>();
   const { projects, loading } = useProjects();
 

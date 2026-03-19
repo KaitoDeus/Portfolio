@@ -56,7 +56,7 @@ export default function AboutPage() {
                 <GraduationCap className="w-4 h-4 mr-1" /> Information Technology
               </Badge>
               <Badge variant="outline" className="text-sm py-1 px-3">
-                <MapPin className="w-4 h-4 mr-1" /> Hồ Chí Minh
+                <MapPin className="w-4 h-4 mr-1" /> Ho Chi Minh City
               </Badge>
             </div>
           </div>
@@ -68,7 +68,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <InfoCard delay={0.1}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-primary">
+              <CardTitle className="flex items-center gap-2 text-orange">
                 <Calendar className="w-5 h-5" /> Personal Information
               </CardTitle>
             </CardHeader>
@@ -106,7 +106,7 @@ export default function AboutPage() {
 
           <InfoCard delay={0.3}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-primary">
+              <CardTitle className="flex items-center gap-2 text-orange">
                 <Gamepad2 className="w-5 h-5" /> Hobbies
               </CardTitle>
             </CardHeader>
@@ -171,7 +171,7 @@ export default function AboutPage() {
                     title="Education" 
                     icon={GraduationCap} 
                     items={education} 
-                    colorClass="text-primary"
+                    colorClass="text-orange"
                 />
                 <TimelineCard 
                     title="Career Timeline" 

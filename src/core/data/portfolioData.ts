@@ -2,7 +2,6 @@ import {
   IPortfolioData
 } from '@/core/models/PortfolioModels';
 
-import avatar1 from '@/assets/img/avt/avatar1.jpg';
 import avatar from '@/assets/img/avt/avatar.jpg';
 import geminiEducator from '@/assets/img/cert/gemini-educator.jpg';
 import geminiStudent from '@/assets/img/cert/gemini-student.jpg';
@@ -27,14 +26,14 @@ import merryChristmasReadme from './projects/merry-christmas.md?raw';
 
 export const portfolioData: IPortfolioData = {
   name: 'Anh Khai',
-  roles: ['Software Engineer', 'AI Engineer', 'Frontend Developer', 'Game Developer'],
+  roles: ['Software Engineer', 'AI Engineer', 'Full Stack Developer', 'Game Developer'],
   tagline: "I'm a",
   bio: 'Passionate about learning, exploring new technologies. With hard work and dedication, I believe it will be a solid foundation to help me achieve big career goals and positively impact the world.',
   avatars: {
-    hero: avatar1,
+    hero: avatar,
     about: avatar,
-    skills: avatar1,
-    contact: avatar1,
+    skills: avatar,
+    contact: avatar,
   },
   socialLinks: [
     { platform: 'linkedin', url: 'https://www.linkedin.com/in/kaitodeus/?locale=en_US', label: 'LinkedIn Profile' },
@@ -92,6 +91,8 @@ export const portfolioData: IPortfolioData = {
     { name: '.NET', icon: 'dotnet', color: '#512BD4', category: 'backend', level: 'Intermediate', description: 'Enterprise Framework, CLR' },
     { name: 'Python', icon: 'python', color: '#3776AB', category: 'backend', level: 'Intermediate', description: 'Data Science, FastAPI, Automation' },
     { name: 'FastAPI', icon: 'fastapi', color: '#05998B', category: 'backend', level: 'Intermediate', description: 'High Performance Python Backend' },
+    { name: 'NodeJS', icon: 'nodejs', color: '#339933', category: 'backend', level: 'Intermediate', description: 'Server-side JavaScript environment' },
+    { name: 'ExpressJS', icon: 'express', color: '#ffffff', category: 'backend', level: 'Intermediate', description: 'Fast, unopinionated web framework for Node.js' },
 
     // Database
     { name: 'MySQL', icon: 'mysql', color: '#4479A1', category: 'database', level: 'Intermediate', description: 'Indexing, Transaction, Query Optimization' },
@@ -119,7 +120,7 @@ export const portfolioData: IPortfolioData = {
     { id: 'neoshop', title: 'NeoShop E-commerce', image: projectNeoShop, role: 'E-commerce Fullstack Web Application', link: 'https://neoshop-ecommerce.vercel.app/', githubLink: 'https://github.com/KaitoDeus/NeoShop', status: 'completed', readmeContent: neoshopReadme, technologies: ['React', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker'], startDate: '2026-01-22', category: 'personal' },
     { id: 'famer-kun', title: 'FAMER-KUN Store', image: projectFarmerStore, role: 'E-commerce Web Application', link: 'https://kenkaneki395.wixsite.com/site', githubLink: 'https://github.com/KaitoDeus/FAMER-KUN.Store', status: 'completed', readmeContent: farmerStoreReadme, technologies: ['Velo', 'JavaScript', 'Wix'], startDate: '2022-05-01', category: 'school' },
     { id: 'uth-wm', title: 'UTH - Work Management', image: projectUthwm, role: 'Desktop Application', link: '', githubLink: 'https://github.com/KaitoDeus/UTH-WM', status: 'completed', readmeContent: uthWmReadme, technologies: ['C#', '.NET', 'Windows Forms'], startDate: '2024-12-19', category: 'school' },
-    { id: 'medicare', title: 'Medicare Webapp', image: projectMedicare, role: 'Healthcare Web Application', link: 'https://medicare-webapp-goll.onrender.com/', githubLink: 'https://github.com/KaitoDeus/MediCare_Webapp', status: 'completed', readmeContent: medicareReadme, technologies: ['React', 'Vite', 'Tailwind CSS'], startDate: '2025-11-01', category: 'school' },
+    { id: 'medicare', title: 'Medicare Webapp', image: projectMedicare, role: 'Healthcare Web Application', link: 'https://medicare-webapp-goll.onrender.com/', githubLink: 'https://github.com/KaitoDeus/MediCare_Webapp', status: 'completed', readmeContent: medicareReadme, technologies: ['MongoDB', 'ExpressJS', 'React', 'NodeJS'], startDate: '2025-11-01', category: 'school' },
     { id: 'merry-christmas', title: 'Merry Christmas 3D AI', image: projectChristmas, role: 'Interactive 3D Website', link: 'https://merry-christmas-khai-25.vercel.app', githubLink: 'https://github.com/KaitoDeus/Merry-Christmas-25', status: 'completed', readmeContent: merryChristmasReadme, technologies: ['Three.js', 'Python', 'FastAPI', 'MediaPipe AI'], startDate: '2025-12-24', category: 'personal' },
   ],
   cvDownloadUrl: 'https://drive.usercontent.google.com/u/0/uc?id=1Z22-lHjWJEq3R16EqIbo8aP0WbuleGiQ&export=download'
