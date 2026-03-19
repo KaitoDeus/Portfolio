@@ -38,6 +38,7 @@ export const portfolioData: IPortfolioData = {
   socialLinks: [
     { platform: 'linkedin', url: 'https://www.linkedin.com/in/kaitodeus/?locale=en_US', label: 'LinkedIn Profile' },
     { platform: 'github', url: 'https://github.com/KaitoDeus', label: 'GitHub Profile' },
+    { platform: 'mail', url: 'mailto:khaivo300605@gmail.com', label: 'Email Me' },
   ],
   personalInfo: {
     fullname: 'Vo Anh Khai',

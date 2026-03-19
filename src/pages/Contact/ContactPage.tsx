@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Send, Github, Linkedin } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, Github, Linkedin, Mail, User, Bot } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { portfolioService } from '@/core/services/PortfolioService';
 import Section from '@/components/common/Section';
@@ -11,54 +10,76 @@ import Section from '@/components/common/Section';
 const socialIcons: Record<string, React.ElementType> = {
   github: Github,
   linkedin: Linkedin,
+  mail: Mail,
+};
+
+const ChatMessage = ({ sender, text, timestamp }: { sender: 'me' | 'visitor', text: string, timestamp: string }) => {
+  const isMe = sender === 'me';
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      className={`flex ${isMe ? 'justify-start' : 'justify-end'} mb-4`}
+    >
+      <div className={`flex max-w-[85%] ${isMe ? 'flex-row' : 'flex-row-reverse'} items-end gap-2`}>
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${isMe ? 'bg-cyan-500/20 text-cyan-400' : 'bg-white/10 text-white/50'}`}>
+          {isMe ? <Bot size={16} /> : <User size={16} />}
+        </div>
+        <div className={`px-4 py-3 rounded-2xl text-sm ${
+          isMe 
+            ? 'bg-secondary/50 text-white rounded-bl-none border border-white/5' 
+            : 'bg-cyan-500 text-black font-medium rounded-br-none shadow-lg shadow-cyan-500/20'
+        }`}>
+          {text}
+          <div className={`text-[10px] mt-1 opacity-50 ${isMe ? 'text-left' : 'text-right'}`}>
+            {timestamp}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
 };
 
 export default function ContactPage() {
   const { socialLinks, name } = portfolioService.getRawData();
   const currentYear = new Date().getFullYear();
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [messages, setMessages] = useState<{ sender: 'me' | 'visitor', text: string, time: string }[]>([]);
+  const [inputValue, setInputValue] = useState('');
+  const chatEndRef = useRef<HTMLDivElement>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      // You need to replace 'YOUR_FORMSPREE_ID' with your actual Formspree ID
-      const response = await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.fullName,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-        }),
-      });
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
-      if (response.ok) {
-        alert("Thank you! Your message has been sent directly to me.");
-        setFormData({ fullName: '', email: '', subject: '', message: '' });
-      } else {
-        alert("Oops! There was a problem. Please try again later.");
-      }
-    } catch (error) {
-      alert("Network error. Please check your connection.");
-    } finally {
-      setIsSubmitting(false);
-    }
+  const sendMessage = (text: string) => {
+    if (!text.trim()) return;
+
+    const newMessage = {
+      sender: 'visitor' as const,
+      text: text,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+
+    setMessages(prev => [...prev, newMessage]);
+    setInputValue('');
+
+    // Simulated reply
+    setTimeout(() => {
+      setMessages(prev => [...prev, {
+        sender: 'me',
+        text: "Thanks for your message! I've received it and will get back to you via email as soon as possible.",
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }]);
+    }, 1000);
+  };
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    sendMessage(inputValue);
   };
 
   return (
@@ -68,13 +89,17 @@ export default function ContactPage() {
           
           {/* Left Content: Intro & Socials */}
           <motion.div 
-            className="lg:col-span-5 space-y-12 lg:sticky lg:top-32"
+            className="lg:col-span-5 space-y-10 lg:pt-4"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
             <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-4">
+                <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                Available for hire
+              </div>
               <h2 className="text-5xl lg:text-7xl font-extrabold mb-8 tracking-tighter leading-[1] text-white">
                 Connect with me!
               </h2>
@@ -101,7 +126,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="pt-12 border-t border-white/10 space-y-6">
+            <div className="pt-10 border-t border-white/10 space-y-6">
                <div className="space-y-4">
                  <p className="text-2xl font-black tracking-tighter text-white/90">
                     {name} <span className="text-cyan-400/30 font-thin mx-3">/</span> © {currentYear}
@@ -120,7 +145,7 @@ export default function ContactPage() {
             </div>
           </motion.div>
 
-          {/* Right Content: Form Card */}
+          {/* Right Content: Chatbox UI */}
           <motion.div 
             className="lg:col-span-7"
             initial={{ opacity: 0, x: 50 }}
@@ -128,87 +153,56 @@ export default function ContactPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Card className="border-white/5 bg-white/[0.03] backdrop-blur-xl shadow-2xl rounded-[2rem] overflow-hidden">
-              <CardContent className="p-8 md:p-10">
-                <div className="mb-8">
-                  <h3 className="text-2xl font-bold mb-2 text-white">Send Message</h3>
-                  <p className="text-muted-foreground text-base">
-                    I'm always open to discussing new projects, creative ideas or prospects to be part of your visions.
-                  </p>
-                </div>
+            <Card className="border-white/5 bg-[#0d0d1a]/80 backdrop-blur-2xl shadow-2xl rounded-[2.5rem] overflow-hidden">
+              <CardContent className="p-0 flex flex-col h-[500px] relative">
                 
-                <form className="space-y-6" onSubmit={handleSubmit}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 ml-1">
-                        Full Name
-                      </label>
-                      <Input
-                        type="text"
-                        name="fullName"
-                        placeholder="Your Full Name"
-                        value={formData.fullName}
-                        onChange={handleChange}
-                        required
-                        className="bg-white/5 border-white/5 focus:border-cyan-400 h-12 text-base rounded-xl px-5 transition-all duration-300"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 ml-1">
-                        Email Address
-                      </label>
-                      <Input
-                        type="email"
-                        name="email"
-                        placeholder="Your Email Address"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="bg-white/5 border-white/5 focus:border-cyan-400 h-12 text-base rounded-xl px-5 transition-all duration-300"
-                      />
-                    </div>
+                {/* Empty State / Background Text */}
+                {messages.length === 0 && (
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <p className="text-xl font-medium text-white/20 tracking-tight">Ask me anything about {name.split(' ').pop()}...</p>
+                  </div>
+                )}
+
+                {/* Chat Area */}
+                <div className="flex-grow overflow-y-auto p-8 space-y-4 relative z-10 scrollbar-hide">
+                   <AnimatePresence>
+                    {messages.map((msg, idx) => (
+                      <ChatMessage key={idx} sender={msg.sender} text={msg.text} timestamp={msg.time} />
+                    ))}
+                   </AnimatePresence>
+                   <div ref={chatEndRef} />
+                </div>
+
+                {/* Suggestions & Input Area */}
+                <div className="p-8 pt-0 space-y-6 relative z-10">
+                  <div className="flex flex-wrap justify-center gap-3">
+                    {['Work', 'About me', 'Projects', 'Contact'].map((suggestion) => (
+                      <button
+                        key={suggestion}
+                        onClick={() => sendMessage(suggestion)}
+                        className="px-5 py-2 rounded-full bg-white/[0.03] border border-white/10 text-xs font-medium text-white/60 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                      >
+                        {suggestion}
+                      </button>
+                    ))}
                   </div>
                   
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 ml-1">
-                      Subject
-                    </label>
-                    <Input
-                      type="text"
-                      name="subject"
-                      placeholder="How can I help you?"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                      className="bg-white/5 border-white/5 focus:border-cyan-400 h-12 text-base rounded-xl px-5 transition-all duration-300"
+                  <form onSubmit={handleSendMessage} className="relative group">
+                    <Input 
+                      placeholder={`Ask anything about ${name.split(' ').pop()}...`}
+                      className="bg-black/40 border border-white/5 group-hover:border-white/10 focus:border-cyan-500/30 focus-visible:ring-0 focus-visible:ring-offset-0 h-14 pl-8 pr-16 rounded-full text-white placeholder:text-white/20 transition-all duration-500 shadow-inner"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
                     />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 ml-1">
-                      Message
-                    </label>
-                    <Textarea
-                      name="message"
-                      placeholder="Your Message..."
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={5}
-                      required
-                      className="bg-white/5 border-white/5 focus:border-cyan-400 resize-none p-5 text-base rounded-xl min-h-[160px] transition-all duration-300"
-                    />
-                  </div>
-                  
-                  <Button 
-                    type="submit" 
-                    size="lg" 
-                    disabled={isSubmitting}
-                    className="w-full text-lg font-bold h-14 rounded-xl bg-cyan-400 hover:bg-cyan-300 disabled:bg-gray-600 disabled:cursor-not-allowed text-black shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    <Send className="w-5 h-5 mr-3" />
-                    {isSubmitting ? "Sending..." : "Send Message"}
-                  </Button>
-                </form>
+                    <Button 
+                      type="submit"
+                      disabled={!inputValue.trim()}
+                      className="absolute right-2 top-1.5 w-11 h-11 rounded-full bg-transparent hover:bg-white/5 text-cyan-400 p-0 transition-all active:scale-95"
+                    >
+                      <Send size={20} />
+                    </Button>
+                  </form>
+                </div>
               </CardContent>
             </Card>
           </motion.div>
@@ -218,5 +212,6 @@ export default function ContactPage() {
     </Section>
   );
 }
+
 
 
