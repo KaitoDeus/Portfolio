@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Github, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileText, Globe } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import Section from '@/components/common/Section';
 import Pagination from '@/components/common/Pagination';
@@ -125,13 +124,22 @@ export default function ProjectsPage() {
                         ))}
                       </div>
                       <div className="grid grid-cols-2 gap-2 mt-auto">
-                        <Link 
-                          to={`/projects/${project.id}`}
-                          className="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground py-2 px-2 rounded-md text-sm font-medium transition-colors"
-                        >
-                          <FileText className="w-4 h-4" />
-                          <span>Details</span>
-                        </Link>
+                        {project.githubLink ? (
+                          <a 
+                            href={project.githubLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground py-2 px-2 rounded-md text-sm font-medium transition-colors"
+                          >
+                            <Github className="w-4 h-4" />
+                            <span>GitHub</span>
+                          </a>
+                        ) : (
+                          <div className="flex items-center justify-center gap-1.5 bg-muted text-muted-foreground py-2 px-2 rounded-md text-sm font-medium cursor-not-allowed">
+                            <Github className="w-4 h-4" />
+                            <span>GitHub</span>
+                          </div>
+                        )}
                         {project.link ? (
                           <a 
                             href={project.link}

@@ -14,16 +14,6 @@ import projectChristmas from '@/assets/img/proj/project_christmas.png';
 import projectMedicare from '@/assets/img/proj/project_medicare.png';
 import projectUthwm from '@/assets/img/proj/project_uthwm.png';
 
-// Import project READMEs
-import caroReadme from './projects/caro.md?raw';
-import evWarrantyReadme from './projects/ev-warranty.md?raw';
-import photoPaletteReadme from './projects/photo-palette.md?raw';
-import neoshopReadme from './projects/neoshop.md?raw';
-import farmerStoreReadme from './projects/famer-kun.md?raw';
-import uthWmReadme from './projects/uth-wm.md?raw';
-import medicareReadme from './projects/medicare.md?raw';
-import merryChristmasReadme from './projects/merry-christmas.md?raw';
-
 export const portfolioData: IPortfolioData = {
   name: 'Anh Khai',
   roles: ['Software Engineer', 'AI Engineer', 'Full Stack Developer', 'Game Developer'],
@@ -115,14 +105,14 @@ export const portfolioData: IPortfolioData = {
     { title: 'Gemini Certified Student', image: geminiStudent, rating: 1, status: '' },
   ],
   projects: [
-    { id: 'caro', title: 'Game Caro', image: projectCaro, role: 'Desktop Application', link: 'https://gamecaro-uth.vercel.app/', githubLink: 'https://github.com/KaitoDeus/CARO', status: 'completed', readmeContent: caroReadme, technologies: ['C#', '.NET', 'Windows Forms'], startDate: '2025-12-02', category: 'school' },
-    { id: 'ev-warranty', title: 'EV Warranty System', image: projectEvWarranty, role: 'Dashboard Web Application', link: 'https://ev-warranty-system.up.railway.app/', githubLink: 'https://github.com/KaitoDeus/EV-Warranty-System', status: 'completed', readmeContent: evWarrantyReadme, technologies: ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'], startDate: '2025-12-19', category: 'school' },
-    { id: 'photo-palette', title: 'Photo Palette', image: projectPhotoPalette, role: 'Landing Page', link: 'https://photo-palette.vercel.app/', githubLink: 'https://github.com/KaitoDeus/Photo-Palette', status: 'completed', readmeContent: photoPaletteReadme, technologies: ['React', 'TypeScript', 'Tailwind CSS'], startDate: '2026-02-04', category: 'personal' },
-    { id: 'neoshop', title: 'NeoShop E-commerce', image: projectNeoShop, role: 'E-commerce Fullstack Web Application', link: 'https://neoshop-ecommerce.vercel.app/', githubLink: 'https://github.com/KaitoDeus/NeoShop', status: 'completed', readmeContent: neoshopReadme, technologies: ['React', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker'], startDate: '2026-01-22', category: 'personal' },
-    { id: 'famer-kun', title: 'FAMER-KUN Store', image: projectFarmerStore, role: 'E-commerce Web Application', link: 'https://kenkaneki395.wixsite.com/site', githubLink: 'https://github.com/KaitoDeus/FAMER-KUN.Store', status: 'completed', readmeContent: farmerStoreReadme, technologies: ['Velo', 'JavaScript', 'Wix'], startDate: '2022-05-01', category: 'school' },
-    { id: 'uth-wm', title: 'UTH - Work Management', image: projectUthwm, role: 'Desktop Application', link: '', githubLink: 'https://github.com/KaitoDeus/UTH-WM', status: 'completed', readmeContent: uthWmReadme, technologies: ['C#', '.NET', 'Windows Forms'], startDate: '2024-12-19', category: 'school' },
-    { id: 'medicare', title: 'Medicare Webapp', image: projectMedicare, role: 'Healthcare Web Application', link: 'https://medicare-webapp-goll.onrender.com/', githubLink: 'https://github.com/KaitoDeus/MediCare_Webapp', status: 'completed', readmeContent: medicareReadme, technologies: ['MongoDB', 'ExpressJS', 'React', 'NodeJS'], startDate: '2025-11-01', category: 'school' },
-    { id: 'merry-christmas', title: 'Merry Christmas 3D AI', image: projectChristmas, role: 'Interactive 3D Website', link: 'https://merry-christmas-khai-25.vercel.app', githubLink: 'https://github.com/KaitoDeus/Merry-Christmas-25', status: 'completed', readmeContent: merryChristmasReadme, technologies: ['Three.js', 'Python', 'FastAPI', 'MediaPipe AI'], startDate: '2025-12-24', category: 'personal' },
+    { id: 'caro', title: 'Game Caro', image: projectCaro, role: 'Desktop Application', link: 'https://gamecaro-uth.vercel.app/', githubLink: 'https://github.com/KaitoDeus/CARO', status: 'completed', technologies: ['C#', '.NET', 'Windows Forms'], startDate: '2025-12-02', category: 'school' },
+    { id: 'ev-warranty', title: 'EV Warranty System', image: projectEvWarranty, role: 'Dashboard Web Application', link: 'https://ev-warranty-system.up.railway.app/', githubLink: 'https://github.com/KaitoDeus/EV-Warranty-System', status: 'completed', technologies: ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'], startDate: '2025-12-19', category: 'school' },
+    { id: 'photo-palette', title: 'Photo Palette', image: projectPhotoPalette, role: 'Landing Page', link: 'https://photo-palette.vercel.app/', githubLink: 'https://github.com/KaitoDeus/Photo-Palette', status: 'completed', technologies: ['React', 'TypeScript', 'Tailwind CSS'], startDate: '2026-02-04', category: 'personal' },
+    { id: 'neoshop', title: 'NeoShop E-commerce', image: projectNeoShop, role: 'E-commerce Fullstack Web Application', link: 'https://neoshop-ecommerce.vercel.app/', githubLink: 'https://github.com/KaitoDeus/NeoShop', status: 'completed', technologies: ['React', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker'], startDate: '2026-01-22', category: 'personal' },
+    { id: 'famer-kun', title: 'FAMER-KUN Store', image: projectFarmerStore, role: 'E-commerce Web Application', link: 'https://kenkaneki395.wixsite.com/site', githubLink: 'https://github.com/KaitoDeus/FAMER-KUN.Store', status: 'completed', technologies: ['Velo', 'JavaScript', 'Wix'], startDate: '2022-05-01', category: 'school' },
+    { id: 'uth-wm', title: 'UTH - Work Management', image: projectUthwm, role: 'Desktop Application', link: '', githubLink: 'https://github.com/KaitoDeus/UTH-WM', status: 'completed', technologies: ['C#', '.NET', 'Windows Forms'], startDate: '2024-12-19', category: 'school' },
+    { id: 'medicare', title: 'Medicare Webapp', image: projectMedicare, role: 'Healthcare Web Application', link: 'https://medicare-webapp-goll.onrender.com/', githubLink: 'https://github.com/KaitoDeus/MediCare_Webapp', status: 'completed', technologies: ['MongoDB', 'ExpressJS', 'React', 'NodeJS'], startDate: '2025-11-01', category: 'school' },
+    { id: 'merry-christmas', title: 'Merry Christmas 3D AI', image: projectChristmas, role: 'Interactive 3D Website', link: 'https://merry-christmas-khai-25.vercel.app', githubLink: 'https://github.com/KaitoDeus/Merry-Christmas-25', status: 'completed', technologies: ['Three.js', 'Python', 'FastAPI', 'MediaPipe AI'], startDate: '2025-12-24', category: 'personal' },
   ],
   cvDownloadUrl: 'https://drive.usercontent.google.com/u/0/uc?id=1Z22-lHjWJEq3R16EqIbo8aP0WbuleGiQ&export=download'
 };

@@ -52,7 +52,9 @@ export default function ContactPage() {
   };
 
   useEffect(() => {
-    scrollToBottom();
+    if (messages.length > 0) {
+      scrollToBottom();
+    }
   }, [messages]);
 
   const sendMessage = (text: string) => {

@@ -20,7 +20,6 @@ export interface IProject {
   link: string;
   githubLink: string;
   status: 'completed' | 'in-progress';
-  readmeContent?: string;
   technologies: string[];
   startDate: string;
   category: 'personal' | 'school';
