@@ -16,12 +16,11 @@ Welcome to **Vo Anh Khai's** personal Portfolio website! This project is a moder
 
 **Key Features:**
 
-- **Clean & Modern UI**: Built with the **Montserrat** font family for a premium feel.
-- **Singleton Service Architecture**: Centralized data management via `PortfolioService`.
-- **Responsive Design**: Fully optimized for mobile, tablet, and desktop screens.
-- **Dynamic Animations**: Smooth transitions powered by **Framer Motion**.
-- **SEO Optimized**: Properly structured meta tags and semantic HTML for visibility.
-- **Seamless Navigation**: Single-page scrolling experience with dedicated project micro-pages.
+- **AI Chat Assistant**: Integrated **Gemini 2.5 Flash** | **Gemini 3 Flash** to answer questions about the portfolio.
+- **Glassmorphism Design**: High-end aesthetics with premium dark modes and blur effects.
+- **Responsive & Dynamic**: Fully optimized for all devices with buttery-smooth **Framer Motion** animations.
+- **SEO Optimized**: Semantic HTML and meta tags for maximum search visibility.
+- **Singleton Architecture**: Centralized data management for high maintainability.
 
 ---
 
@@ -31,6 +30,7 @@ Welcome to **Vo Anh Khai's** personal Portfolio website! This project is a moder
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/Google_Gemini-4285F4?style=for-the-badge&logo=google-gemini&logoColor=white)
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
 ![Lucide Icons](https://img.shields.io/badge/Lucide_Icons-FF5733?style=for-the-badge&logo=lucide&logoColor=white)
 
@@ -51,7 +51,8 @@ The project follows the **Clean Architecture** principles with a focus on **SOLI
 |       VIEW        |       |        SHARED         |       |       CORE        |
 | (React Pages)     | <---> | (Hooks & Utilities)   | <---> | (Logic & Data)    |
 | - HomePage        |       | - useProjects.ts      |       | - PortfolioService|
-| - ProjectsPage    |       | - usePageTitle.ts     |       | - portfolioData.ts|
+| - ContactPage     |       | - utils.ts            |       | - ChatService (AI)|
+| - MainLayout      |       |                       |       | - portfolioData.ts|
 +-------------------+       +-----------------------+       +-------------------+
 ```
 
@@ -97,14 +98,18 @@ cd Portfolio
 npm install
 ```
 
-**Step 3: Launch Development Server**
+**Step 3: Setup Environment Variables**
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_GEMINI_API_KEY=your_google_gemini_api_key_here
+```
+
+**Step 4: Launch Development Server**
 
 ```bash
 npm run dev
 ```
 
 Visit [http://localhost:5173](http://localhost:5173) to view the project.
-
----
-
-**Author:** [Vo Anh Khai](https://github.com/KaitoDeus)
