@@ -73,8 +73,9 @@ export default function HomePage() {
   const handleDownloadCV = () => {
     const link = document.createElement('a');
     link.href = cvDownloadUrl;
-    const sanitizedName = name.replace(/\s+/g, '-');
-    link.download = `${sanitizedName}-CV.pdf`;
+    // Get filename from the URL path
+    const fileName = cvDownloadUrl.substring(cvDownloadUrl.lastIndexOf('/') + 1);
+    link.download = fileName;
     link.click();
   };
 

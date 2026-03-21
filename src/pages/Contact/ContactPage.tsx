@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Github, Linkedin, Mail, User, Bot } from 'lucide-react';
+import { Send, Github, Linkedin, Mail, User, Bot, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { portfolioService } from '@/core/services/PortfolioService';
 import Section from '@/components/common/Section';
+import { chatService, IChatHistory } from '@/core/services/ChatService';
+import modelAvatar from '@/assets/img/avt/model.png';
+
 
 const socialIcons: Record<string, React.ElementType> = {
   github: Github,
@@ -15,6 +18,44 @@ const socialIcons: Record<string, React.ElementType> = {
 
 const ChatMessage = ({ sender, text, timestamp }: { sender: 'me' | 'visitor', text: string, timestamp: string }) => {
   const isMe = sender === 'me';
+  
+  const parseText = (content: string) => {
+    return content.split('\n').map((line, i) => {
+      // Check for links
+      const urlRegex = /(https?:\/\/[^\s]+|mailto:[^\s]+)/g;
+      const parts = line.split(urlRegex);
+      
+      return (
+        <div key={i} className="min-h-[1.5em] flex flex-wrap items-center gap-x-1">
+          {parts.map((part, j) => {
+            if (part.match(urlRegex)) {
+              const isMail = part.startsWith('mailto:');
+              const displayUrl = part.replace('mailto:', '');
+              let Icon = ExternalLink;
+              if (part.includes('linkedin')) Icon = Linkedin;
+              else if (part.includes('github')) Icon = Github;
+              else if (isMail) Icon = Mail;
+
+              return (
+                <a 
+                  key={j} 
+                  href={part} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-cyan-400 hover:text-cyan-300 underline font-semibold inline-flex items-center gap-1 transition-colors"
+                >
+                  <Icon size={12} />
+                  {displayUrl}
+                </a>
+              );
+            }
+            return part;
+          })}
+        </div>
+      );
+    });
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -27,11 +68,13 @@ const ChatMessage = ({ sender, text, timestamp }: { sender: 'me' | 'visitor', te
         </div>
         <div className={`px-4 py-3 rounded-2xl text-sm ${
           isMe 
-            ? 'bg-secondary/50 text-white rounded-bl-none border border-white/5' 
+            ? 'bg-secondary/50 text-white rounded-bl-none border border-white/5 shadow-inner' 
             : 'bg-cyan-500 text-black font-medium rounded-br-none shadow-lg shadow-cyan-500/20'
         }`}>
-          {text}
-          <div className={`text-[10px] mt-1 opacity-50 ${isMe ? 'text-left' : 'text-right'}`}>
+          <div className="space-y-1">
+            {parseText(text)}
+          </div>
+          <div className={`text-[10px] mt-2 opacity-50 ${isMe ? 'text-left' : 'text-right'}`}>
             {timestamp}
           </div>
         </div>
@@ -41,10 +84,11 @@ const ChatMessage = ({ sender, text, timestamp }: { sender: 'me' | 'visitor', te
 };
 
 export default function ContactPage() {
-  const { socialLinks, name } = portfolioService.getRawData();
+  const { socialLinks, name, projects, skills, cvDownloadUrl } = portfolioService.getRawData();
   const currentYear = new Date().getFullYear();
   const [messages, setMessages] = useState<{ sender: 'me' | 'visitor', text: string, time: string }[]>([]);
   const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -57,26 +101,64 @@ export default function ContactPage() {
     }
   }, [messages]);
 
-  const sendMessage = (text: string) => {
-    if (!text.trim()) return;
+  const sendMessage = async (text: string) => {
+    if (!text.trim() || isLoading) return;
 
-    const newMessage = {
+    const userTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const userMsg = {
       sender: 'visitor' as const,
       text: text,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      time: userTime
     };
 
-    setMessages(prev => [...prev, newMessage]);
+    setMessages(prev => [...prev, userMsg]);
     setInputValue('');
+    setIsLoading(true);
 
-    // Simulated reply
-    setTimeout(() => {
+    try {
+      // Prepare history for AI
+      const history: IChatHistory[] = messages.map(m => ({
+        role: m.sender === 'visitor' ? 'user' : 'assistant',
+        content: m.text
+      }));
+
+      // Create a system prompt describing the portfolio owner
+      const systemPrompt = `You are a helpful AI assistant for ${name}'s portfolio (English: Khai, Vietnamese: Khải). 
+      Your goal is to provide helpful, polite, and detailed information about Khải's skills, projects, and professional background.
+
+      About Khải:
+      - Software Engineer student at UTH.
+      - Interests: Game Development, Fullstack Web, and AI.
+      - Core Skills: ${skills.map(s => s.name).join(', ')}.
+
+      Projects Highlights:
+      ${projects.map(p => `- ${p.title}: Built with ${p.technologies.join(', ')}.`).join('\n')}
+
+      Contact & Links:
+      - LinkedIn: ${socialLinks.find(l => l.platform === 'linkedin')?.url || 'N/A'}
+      - GitHub: ${socialLinks.find(l => l.platform === 'github')?.url || 'N/A'}
+      - Email: mailto:${socialLinks.find(l => l.platform === 'mail')?.url.replace('mailto:', '') || 'N/A'}
+      - CV/Resume: ${window.location.origin}${cvDownloadUrl}
+
+      Guidelines:
+      - ALWAYS keep each link on a NEW SEPARATE LINE.
+      - Keep responses very concise (1-3 sentences).
+      - Speak in the language used by the visitor (Vietnamese or English).
+      - Be friendly and helpful.
+      - Use plain text only (no bold, italics, or # symbols). Keep it simple.`;
+
+      const aiResponse = await chatService.chat(text, history, systemPrompt);
+
       setMessages(prev => [...prev, {
         sender: 'me',
-        text: "Thanks for your message! I've received it and will get back to you via email as soon as possible.",
+        text: aiResponse || "Sorry, I couldn't process that.",
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }]);
-    }, 1000);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSendMessage = (e: React.FormEvent) => {
@@ -160,7 +242,20 @@ export default function ContactPage() {
                 
                 {/* Empty State / Background Text */}
                 {messages.length === 0 && (
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none gap-8 pb-16">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.8, ease: "easeOut" }}
+                      className="relative"
+                    >
+                      <div className="absolute -inset-4 bg-cyan-500/10 rounded-full blur-2xl animate-pulse" />
+                      <img 
+                        src={modelAvatar} 
+                        alt="Model" 
+                        className="w-32 h-32 object-cover rounded-full border-4 border-white/5 relative z-10 shadow-2xl" 
+                      />
+                    </motion.div>
                     <p className="text-xl font-medium text-white/20 tracking-tight">Ask me anything about {name.split(' ').pop()}...</p>
                   </div>
                 )}
@@ -171,6 +266,22 @@ export default function ContactPage() {
                     {messages.map((msg, idx) => (
                       <ChatMessage key={idx} sender={msg.sender} text={msg.text} timestamp={msg.time} />
                     ))}
+                    {isLoading && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex justify-start mb-4"
+                      >
+                         <div className="flex flex-row items-center gap-2">
+                           <div className="w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
+                              <Bot size={16} />
+                           </div>
+                           <div className="px-4 py-2 rounded-2xl bg-secondary/50 text-white/50 text-xs italic">
+                              Typing...
+                           </div>
+                         </div>
+                      </motion.div>
+                    )}
                    </AnimatePresence>
                    <div ref={chatEndRef} />
                 </div>
@@ -198,7 +309,7 @@ export default function ContactPage() {
                     />
                     <Button 
                       type="submit"
-                      disabled={!inputValue.trim()}
+                      disabled={!inputValue.trim() || isLoading}
                       className="absolute right-2 top-1.5 w-11 h-11 rounded-full bg-transparent hover:bg-white/5 text-cyan-400 p-0 transition-all active:scale-95"
                     >
                       <Send size={20} />

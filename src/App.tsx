@@ -25,6 +25,22 @@ function ScrollToTop() {
 }
 
 function App() {
+  useEffect(() => {
+    // Disable automatic browser scroll restoration
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // On initial load/refresh, always start at the top
+    window.scrollTo(0, 0);
+
+    // Optional: Clear hash if you want to ensure we start at the home section
+    // but only on the very first mount of the app
+    if (window.location.hash) {
+      window.history.replaceState('', document.title, window.location.pathname);
+    }
+  }, []);
+
   return (
     <MainLayout>
       <ScrollToTop />
