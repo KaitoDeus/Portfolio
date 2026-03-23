@@ -3,7 +3,13 @@ import { useState, useMemo } from 'react';
 export function usePagination<T>(data: T[], itemsPerPage: number) {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(data.length / itemsPerPage));
+
+  // Adjust current page if it's out of bounds (e.g., after data filtering)
+  // This is a standard React pattern for adjusting state based on props during render
+  if (currentPage > totalPages) {
+    setCurrentPage(1);
+  }
 
   const currentData = useMemo(() => {
     const begin = (currentPage - 1) * itemsPerPage;
@@ -23,12 +29,6 @@ export function usePagination<T>(data: T[], itemsPerPage: number) {
     const pageNumber = Math.max(1, page);
     setCurrentPage(Math.min(pageNumber, totalPages));
   };
-
-  useMemo(() => {
-    if (currentPage > Math.max(1, Math.ceil(data.length / itemsPerPage))) {
-      setCurrentPage(1);
-    }
-  }, [data.length, currentPage, itemsPerPage]);
 
   return { next, prev, jump, currentData, currentPage, totalPages, setCurrentPage };
 }
