@@ -9,6 +9,7 @@ import SkillsPage from '../Skills/SkillsPage';
 import ProjectsPage from '../Projects/ProjectsPage';
 import ContactPage from '../Contact/ContactPage';
 import backgroundHero from '@/assets/img/avt/background-hero.gif';
+import CVDownloadDialog from '@/components/common/CVDownloadDialog';
 
 const Typewriter = ({ texts, speed = 100, waitTime = 2000 }: { texts: string[], speed?: number, waitTime?: number }) => {
   const [displayText, setDisplayText] = useState('');
@@ -54,7 +55,8 @@ export default function HomePage() {
   usePageTitle('Portfolio');
   const location = useLocation();
 
-  const { name, cvDownloadUrl, roles } = portfolioService.getRawData();
+  const { name, roles } = portfolioService.getRawData();
+  const [isCVDialogOpen, setIsCVDialogOpen] = useState(false);
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -71,12 +73,7 @@ export default function HomePage() {
   }, [location]);
 
   const handleDownloadCV = () => {
-    const link = document.createElement('a');
-    link.href = cvDownloadUrl;
-    // Get filename from the URL path
-    const fileName = cvDownloadUrl.substring(cvDownloadUrl.lastIndexOf('/') + 1);
-    link.download = fileName;
-    link.click();
+    setIsCVDialogOpen(true);
   };
 
   const scrollToSection = (id: string) => {
@@ -91,13 +88,13 @@ export default function HomePage() {
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center pt-20 px-[5%] relative overflow-hidden">
         {/* Background GIF Layer with Fade Out Mask */}
-        <div className="absolute inset-0 z-0 pointer-events-none [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]">
+        <div className="absolute inset-0 z-0 pointer-events-none mask-[linear-gradient(to_bottom,black_60%,transparent_100%)]">
           <img 
             src={backgroundHero} 
             alt="Background" 
             className="w-full h-full object-cover opacity-20 filter brightness-50"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-b from-background/60 via-transparent to-transparent" />
         </div>
 
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none z-1" />
@@ -125,7 +122,7 @@ export default function HomePage() {
           >
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight mt-4 mb-6">
               <span className="text-foreground">Hi, I am </span>
-              <span className="text-primary bg-clip-text bg-gradient-to-r from-primary to-primary/70">
+              <span className="text-primary bg-clip-text bg-linear-to-r from-primary to-primary/70">
                 {name}
               </span>
             </h1>
@@ -187,6 +184,11 @@ export default function HomePage() {
       <SkillsPage />
       <ProjectsPage />
       <ContactPage />
+
+      <CVDownloadDialog 
+        isOpen={isCVDialogOpen} 
+        onClose={() => setIsCVDialogOpen(false)} 
+      />
     </div>
   );
 }

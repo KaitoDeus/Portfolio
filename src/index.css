@@ -63,6 +63,10 @@ html {
   scroll-padding-top: 80px;
 }
 
+button {
+  cursor: pointer;
+}
+
 body {
   font-family: "Montserrat", "Inter", sans-serif;
 }
