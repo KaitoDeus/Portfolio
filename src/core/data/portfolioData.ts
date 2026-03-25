@@ -114,5 +114,5 @@ export const portfolioData: IPortfolioData = {
     { id: 'medicare', title: 'Medicare Webapp', image: projectMedicare, role: 'Healthcare Web Application', link: 'https://medicare-webapp-goll.onrender.com/', githubLink: 'https://github.com/KaitoDeus/MediCare_Webapp', status: 'completed', technologies: ['MongoDB', 'ExpressJS', 'React', 'NodeJS'], startDate: '2025-11-01', category: 'school' },
     { id: 'merry-christmas', title: 'Merry Christmas 3D AI', image: projectChristmas, role: 'Interactive 3D Website', link: 'https://merry-christmas-khai-25.vercel.app', githubLink: 'https://github.com/KaitoDeus/Merry-Christmas-25', status: 'completed', technologies: ['Three.js', 'Python', 'FastAPI', 'MediaPipe AI'], startDate: '2025-12-24', category: 'personal' },
   ],
-  cvDownloadUrl: '/VoAnhKhai_Resume_SoftwareEngineer.pdf'
+  cvDownloadUrl: '/VoAnhKhai_Resume_InternshipEN.pdf'
 };

@@ -11,14 +11,14 @@ export default function CVDownloadDialog({ isOpen, onClose }: CVDownloadDialogPr
   const downloadOptions = [
     {
       title: "English Version",
-      fileName: "VoAnhKhai_Resume_SoftwareEngineer.pdf",
-      url: "/VoAnhKhai_Resume_SoftwareEngineer.pdf",
+      fileName: "VoAnhKhai_Resume_InternshipEN.pdf",
+      url: "/VoAnhKhai_Resume_InternshipEN.pdf",
       icon: <Globe className="w-5 h-5 text-primary" />,
     },
     {
       title: "Vietnamese Version",
-      fileName: "VoAnhKhai_Resume_Internship.pdf",
-      url: "/VoAnhKhai_Resume_Internship.pdf",
+      fileName: "VoAnhKhai_Resume_InternshipVIE.pdf",
+      url: "/VoAnhKhai_Resume_InternshipVIE.pdf",
       icon: <FileText className="w-5 h-5 text-orange" />,
     }
   ];
