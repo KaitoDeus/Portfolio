@@ -46,9 +46,9 @@ export default function AboutPage() {
           />
           <div className="flex-1 text-center lg:text-left">
             <h3 className="text-3xl font-bold mb-4 text-primary">
-              Beyond code, I'm a creator at heart
+              Using technology to change the world
             </h3>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+            <p className="text-lg text-muted-foreground leading-relaxed mb-6 text-justify">
               Hi, I'm {personalInfo.fullname}. I'm an IT student at UTH with a real passion for game development and software engineering. I love exploring new technologies and finding creative ways to build tools and experiences that actually make an impact.
             </p>
             <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
