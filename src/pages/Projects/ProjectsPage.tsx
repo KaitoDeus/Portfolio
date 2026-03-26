@@ -24,7 +24,7 @@ export default function ProjectsPage() {
   const { projects, loading } = useProjects();
   
   const [sortOrder] = useState<'newest' | 'oldest'>('newest');
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'personal' | 'school'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'personal' | 'school' | 'unity'>('all');
 
   const filteredAndSortedProjects = useMemo(() => {
     let result = [...projects];
@@ -66,7 +66,7 @@ export default function ProjectsPage() {
         <>
           {/* Category Tabs */}
           <div className="flex justify-center mb-12 gap-2">
-            {(['all', 'personal', 'school'] as const).map(cat => (
+            {(['all', 'personal', 'school', 'unity'] as const).map(cat => (
               <button
                 key={cat}
                 className={`px-6 py-2 rounded-full font-medium transition-colors ${
@@ -82,6 +82,7 @@ export default function ProjectsPage() {
                 {cat === 'all' && 'All'}
                 {cat === 'personal' && 'Personal Projects'}
                 {cat === 'school' && 'School Projects'}
+                {cat === 'unity' && 'Unity Developer'}
               </button>
             ))}
           </div>
@@ -106,7 +107,7 @@ export default function ProjectsPage() {
                   className="h-full"
                 >
                   <Card className="overflow-hidden border-border bg-card text-card-foreground transition-all relative h-full flex flex-col">
-                    <CardContent className="p-4 flex flex-col flex-grow">
+                    <CardContent className="p-4 flex flex-col grow">
                       <div className="overflow-hidden rounded-lg mb-4">
                         <img 
                           src={project.image} 
@@ -116,7 +117,7 @@ export default function ProjectsPage() {
                         />
                       </div>
                       <h4 className="text-lg font-semibold mb-2">{project.title}</h4>
-                      <div className="flex flex-wrap gap-1.5 mb-4 flex-grow content-start">
+                      <div className="flex flex-wrap gap-1.5 mb-4 grow content-start">
                         {project.technologies?.map(tech => (
                           <span key={tech} className="text-[11px] px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground font-medium">
                             {tech}

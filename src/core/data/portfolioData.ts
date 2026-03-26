@@ -1,24 +1,29 @@
-import { 
-  IPortfolioData
-} from '@/core/models/PortfolioModels';
+import { IPortfolioData } from '@/core/models/PortfolioModels';
 
-import avatar from '@/assets/img/avt/avatar.jpg';
-import geminiEducator from '@/assets/img/cert/gemini-educator.jpg';
-import geminiStudent from '@/assets/img/cert/gemini-student.jpg';
-import projectCaro from '@/assets/img/proj/project_caro.png';
-import projectEvWarranty from '@/assets/img/proj/project_evwarranty.png';
-import projectPhotoPalette from '@/assets/img/proj/project_photopalette.png';
-import projectNeoShop from '@/assets/img/proj/project_neoshop.png';
-import projectFarmerStore from '@/assets/img/proj/project_farmerstore.png';
-import projectChristmas from '@/assets/img/proj/project_christmas.png';
-import projectMedicare from '@/assets/img/proj/project_medicare.png';
-import projectUthwm from '@/assets/img/proj/project_uthwm.png';
+import avatar from '@/assets/img/avt/avatar.webp';
+import geminiEducator from '@/assets/img/cert/gemini-educator.webp';
+import geminiStudent from '@/assets/img/cert/gemini-student.webp';
+import projectCaro from '@/assets/img/proj/project_caro.webp';
+import projectEvWarranty from '@/assets/img/proj/project_evwarranty.webp';
+import projectPhotoPalette from '@/assets/img/proj/project_photopalette.webp';
+import projectNeoShop from '@/assets/img/proj/project_neoshop.webp';
+import projectFarmerStore from '@/assets/img/proj/project_farmerstore.webp';
+import projectChristmas from '@/assets/img/proj/project_christmas.webp';
+import projectMedicare from '@/assets/img/proj/project_medicare.webp';
+import projectUthwm from '@/assets/img/proj/project_uthwm.webp';
+import projectTeliViettel from '@/assets/img/proj/project_teli-viettel.webp';
+import projectFirst2DGame from '@/assets/img/proj/project_first2dgame.webp';
 
 export const portfolioData: IPortfolioData = {
   name: 'Anh Khai',
-  roles: ['Software Engineer', 'AI Engineer', 'Full Stack Developer', 'Game Developer'],
+  roles: [
+    'Software Engineer',
+    '.NET Developer',
+    'Full Stack Developer',
+    'Game Developer',
+  ],
   tagline: "I'm a",
-  bio: 'Passionate about learning, exploring new technologies. With hard work and dedication, I believe it will be a solid foundation to help me achieve big career goals and positively impact the world.',
+  bio: "I'm a developer who loves the process of learning and building. Whether it's crafting games or engineering software, I'm always pushing myself to learn new things and create products that actually help people.",
   avatars: {
     hero: avatar,
     about: avatar,
@@ -26,9 +31,21 @@ export const portfolioData: IPortfolioData = {
     contact: avatar,
   },
   socialLinks: [
-    { platform: 'linkedin', url: 'https://www.linkedin.com/in/kaitodeus/?locale=en_US', label: 'LinkedIn Profile' },
-    { platform: 'github', url: 'https://github.com/KaitoDeus', label: 'GitHub Profile' },
-    { platform: 'mail', url: 'mailto:khaivo300605@gmail.com', label: 'Email Me' },
+    {
+      platform: 'linkedin',
+      url: 'https://www.linkedin.com/in/kaitodeus/?locale=en_US',
+      label: 'LinkedIn Profile',
+    },
+    {
+      platform: 'github',
+      url: 'https://github.com/KaitoDeus',
+      label: 'GitHub Profile',
+    },
+    {
+      platform: 'mail',
+      url: 'mailto:khaivo300605@gmail.com',
+      label: 'Email Me',
+    },
   ],
   personalInfo: {
     fullname: 'Vo Anh Khai',
@@ -46,78 +63,380 @@ export const portfolioData: IPortfolioData = {
     { icon: 'brain', title: 'Learning new Tech' },
   ],
   education: [
-    { 
-      year: '2023 - 2026', 
-      title: 'UTH - University of Transport Ho Chi Minh City', 
-      location: 'Hồ Chí Minh', 
-      subtitle: "Bachelor's degree, Information Technology", 
+    {
+      year: '2023 - Present',
+      title: 'UTH - University of Transport Ho Chi Minh City',
+      location: 'Hồ Chí Minh',
+      subtitle: "Bachelor's degree, Information Technology",
       extra: 'GPA: 7.5/10\nRelevant Coursework:',
       details: [
         'Artificial Intelligence and Applications (9.4/10)',
         'Introduction to IT (9.1/10)',
-        'Software Engineering (9.0/10)'
-      ]
+        'Software Engineering (9.0/10)',
+      ],
     },
-    { 
-      year: '2020 - 2022', 
-      title: 'Ho Chi Minh Vocational College', 
-      location: 'Hồ Chí Minh', 
-      subtitle: 'Intermediate Degree, IT (Software Application)', 
+    {
+      year: '2020 - 2022',
+      title: 'Ho Chi Minh Vocational College',
+      location: 'Hồ Chí Minh',
+      subtitle: 'Intermediate Degree, IT (Software Application)',
       extra: 'GPA: 8.7/10',
-      details: ['Top Graduate', 'Class President']
+      details: ['Top Graduate', 'Class President'],
     },
   ],
-  career: [
-    { year: '', title: null, location: '', subtitle: null, extra: '' },
-  ],
+  career: [{ year: '', title: null, location: '', subtitle: null, extra: '' }],
   skills: [
     // Frontend
-    { name: 'React', icon: 'react', color: '#61DAFB', category: 'frontend', level: 'Advanced', description: 'Hooks, Redux, Component Lifecycle' },
-    { name: 'TypeScript', icon: 'typescript', color: '#3178C6', category: 'frontend', level: 'Intermediate', description: 'Strong Typing, Interfaces, Generics' },
-    { name: 'JavaScript', icon: 'javascript', color: '#f7df1e', category: 'frontend', level: 'Advanced', description: 'ES6+, Async/Await, DOM Manipulation' },
-    { name: 'HTML5', icon: 'html5', color: '#e44d26', category: 'frontend', level: 'Advanced', description: 'Semantic Structure, Accessibility' },
-    { name: 'CSS3', icon: 'css3', color: '#1572b6', category: 'frontend', level: 'Intermediate', description: 'Flexbox, Grid, Responsive Design' },
-    { name: 'Tailwind CSS', icon: 'tailwindcss', color: '#06B6D4', category: 'frontend', level: 'Advanced', description: 'Utility-first, Responsive Layouts' },
-    { name: 'Three.js', icon: 'threejs', color: '#ffffff', category: 'frontend', level: 'Intermediate', description: '3D Web Experiences, WebGL' },
+    {
+      name: 'React',
+      icon: 'react',
+      color: '#61DAFB',
+      category: 'frontend',
+      level: 'Advanced',
+      description: 'Hooks, Redux, Component Lifecycle',
+    },
+    {
+      name: 'TypeScript',
+      icon: 'typescript',
+      color: '#3178C6',
+      category: 'frontend',
+      level: 'Intermediate',
+      description: 'Strong Typing, Interfaces, Generics',
+    },
+    {
+      name: 'JavaScript',
+      icon: 'javascript',
+      color: '#f7df1e',
+      category: 'frontend',
+      level: 'Advanced',
+      description: 'ES6+, Async/Await, DOM Manipulation',
+    },
+    {
+      name: 'HTML5',
+      icon: 'html5',
+      color: '#e44d26',
+      category: 'frontend',
+      level: 'Advanced',
+      description: 'Semantic Structure, Accessibility',
+    },
+    {
+      name: 'CSS3',
+      icon: 'css3',
+      color: '#1572b6',
+      category: 'frontend',
+      level: 'Intermediate',
+      description: 'Flexbox, Grid, Responsive Design',
+    },
+    {
+      name: 'Tailwind CSS',
+      icon: 'tailwindcss',
+      color: '#06B6D4',
+      category: 'frontend',
+      level: 'Advanced',
+      description: 'Utility-first, Responsive Layouts',
+    },
+    {
+      name: 'Three.js',
+      icon: 'threejs',
+      color: '#ffffff',
+      category: 'frontend',
+      level: 'Intermediate',
+      description: '3D Web Experiences, WebGL',
+    },
 
     // Backend
-    { name: 'Java', icon: 'java', color: '#f89820', category: 'backend', level: 'Advanced', description: 'OOP, Stream, Exception, JVM basics' },
-    { name: 'Spring Boot', icon: 'spring', color: '#6DB33F', category: 'backend', level: 'Advanced', description: 'REST API, Validation, Pagination' },
-    { name: 'C#', icon: 'csharp', color: '#239120', category: 'backend', level: 'Advanced', description: 'Desktop App, Windows Forms, LINQ' },
-    { name: '.NET', icon: 'dotnet', color: '#512BD4', category: 'backend', level: 'Intermediate', description: 'Enterprise Framework, CLR' },
-    { name: 'Python', icon: 'python', color: '#3776AB', category: 'backend', level: 'Intermediate', description: 'Data Science, FastAPI, Automation' },
-    { name: 'FastAPI', icon: 'fastapi', color: '#05998B', category: 'backend', level: 'Intermediate', description: 'High Performance Python Backend' },
-    { name: 'NodeJS', icon: 'nodejs', color: '#339933', category: 'backend', level: 'Intermediate', description: 'Server-side JavaScript environment' },
-    { name: 'ExpressJS', icon: 'express', color: '#ffffff', category: 'backend', level: 'Intermediate', description: 'Fast, unopinionated web framework for Node.js' },
+    {
+      name: 'Java',
+      icon: 'java',
+      color: '#f89820',
+      category: 'backend',
+      level: 'Advanced',
+      description: 'OOP, Stream, Exception, JVM basics',
+    },
+    {
+      name: 'Spring Boot',
+      icon: 'spring',
+      color: '#6DB33F',
+      category: 'backend',
+      level: 'Advanced',
+      description: 'REST API, Validation, Pagination',
+    },
+    {
+      name: 'C#',
+      icon: 'csharp',
+      color: '#239120',
+      category: 'backend',
+      level: 'Advanced',
+      description: 'Desktop App, Windows Forms, LINQ',
+    },
+    {
+      name: '.NET',
+      icon: 'dotnet',
+      color: '#512BD4',
+      category: 'backend',
+      level: 'Intermediate',
+      description: 'Enterprise Framework, CLR',
+    },
+    {
+      name: 'Python',
+      icon: 'python',
+      color: '#3776AB',
+      category: 'backend',
+      level: 'Intermediate',
+      description: 'Data Science, FastAPI, Automation',
+    },
+    {
+      name: 'FastAPI',
+      icon: 'fastapi',
+      color: '#05998B',
+      category: 'backend',
+      level: 'Intermediate',
+      description: 'High Performance Python Backend',
+    },
+    {
+      name: 'NodeJS',
+      icon: 'nodejs',
+      color: '#339933',
+      category: 'backend',
+      level: 'Intermediate',
+      description: 'Server-side JavaScript environment',
+    },
+    {
+      name: 'ExpressJS',
+      icon: 'express',
+      color: '#ffffff',
+      category: 'backend',
+      level: 'Intermediate',
+      description: 'Fast, unopinionated web framework for Node.js',
+    },
 
     // Database
-    { name: 'MySQL', icon: 'mysql', color: '#4479A1', category: 'database', level: 'Intermediate', description: 'Indexing, Transaction, Query Optimization' },
-    { name: 'SQL Server', icon: 'sql', color: '#CC2927', category: 'database', level: 'Intermediate', description: 'Stored Procedures, Triggers' },
-    { name: 'PostgreSQL', icon: 'postgresql', color: '#4169E1', category: 'database', level: 'Intermediate', description: 'Relational Database, JSONB' },
-    { name: 'MongoDB', icon: 'mongodb', color: '#47A248', category: 'database', level: 'Beginner', description: 'NoSQL, Aggregation Framework' },
+    {
+      name: 'MySQL',
+      icon: 'mysql',
+      color: '#4479A1',
+      category: 'database',
+      level: 'Intermediate',
+      description: 'Indexing, Transaction, Query Optimization',
+    },
+    {
+      name: 'SQL Server',
+      icon: 'sql',
+      color: '#CC2927',
+      category: 'database',
+      level: 'Intermediate',
+      description: 'Stored Procedures, Triggers',
+    },
+    {
+      name: 'PostgreSQL',
+      icon: 'postgresql',
+      color: '#4169E1',
+      category: 'database',
+      level: 'Intermediate',
+      description: 'Relational Database, JSONB',
+    },
+    {
+      name: 'MongoDB',
+      icon: 'mongodb',
+      color: '#47A248',
+      category: 'database',
+      level: 'Beginner',
+      description: 'NoSQL, Aggregation Framework',
+    },
 
     // DevOps & Tools
-    { name: 'Docker', icon: 'docker', color: '#2496ED', category: 'devops', level: 'Intermediate', description: 'Containerization (Backend focus)' },
-    { name: 'Git', icon: 'git', color: '#F05032', category: 'devops', level: 'Advanced', description: 'Version Control, Branching Strategies' },
-    { name: 'Vite', icon: 'vite', color: '#646CFF', category: 'devops', level: 'Advanced', description: 'Modern Frontend Build Tool' },
-    { name: 'MediaPipe AI', icon: 'mediapipe', color: '#0070F3', category: 'devops', level: 'Beginner', description: 'On-device Machine Learning' },
-    { name: 'Velo (Wix)', icon: 'wix', color: '#ffffff', category: 'devops', level: 'Intermediate', description: 'Wix Fullstack Platform' },
-    { name: 'Vercel', icon: 'vercel', color: '#000000', category: 'devops', level: 'Intermediate', description: 'Deployment, CI/CD Integration' },
-    { name: 'Render', icon: 'render', color: '#46E3B7', category: 'devops', level: 'Intermediate', description: 'Cloud Hosting, Auto-deploy' },
+    {
+      name: 'Docker',
+      icon: 'docker',
+      color: '#2496ED',
+      category: 'devops',
+      level: 'Intermediate',
+      description: 'Containerization (Backend focus)',
+    },
+    {
+      name: 'Git',
+      icon: 'git',
+      color: '#F05032',
+      category: 'devops',
+      level: 'Advanced',
+      description: 'Version Control, Branching Strategies',
+    },
+    {
+      name: 'Vite',
+      icon: 'vite',
+      color: '#646CFF',
+      category: 'devops',
+      level: 'Advanced',
+      description: 'Modern Frontend Build Tool',
+    },
+    {
+      name: 'MediaPipe AI',
+      icon: 'mediapipe',
+      color: '#0070F3',
+      category: 'devops',
+      level: 'Beginner',
+      description: 'On-device Machine Learning',
+    },
+    {
+      name: 'Velo (Wix)',
+      icon: 'wix',
+      color: '#ffffff',
+      category: 'devops',
+      level: 'Intermediate',
+      description: 'Wix Fullstack Platform',
+    },
+    {
+      name: 'Vercel',
+      icon: 'vercel',
+      color: '#000000',
+      category: 'devops',
+      level: 'Intermediate',
+      description: 'Deployment, CI/CD Integration',
+    },
+    {
+      name: 'Render',
+      icon: 'render',
+      color: '#46E3B7',
+      category: 'devops',
+      level: 'Intermediate',
+      description: 'Cloud Hosting, Auto-deploy',
+    },
   ],
   certificates: [
-    { title: 'Gemini Certified Educator', image: geminiEducator, rating: 1, status: '' },
-    { title: 'Gemini Certified Student', image: geminiStudent, rating: 1, status: '' },
+    {
+      title: 'Gemini Certified Educator',
+      image: geminiEducator,
+      rating: 1,
+      status: '',
+    },
+    {
+      title: 'Gemini Certified Student',
+      image: geminiStudent,
+      rating: 1,
+      status: '',
+    },
   ],
   projects: [
-    { id: 'caro', title: 'Game Caro', image: projectCaro, role: 'Desktop Application', link: 'https://gamecaro-uth.vercel.app/', githubLink: 'https://github.com/KaitoDeus/CARO', status: 'completed', technologies: ['C#', '.NET', 'Windows Forms'], startDate: '2025-12-02', category: 'school' },
-    { id: 'ev-warranty', title: 'EV Warranty System', image: projectEvWarranty, role: 'Dashboard Web Application', link: 'https://ev-warranty-system.up.railway.app/', githubLink: 'https://github.com/KaitoDeus/EV-Warranty-System', status: 'completed', technologies: ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'], startDate: '2025-12-19', category: 'school' },
-    { id: 'photo-palette', title: 'Photo Palette', image: projectPhotoPalette, role: 'Landing Page', link: 'https://photo-palette.vercel.app/', githubLink: 'https://github.com/KaitoDeus/Photo-Palette', status: 'completed', technologies: ['React', 'TypeScript', 'Tailwind CSS'], startDate: '2026-02-04', category: 'personal' },
-    { id: 'neoshop', title: 'NeoShop E-commerce', image: projectNeoShop, role: 'E-commerce Fullstack Web Application', link: 'https://neoshop-ecommerce.vercel.app/', githubLink: 'https://github.com/KaitoDeus/NeoShop', status: 'completed', technologies: ['React', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker'], startDate: '2026-01-22', category: 'personal' },
-    { id: 'famer-kun', title: 'FAMER-KUN Store', image: projectFarmerStore, role: 'E-commerce Web Application', link: 'https://kenkaneki395.wixsite.com/site', githubLink: 'https://github.com/KaitoDeus/FAMER-KUN.Store', status: 'completed', technologies: ['Velo', 'JavaScript', 'Wix'], startDate: '2022-05-01', category: 'school' },
-    { id: 'uth-wm', title: 'UTH - Work Management', image: projectUthwm, role: 'Desktop Application', link: '', githubLink: 'https://github.com/KaitoDeus/UTH-WM', status: 'completed', technologies: ['C#', '.NET', 'Windows Forms'], startDate: '2024-12-19', category: 'school' },
-    { id: 'medicare', title: 'Medicare Webapp', image: projectMedicare, role: 'Healthcare Web Application', link: 'https://medicare-webapp-goll.onrender.com/', githubLink: 'https://github.com/KaitoDeus/MediCare_Webapp', status: 'completed', technologies: ['MongoDB', 'ExpressJS', 'React', 'NodeJS'], startDate: '2025-11-01', category: 'school' },
-    { id: 'merry-christmas', title: 'Merry Christmas 3D AI', image: projectChristmas, role: 'Interactive 3D Website', link: 'https://merry-christmas-khai-25.vercel.app', githubLink: 'https://github.com/KaitoDeus/Merry-Christmas-25', status: 'completed', technologies: ['Three.js', 'Python', 'FastAPI', 'MediaPipe AI'], startDate: '2025-12-24', category: 'personal' },
+    {
+      id: 'teli-viettel',
+      title: 'TELI Viettel',
+      image: projectTeliViettel,
+      role: 'AI-Powered Learning Platform',
+      link: 'https://teli-viettel.vercel.app/',
+      githubLink: 'https://github.com/KaitoDeus/TELI_Viettel',
+      status: 'completed',
+      technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Gemini AI'],
+      startDate: '2026-03-25',
+      category: 'personal',
+    },
+    {
+      id: 'photo-palette',
+      title: 'Photo Palette',
+      image: projectPhotoPalette,
+      role: 'Landing Page',
+      link: 'https://photo-palette.vercel.app/',
+      githubLink: 'https://github.com/KaitoDeus/Photo-Palette',
+      status: 'completed',
+      technologies: ['React', 'TypeScript', 'Tailwind CSS'],
+      startDate: '2026-02-04',
+      category: 'personal',
+    },
+    {
+      id: 'neoshop',
+      title: 'NeoShop E-commerce',
+      image: projectNeoShop,
+      role: 'E-commerce Fullstack Web Application',
+      link: 'https://neoshop-ecommerce.vercel.app/',
+      githubLink: 'https://github.com/KaitoDeus/NeoShop',
+      status: 'completed',
+      technologies: ['React', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker'],
+      startDate: '2026-01-22',
+      category: 'personal',
+    },
+    {
+      id: 'merry-christmas',
+      title: 'Merry Christmas 3D AI',
+      image: projectChristmas,
+      role: 'Interactive 3D Website',
+      link: 'https://merry-christmas-khai-25.vercel.app',
+      githubLink: 'https://github.com/KaitoDeus/Merry-Christmas-25',
+      status: 'completed',
+      technologies: ['Three.js', 'Python', 'FastAPI', 'MediaPipe AI'],
+      startDate: '2025-12-24',
+      category: 'personal',
+    },
+    {
+      id: 'ev-warranty',
+      title: 'EV Warranty System',
+      image: projectEvWarranty,
+      role: 'Dashboard Web Application',
+      link: 'https://ev-warranty-system.up.railway.app/',
+      githubLink: 'https://github.com/KaitoDeus/EV-Warranty-System',
+      status: 'completed',
+      technologies: ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'],
+      startDate: '2025-12-19',
+      category: 'school',
+    },
+    {
+      id: 'caro',
+      title: 'Game Caro',
+      image: projectCaro,
+      role: 'Desktop Application',
+      link: 'https://gamecaro-uth.vercel.app/',
+      githubLink: 'https://github.com/KaitoDeus/CARO',
+      status: 'completed',
+      technologies: ['C#', '.NET', 'Windows Forms'],
+      startDate: '2025-12-02',
+      category: 'school',
+    },
+    {
+      id: 'medicare',
+      title: 'Medicare Webapp',
+      image: projectMedicare,
+      role: 'Healthcare Web Application',
+      link: 'https://medicare-webapp-goll.onrender.com/',
+      githubLink: 'https://github.com/KaitoDeus/MediCare_Webapp',
+      status: 'completed',
+      technologies: ['MongoDB', 'ExpressJS', 'React', 'NodeJS'],
+      startDate: '2025-11-01',
+      category: 'school',
+    },
+    {
+      id: 'uth-wm',
+      title: 'UTH - Work Management',
+      image: projectUthwm,
+      role: 'Desktop Application',
+      link: '',
+      githubLink: 'https://github.com/KaitoDeus/UTH-WM',
+      status: 'completed',
+      technologies: ['C#', '.NET', 'Windows Forms'],
+      startDate: '2024-12-19',
+      category: 'school',
+    },
+    {
+      id: 'famer-kun',
+      title: 'FAMER-KUN Store',
+      image: projectFarmerStore,
+      role: 'E-commerce Web Application',
+      link: 'https://kenkaneki395.wixsite.com/site',
+      githubLink: 'https://github.com/KaitoDeus/FAMER-KUN.Store',
+      status: 'completed',
+      technologies: ['Velo', 'JavaScript', 'Wix'],
+      startDate: '2022-05-01',
+      category: 'school',
+    },
+    {
+      id: 'first-2d-game',
+      title: 'First 2D Game Tutorial',
+      image: projectFirst2DGame,
+      role: 'Unity Developer',
+      link: 'https://kaitodesu.itch.io/first2dgametutorial',
+      githubLink: 'https://github.com/KaitoDeus/First2DGameTutorial',
+      status: 'completed',
+      technologies: ['C#', 'Unity'],
+      startDate: '2024-05-01',
+      category: 'unity',
+    },
   ],
-  cvDownloadUrl: '/VoAnhKhai_Resume_InternshipEN.pdf'
+  cvDownloadUrl: '/VoAnhKhai_Resume_InternshipEN.pdf',
 };

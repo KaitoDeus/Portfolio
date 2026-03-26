@@ -46,10 +46,10 @@ export default function AboutPage() {
           />
           <div className="flex-1 text-center lg:text-left">
             <h3 className="text-3xl font-bold mb-4 text-primary">
-              Using technology to change the world
+              Beyond code, I'm a creator at heart
             </h3>
             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              I'm {personalInfo.fullname}, an IT student at University of Transport Ho Chi Minh City. I'm passionate about game development and software engineering, always eager to learn new technologies to create innovative and useful products.
+              Hi, I'm {personalInfo.fullname}. I'm an IT student at UTH with a real passion for game development and software engineering. I love exploring new technologies and finding creative ways to build tools and experiences that actually make an impact.
             </p>
             <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
               <Badge variant="outline" className="text-sm py-1 px-3">
@@ -90,15 +90,15 @@ export default function AboutPage() {
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-2">
                   <span className="text-orange">•</span>
-                  <span>Complete a Software Engineer internship at a tech company in 2026.</span>
+                  <span>Land an internship at a tech company to contribute to real-world products.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-orange">•</span>
-                  <span>Develop problem-solving skills through real-world projects.</span>
+                  <span>Challenge myself by solving complex problems through hands-on projects.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-orange">•</span>
-                  <span>Learn best practices and professional software development processes.</span>
+                  <span>Learn how modern teams build, scale, and maintain high-quality software.</span>
                 </li>
               </ul>
             </CardContent>
@@ -226,13 +226,13 @@ function TimelineCard({ title, icon: Icon, items, colorClass }: { title: string,
             <CardContent className="space-y-8">
               {items.map((item, index) => (
                 <div key={index} className="flex gap-4 group">
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <div className="w-16 h-16 rounded-xl bg-primary/5 flex items-center justify-center border border-primary/10 group-hover:border-primary/30 transition-colors">
                        <GraduationCap className="w-8 h-8 text-primary/40 group-hover:text-primary transition-colors" />
                     </div>
                   </div>
                   
-                  <div className="flex-grow space-y-1">
+                  <div className="grow space-y-1">
                     <h4 className="text-lg font-bold group-hover:text-primary transition-colors leading-tight">
                       {item.title}
                     </h4>

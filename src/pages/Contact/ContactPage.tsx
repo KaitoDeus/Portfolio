@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { portfolioService } from '@/core/services/PortfolioService';
 import Section from '@/components/common/Section';
 import { chatService, IChatHistory } from '@/core/services/ChatService';
-import modelAvatar from '@/assets/img/avt/model.png';
+import modelAvatar from '@/assets/img/avt/model.webp';
 
 
 const socialIcons: Record<string, React.ElementType> = {
@@ -184,7 +184,7 @@ export default function ContactPage() {
                 <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                 Available for hire
               </div>
-              <h2 className="text-5xl lg:text-7xl font-extrabold mb-8 tracking-tighter leading-[1] text-white">
+              <h2 className="text-5xl lg:text-7xl font-extrabold mb-8 tracking-tighter leading-none text-white">
                 Connect with me!
               </h2>
             </div>
@@ -238,7 +238,7 @@ export default function ContactPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Card className="border-white/5 bg-[#0d0d1a]/80 backdrop-blur-2xl shadow-2xl rounded-[2.5rem] overflow-hidden">
-              <CardContent className="p-0 flex flex-col h-[500px] relative">
+              <CardContent className="p-0 flex flex-col h-125 relative">
                 
                 {/* Empty State / Background Text */}
                 {messages.length === 0 && (
@@ -261,7 +261,7 @@ export default function ContactPage() {
                 )}
 
                 {/* Chat Area */}
-                <div className="flex-grow overflow-y-auto p-8 space-y-4 relative z-10 scrollbar-hide">
+                <div className="grow overflow-y-auto p-8 space-y-4 relative z-10 scrollbar-hide">
                    <AnimatePresence>
                     {messages.map((msg, idx) => (
                       <ChatMessage key={idx} sender={msg.sender} text={msg.text} timestamp={msg.time} />
@@ -293,7 +293,7 @@ export default function ContactPage() {
                       <button
                         key={suggestion}
                         onClick={() => sendMessage(suggestion)}
-                        className="px-5 py-2 rounded-full bg-white/[0.03] border border-white/10 text-xs font-medium text-white/60 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                        className="px-5 py-2 rounded-full bg-white/3 border border-white/10 text-xs font-medium text-white/60 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300"
                       >
                         {suggestion}
                       </button>
