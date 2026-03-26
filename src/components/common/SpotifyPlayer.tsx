@@ -19,7 +19,7 @@ export default function SpotifyPlayer() {
       {/* Constraints boundary */}
       <div ref={constraintsRef} className="fixed inset-0 pointer-events-none z-49" />
 
-      <div className="fixed top-24 md:top-auto md:bottom-6 right-6 z-50 pointer-events-none flex items-end justify-end">
+      <div className="fixed bottom-28 lg:bottom-10 right-4 sm:right-6 z-50 pointer-events-none flex items-end justify-end">
         {/* Spotify Card - Using relative so it occupies its own space when open, but absolute for no jump */}
         <motion.div
           drag
@@ -35,7 +35,7 @@ export default function SpotifyPlayer() {
             pointerEvents: isOpen ? 'auto' : 'none',
           }}
           transition={{ type: 'spring', damping: 25, stiffness: 400 }}
-          className="absolute bottom-0 right-0 bg-card/80 backdrop-blur-xl border border-primary/20 rounded-2xl shadow-2xl overflow-hidden w-70 sm:w-[320px] md:w-[350px] cursor-grab active:cursor-grabbing origin-bottom-right"
+          className="absolute bottom-0 right-0 bg-card/80 backdrop-blur-xl border border-primary/20 rounded-2xl shadow-2xl overflow-hidden w-72 sm:w-[320px] lg:w-[350px] cursor-grab active:cursor-grabbing origin-bottom-right"
         >
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-2 bg-primary/10 border-b border-primary/10 select-none">
@@ -51,7 +51,7 @@ export default function SpotifyPlayer() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-7 w-7 rounded-full hover:bg-destructive/20 hover:text-destructive"
+                className="h-8 w-8 rounded-full hover:bg-destructive/20 hover:text-destructive"
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsOpen(false);
