@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   Gamepad2, Code, Brain, 
   GraduationCap, Briefcase, Award, Target,
@@ -24,14 +24,10 @@ export default function AboutPage() {
   const { personalInfo, avatars, hobbies, education, career, certificates } = portfolioService.getRawData();
   
   const targetRef = useRef(null);
-  useScroll({
-    target: targetRef,
-    offset: ["start end", "end start"]
-  });
 
   return (
     <Section id="about" title="About Me">
-      <div className="max-w-6xl mx-auto space-y-12" ref={targetRef}>
+      <div className="max-w-6xl mx-auto space-y-12 relative" ref={targetRef}>
         {/* Hero Bio Section */}
         <motion.div 
           className="flex flex-col lg:flex-row items-center gap-10"
@@ -48,7 +44,7 @@ export default function AboutPage() {
             <h3 className="text-3xl font-bold mb-4 text-primary">
               Using technology to change the world
             </h3>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-6 text-justify">
+            <p className="text-lg text-muted-foreground leading-relaxed mb-6 text-left">
               Hi, I'm {personalInfo.fullname}. I'm an IT student at UTH with a real passion for game development and software engineering. I love exploring new technologies and finding creative ways to build tools and experiences that actually make an impact.
             </p>
             <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
