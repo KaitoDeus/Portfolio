@@ -248,7 +248,7 @@ function TimelineCard({ title, icon: Icon, items, colorClass }: { title: string,
                     </div>
 
                     {item.extra && (
-                      <p className="text-sm font-medium text-foreground/80">
+                      <p className="text-sm font-medium text-foreground/80 whitespace-pre-wrap">
                         {item.extra}
                       </p>
                     )}
