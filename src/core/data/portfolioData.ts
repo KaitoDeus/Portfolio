@@ -18,7 +18,7 @@ export const portfolioData: IPortfolioData = {
   name: 'Anh Khai',
   roles: [
     'Software Engineer',
-    '.NET Developer',
+    'Desktop App Developer',
     'Full Stack Developer',
     'Game Developer',
   ],
@@ -65,23 +65,19 @@ export const portfolioData: IPortfolioData = {
   education: [
     {
       year: '2023 - Present',
-      title: 'UTH - University of Transport Ho Chi Minh City',
+      title: 'University of Transport Ho Chi Minh City',
       location: 'Hồ Chí Minh',
       subtitle: "Bachelor's degree, Information Technology",
-      extra: 'GPA: 7.5/10\nRelevant Coursework:',
-      details: [
-        'Artificial Intelligence and Applications (9.4/10)',
-        'Introduction to IT (9.1/10)',
-        'Software Engineering (9.0/10)',
-      ],
+      extra: '',
+      details: [],
     },
     {
       year: '2020 - 2022',
       title: 'Ho Chi Minh Vocational College',
       location: 'Hồ Chí Minh',
       subtitle: 'Intermediate Degree, IT (Software Application)',
-      extra: 'GPA: 8.7/10',
-      details: ['Top Graduate', 'Class President'],
+      extra: '',
+      details: [],
     },
   ],
   career: [{ year: '', title: null, location: '', subtitle: null, extra: '' }],
