@@ -2,7 +2,10 @@ import { IPortfolioData } from '@/core/models/PortfolioModels';
 
 import avatar from '@/assets/img/avt/avatar.webp';
 import geminiEducator from '@/assets/img/cert/gemini-educator.webp';
-import geminiStudent from '@/assets/img/cert/gemini-student.webp';
+import intermediateDiploma from '@/assets/img/cert/intermediate-diploma.webp';
+import logoUTH from '@/assets/logo/logo-UTH.webp';
+import logoCDN from '@/assets/logo/Logo-CĐN.webp';
+
 import projectCaro from '@/assets/img/proj/project_caro.webp';
 import projectEvWarranty from '@/assets/img/proj/project_evwarranty.webp';
 import projectPhotoPalette from '@/assets/img/proj/project_photopalette.webp';
@@ -19,11 +22,11 @@ export const portfolioData: IPortfolioData = {
   roles: [
     'Software Engineer',
     'Desktop App Developer',
-    'Full Stack Developer',
+    'Backend Developer',
     'Game Developer',
   ],
   tagline: "I'm a",
-  bio: "I'm a developer who loves the process of learning and building. Whether it's crafting games or engineering software, I'm always pushing myself to learn new things and create products that actually help people.",
+  bio: "I am a third-year Information Technology student from Vietnam, seeking a software engineering internship opportunity. Although I lack practical experience, my passion for the field and my proactive attitude will help me overcome the challenges of this job.",
   avatars: {
     hero: avatar,
     about: avatar,
@@ -68,6 +71,7 @@ export const portfolioData: IPortfolioData = {
       title: 'University of Transport Ho Chi Minh City',
       location: 'Hồ Chí Minh',
       subtitle: "Bachelor's degree, Information Technology",
+      logo: logoUTH,
       extra: '',
       details: [],
     },
@@ -76,6 +80,7 @@ export const portfolioData: IPortfolioData = {
       title: 'Ho Chi Minh Vocational College',
       location: 'Hồ Chí Minh',
       subtitle: 'Intermediate Degree, IT (Software Application)',
+      logo: logoCDN,
       extra: '',
       details: [],
     },
@@ -306,8 +311,8 @@ export const portfolioData: IPortfolioData = {
       status: '',
     },
     {
-      title: 'Gemini Certified Student',
-      image: geminiStudent,
+      title: 'Intermediate Diploma',
+      image: intermediateDiploma,
       rating: 1,
       status: '',
     },
