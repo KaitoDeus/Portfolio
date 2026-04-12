@@ -3,6 +3,7 @@ import { IPortfolioData } from '@/core/models/PortfolioModels';
 import avatar from '@/assets/img/avt/avatar.webp';
 import geminiEducator from '@/assets/img/cert/gemini-educator.webp';
 import intermediateDiploma from '@/assets/img/cert/intermediate-diploma.webp';
+import aiFluencyFramework from '@/assets/img/cert/Al-Fluency-Framework-Foundations.webp';
 import logoUTH from '@/assets/logo/logo-UTH.webp';
 import logoCDN from '@/assets/logo/Logo-CĐN.webp';
 
@@ -313,6 +314,12 @@ export const portfolioData: IPortfolioData = {
     {
       title: 'Intermediate Diploma',
       image: intermediateDiploma,
+      rating: 1,
+      status: '',
+    },
+    {
+      title: 'AI Fluency Framework: Foundations',
+      image: aiFluencyFramework,
       rating: 1,
       status: '',
     },
