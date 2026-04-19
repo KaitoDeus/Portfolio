@@ -446,5 +446,14 @@ export const portfolioData: IPortfolioData = {
       category: 'unity',
     },
   ],
-  cvDownloadUrl: '/VoAnhKhai_Resume_InternshipEN.pdf',
+  cv: {
+    en: {
+      url: '/VoAnhKhai_Resume_Intern(EN).pdf',
+      fileName: 'VoAnhKhai_Resume_Intern(EN).pdf',
+    },
+    vi: {
+      url: '/VoAnhKhai_Resume_Intern(VIE).pdf',
+      fileName: 'VoAnhKhai_Resume_Intern(VIE).pdf',
+    },
+  },
 };

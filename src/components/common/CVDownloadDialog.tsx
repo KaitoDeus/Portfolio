@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, FileText, Download, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { portfolioService } from '@/core/services/PortfolioService';
 
 interface CVDownloadDialogProps {
   isOpen: boolean;
@@ -8,17 +9,19 @@ interface CVDownloadDialogProps {
 }
 
 export default function CVDownloadDialog({ isOpen, onClose }: CVDownloadDialogProps) {
+  const { cv } = portfolioService.getRawData();
+  
   const downloadOptions = [
     {
       title: "English Version",
-      fileName: "VoAnhKhai_Resume_InternshipEN.pdf",
-      url: "/VoAnhKhai_Resume_InternshipEN.pdf",
+      fileName: cv.en.fileName,
+      url: cv.en.url,
       icon: <Globe className="w-5 h-5 text-primary" />,
     },
     {
       title: "Vietnamese Version",
-      fileName: "VoAnhKhai_Resume_InternshipVIE.pdf",
-      url: "/VoAnhKhai_Resume_InternshipVIE.pdf",
+      fileName: cv.vi.fileName,
+      url: cv.vi.url,
       icon: <FileText className="w-5 h-5 text-orange" />,
     }
   ];

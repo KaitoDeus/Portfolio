@@ -84,7 +84,7 @@ const ChatMessage = ({ sender, text, timestamp }: { sender: 'me' | 'visitor', te
 };
 
 export default function ContactPage() {
-  const { socialLinks, name, projects, skills, cvDownloadUrl } = portfolioService.getRawData();
+  const { socialLinks, name, projects, skills, cv } = portfolioService.getRawData();
   const currentYear = new Date().getFullYear();
   const [messages, setMessages] = useState<{ sender: 'me' | 'visitor', text: string, time: string }[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -138,7 +138,8 @@ export default function ContactPage() {
       - LinkedIn: ${socialLinks.find(l => l.platform === 'linkedin')?.url || 'N/A'}
       - GitHub: ${socialLinks.find(l => l.platform === 'github')?.url || 'N/A'}
       - Email: mailto:${socialLinks.find(l => l.platform === 'mail')?.url.replace('mailto:', '') || 'N/A'}
-      - CV/Resume: ${window.location.origin}${cvDownloadUrl}
+      - CV/Resume (EN): ${window.location.origin}${cv.en.url}
+      - CV/Resume (VIE): ${window.location.origin}${cv.vi.url}
 
       Guidelines:
       - ALWAYS keep each link on a NEW SEPARATE LINE.

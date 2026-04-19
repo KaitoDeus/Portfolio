@@ -70,5 +70,8 @@ export interface IPortfolioData {
   skills: ISkill[];
   certificates: ICertificate[];
   projects: IProject[];
-  cvDownloadUrl: string;
+  cv: {
+    en: { url: string; fileName: string };
+    vi: { url: string; fileName: string };
+  };
 }
