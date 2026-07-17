@@ -91,8 +91,8 @@ export default function AboutPage() {
             <CardContent className="space-y-3">
               <InfoRow label="Full Name" value={personalInfo.fullname} />
               <InfoRow label="Date of Birth" value={personalInfo.dateOfBirth} />
-              <InfoRow label="Major" value="Information Technology" />
-              <InfoRow label="School" value={personalInfo.school} />
+              <InfoRow label="Gender" value={personalInfo.gender} />
+              <InfoRow label="Address" value={personalInfo.address} />
             </CardContent>
           </InfoCard>
 
@@ -339,12 +339,12 @@ function TimelineCard({
                   </p>
                 )}
 
-                <div className="flex items-center gap-2 text-sm text-muted-foreground/80">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <span className="font-semibold">{item.year}</span>
                 </div>
 
                 {item.extra && (
-                  <p className="text-sm font-medium text-foreground/80 whitespace-pre-wrap">
+                  <p className="text-sm font-medium text-foreground whitespace-pre-wrap">
                     {item.extra}
                   </p>
                 )}

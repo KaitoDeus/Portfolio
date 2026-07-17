@@ -9,17 +9,17 @@
   
   /* Portfolio Dark theme colors as DEFAULT */
   --background: 230 53% 7%;
-  --foreground: 0 0% 98%;
+  --foreground: 0 0% 100%;
   --card: 230 40% 10%;
-  --card-foreground: 0 0% 98%;
+  --card-foreground: 0 0% 100%;
   --popover: 230 40% 10%;
-  --popover-foreground: 0 0% 98%;
+  --popover-foreground: 0 0% 100%;
   --primary: 172 66% 50%;
   --primary-foreground: 0 0% 100%;
   --secondary: 230 30% 15%;
-  --secondary-foreground: 0 0% 98%;
+  --secondary-foreground: 0 0% 100%;
   --muted: 230 30% 15%;
-  --muted-foreground: 0 0% 65%;
+  --muted-foreground: 0 0% 100%;
   --accent: 172 66% 50%;
   --accent-foreground: 0 0% 100%;
   --destructive: 0 62% 50%;
@@ -38,17 +38,17 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
+  --color-foreground: #ffffff;
   --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-foreground: #ffffff;
   --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-foreground: #ffffff;
   --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-secondary-foreground: #ffffff;
   --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-muted-foreground: #ffffff;
   --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent-foreground: #ffffff;
   --color-destructive: hsl(var(--destructive));
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));

@@ -17,8 +17,10 @@ Welcome to **Vo Anh Khai's** personal Portfolio website! This project is a moder
 **Key Features:**
 
 - **AI Chat Assistant**: Integrated **Gemini 2.5 Flash** | **Gemini 3 Flash** to answer questions about the portfolio.
-- **Glassmorphism Design**: High-end aesthetics with premium dark modes and blur effects.
-- **Responsive & Dynamic**: Fully optimized for all devices with buttery-smooth **Framer Motion** animations.
+- **Interactive Skills Grid**: Clean, responsive layout with real-time category filtering (Frontend, Backend, Database, DevOps & Tools).
+- **Interactive Terminal**: Custom typing terminal simulation executing the `nickname: kaitodeus` command and loading stack specs.
+- **Premium Aesthetics**: Vibrant glassmorphic card designs, dynamic hover effects, and parallax-like micro-animations.
+- **Responsive & Dynamic**: Fully optimized for all screen sizes with buttery-smooth **Framer Motion** animations.
 - **SEO Optimized**: Semantic HTML and meta tags for maximum search visibility.
 - **Singleton Architecture**: Centralized data management for high maintainability.
 
@@ -26,7 +28,7 @@ Welcome to **Vo Anh Khai's** personal Portfolio website! This project is a moder
 
 ## 2. Tech Stack
 
-![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![React](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)

@@ -84,7 +84,7 @@ const ChatMessage = ({ sender, text, timestamp }: { sender: 'me' | 'visitor', te
 };
 
 export default function ContactPage() {
-  const { socialLinks, name, projects, skills, cv } = portfolioService.getRawData();
+  const { socialLinks, name, projects, skills } = portfolioService.getRawData();
   const currentYear = new Date().getFullYear();
   const [messages, setMessages] = useState<{ sender: 'me' | 'visitor', text: string, time: string }[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -138,8 +138,6 @@ export default function ContactPage() {
       - LinkedIn: ${socialLinks.find(l => l.platform === 'linkedin')?.url || 'N/A'}
       - GitHub: ${socialLinks.find(l => l.platform === 'github')?.url || 'N/A'}
       - Email: mailto:${socialLinks.find(l => l.platform === 'mail')?.url.replace('mailto:', '') || 'N/A'}
-      - CV/Resume (EN): ${window.location.origin}${cv.en.url}
-      - CV/Resume (VIE): ${window.location.origin}${cv.vi.url}
 
       Guidelines:
       - ALWAYS keep each link on a NEW SEPARATE LINE.
@@ -213,10 +211,10 @@ export default function ContactPage() {
 
             <div className="pt-10 border-t border-white/10 space-y-6">
                <div className="space-y-4">
-                 <p className="text-2xl font-black tracking-tighter text-white/90">
+                 <p className="text-2xl font-black tracking-tighter text-white">
                     {name} <span className="text-cyan-400/30 font-thin mx-3">/</span> © {currentYear}
                  </p>
-                 <div className="flex flex-wrap items-center gap-3 text-[10px] font-bold text-muted-foreground/60 uppercase tracking-[0.3em]">
+                 <div className="flex flex-wrap items-center gap-3 text-[10px] font-bold text-muted-foreground uppercase tracking-[0.3em]">
                     <span>Built with</span>
                     <div className="flex items-center gap-2">
                       <span className="text-white">React</span>

@@ -21,13 +21,10 @@ import projectFirst2DGame from '@/assets/img/proj/project_first2dgame.webp';
 export const portfolioData: IPortfolioData = {
   name: 'Anh Khai',
   roles: [
-    'Software Engineer',
-    'Desktop App Developer',
-    'Backend Developer',
-    'Game Developer',
+    'Software Developer',
   ],
   tagline: "I'm a",
-  bio: "I am a third-year Information Technology student from Vietnam, seeking a software engineering internship opportunity. Although I lack practical experience, my passion for the field and my proactive attitude will help me overcome the challenges of this job.",
+  bio: "Third-year IT student with practical experience in software and game development. Experienced in building desktop applications, web applications, and game projects using modern development technologies. Seeking a Software Developer Internship to contribute, learn, and grow in a professional engineering environment.",
   avatars: {
     hero: avatar,
     about: avatar,
@@ -54,8 +51,8 @@ export const portfolioData: IPortfolioData = {
   personalInfo: {
     fullname: 'Vo Anh Khai',
     dateOfBirth: '30/06/2005',
-    major: 'Information Technology',
-    school: 'University of Transport Ho Chi Minh City',
+    gender: 'Male',
+    address: 'Gia Dinh Ward, HCMC',
     careerObjective: '',
   },
   hobbies: [
@@ -68,7 +65,7 @@ export const portfolioData: IPortfolioData = {
   ],
   education: [
     {
-      year: '2023 - Present',
+      year: 'Sept 2023 - Jun 2027',
       title: 'University of Transport Ho Chi Minh City',
       location: 'Hồ Chí Minh',
       subtitle: "Bachelor's degree, Information Technology",
@@ -77,7 +74,7 @@ export const portfolioData: IPortfolioData = {
       details: [],
     },
     {
-      year: '2020 - 2022',
+      year: 'Aug 2020 - Jul 2022',
       title: 'Ho Chi Minh Vocational College',
       location: 'Hồ Chí Minh',
       subtitle: 'Intermediate Degree, IT (Software Application)',
@@ -86,7 +83,24 @@ export const portfolioData: IPortfolioData = {
       details: [],
     },
   ],
-  career: [{ year: '', title: null, location: '', subtitle: null, extra: '' }],
+  career: [
+    {
+      year: 'March 2026 - Present',
+      title: 'Freelance',
+      location: 'Remote',
+      subtitle: 'Web Developer',
+      logo: '/freelance.jpg',
+      extra: `HEART of CLASSY - Handbag E-Commerce Website
+- In progress (Jun 01 2026 - Aug 30 2026)
+
+TELI Viettel - Digital Learning Platform
+- Academic project developed for the Project Management course at Van Lang University
+- Built an AI-powered web platform to help teachers in remote areas generate teaching materials more efficiently
+- Collaborated on the project from Mar 13 - Mar 23, 2026, in an agile team environment
+- Applied Figma MCP to ensure code closely matched the original design specifications
+- Live Demo: https://teli-viettel.vercel.app/`,
+    },
+  ],
   skills: [
     // Frontend
     {
@@ -446,14 +460,4 @@ export const portfolioData: IPortfolioData = {
       category: 'unity',
     },
   ],
-  cv: {
-    en: {
-      url: '/VoAnhKhai_Resume_Intern(EN).pdf',
-      fileName: 'VoAnhKhai_Resume_Intern(EN).pdf',
-    },
-    vi: {
-      url: '/VoAnhKhai_Resume_Intern(VIE).pdf',
-      fileName: 'VoAnhKhai_Resume_Intern(VIE).pdf',
-    },
-  },
 };

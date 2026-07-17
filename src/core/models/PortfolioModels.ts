@@ -7,8 +7,8 @@ export interface ISocialLink {
 export interface IPersonalInfo {
   fullname: string;
   dateOfBirth: string;
-  major: string;
-  school: string;
+  gender: string;
+  address: string;
   careerObjective: string;
 }
 
@@ -70,8 +70,4 @@ export interface IPortfolioData {
   skills: ISkill[];
   certificates: ICertificate[];
   projects: IProject[];
-  cv: {
-    en: { url: string; fileName: string };
-    vi: { url: string; fileName: string };
-  };
 }

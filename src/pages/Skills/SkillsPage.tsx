@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Code2, 
   Circle
@@ -53,40 +54,117 @@ const iconMap: Record<string, React.ComponentType<{ className?: string; style?: 
   express: SiExpress 
 };
 
+const TerminalContent = () => {
+  const [typedLength, setTypedLength] = useState(0);
+  const [showOutput, setShowOutput] = useState(false);
+  const command = 'nickname: kaitodeus';
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTypedLength((prev) => {
+        if (prev < command.length) {
+          return prev + 1;
+        } else {
+          clearInterval(interval);
+          setTimeout(() => {
+            setShowOutput(true);
+          }, 300);
+          return prev;
+        }
+      });
+    }, 120);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const typedText = command.slice(0, typedLength);
+
+  return (
+    <div className="p-6 space-y-4 text-zinc-400 font-mono text-xs md:text-sm h-[150px]">
+      <div className="flex gap-2 text-zinc-500">
+        <span>$</span>
+        <span className="text-zinc-300">
+          {typedText}
+          {!showOutput && (
+            <motion.span
+              animate={{ opacity: [1, 0, 1] }}
+              transition={{ repeat: Infinity, duration: 0.8 }}
+              className="inline-block w-1.5 h-4 bg-zinc-300 ml-1 align-middle animate-pulse"
+            />
+          )}
+        </span>
+      </div>
+      
+      {showOutput && (
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.15
+              }
+            }
+          }}
+          className="grid grid-cols-1 gap-1"
+        >
+          {[
+            { label: 'OS', value: 'Microsoft Windows' },
+            { label: 'Shell', value: 'bash / powershell' },
+            { label: 'Editor', value: 'Visual Studio (Code)' },
+            { label: 'Focus', value: 'Software Engineer' }
+          ].map((item, idx) => (
+            <motion.div
+              key={idx}
+              variants={{
+                hidden: { opacity: 0, x: -5 },
+                visible: { opacity: 1, x: 0 }
+              }}
+              className="flex gap-4"
+            >
+              <span className="text-blue-400 font-bold w-12 shrink-0">{item.label}</span>
+              <span className="text-foreground">{item.value}</span>
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
 const SkillItem = ({ skill }: { skill: ISkill }) => {
   const Icon = iconMap[skill.icon] || Code2;
   
   return (
     <motion.div 
-      className="flex flex-col items-center justify-center gap-4 px-10 group cursor-default"
-      whileHover={{ scale: 1.1 }}
+      layout
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.3 }}
+      whileHover={{ y: -5 }}
+      className="relative aspect-square rounded-2xl border border-primary/10 bg-card/30 p-6 flex flex-col items-center justify-center gap-4 group cursor-pointer transition-all duration-300 hover:border-primary/30 hover:bg-card/60 hover:shadow-[0_0_25px_rgba(var(--primary),0.05)] overflow-hidden"
     >
-      <div className="relative group">
-        {/* Glow effect on hover */}
-        <div 
-          className="absolute inset-0 rounded-full blur-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500"
-          style={{ backgroundColor: skill.color }}
-        />
-        
+      {/* Background radial glow based on skill color on hover */}
+      <div 
+        className="absolute inset-0 opacity-0 group-hover:opacity-15 transition-opacity duration-500 pointer-events-none"
+        style={{ 
+          background: `radial-gradient(circle at center, ${skill.color} 0%, transparent 70%)` 
+        }}
+      />
+
+      <div className="relative z-10 shrink-0">
         <Icon 
-          className="w-16 h-16 transition-all duration-500 grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100" 
+          className="w-12 h-12 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2" 
           style={{ 
-            color: 'currentColor' // Default color (usually gray due to opacity/grayscale)
+            color: skill.color
           }}
-          // We override color with inline style for the 'bright' state
-          data-color={skill.color}
         />
-        
-        {/* We use a clever CSS trick: the icon is grayscale by default. 
-            On hover, we set its color to the brand color and remove grayscale. */}
-        <style dangerouslySetInnerHTML={{ __html: `
-          .group:hover [data-color="${skill.color}"] {
-            color: ${skill.color} !important;
-          }
-        `}} />
       </div>
-      
-      <span className="text-sm font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-all duration-500 text-muted-foreground group-hover:text-foreground">
+
+      <span className="relative z-10 text-xs font-bold tracking-wider text-center uppercase text-foreground/80 group-hover:text-foreground transition-colors duration-300">
         {skill.name}
       </span>
     </motion.div>
@@ -95,21 +173,32 @@ const SkillItem = ({ skill }: { skill: ISkill }) => {
 
 export default function SkillsPage() {
   const allSkills = portfolioService.getSkills();
+  const [activeCategory, setActiveCategory] = useState<string>('all');
   
-  // Duplicating the list for smooth infinite scroll
-  const repeatedSkills = [...allSkills, ...allSkills, ...allSkills];
+  // categories list
+  const categories = [
+    { id: 'all', label: 'All' },
+    { id: 'frontend', label: 'Frontend' },
+    { id: 'backend', label: 'Backend' },
+    { id: 'database', label: 'Database' },
+    { id: 'devops', label: 'DevOps & Tools' }
+  ];
+
+  const filteredSkills = activeCategory === 'all' 
+    ? allSkills 
+    : allSkills.filter(skill => skill.category === activeCategory);
 
   return (
     <Section id="skills">
-      <div className="max-w-7xl mx-auto space-y-24 overflow-hidden">
+      <div className="max-w-7xl mx-auto space-y-16">
         
-        {/* Terminal Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+        {/* Top Header & Terminal */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
            <div className="space-y-6">
               <h2 className="text-4xl lg:text-5xl font-bold tracking-tighter">
                  Professional <span className="text-primary">Skills</span>
               </h2>
-              <p className="text-xl text-muted-foreground border-l-4 border-primary/50 pl-4 py-1">
+              <p className="text-xl text-foreground border-l-4 border-primary/50 pl-4 py-1">
                  Technologies I use to bring ideas to life.
               </p>
            </div>
@@ -128,60 +217,45 @@ export default function SkillsPage() {
                  </div>
                  <span className="ml-2 text-zinc-500">~/stack/overview</span>
                </div>
-               <div className="p-6 space-y-4 text-zinc-400">
-                  <div className="flex gap-2 text-zinc-500">
-                    <span>$</span>
-                    <span className="text-zinc-300">neofetch</span>
-                  </div>
-                  <div className="grid grid-cols-1 gap-1">
-                    <div className="flex gap-4"><span className="text-blue-400 font-bold">OS</span> <span>Windows 11 / Linux (WSL2)</span></div>
-                    <div className="flex gap-4"><span className="text-blue-400 font-bold">Shell</span> <span>Zsh / PowerShell</span></div>
-                    <div className="flex gap-4"><span className="text-blue-400 font-bold">Editor</span> <span>VS Code / IntelliJ IDEA</span></div>
-                    <div className="flex gap-4"><span className="text-blue-400 font-bold">Focus</span> <span>Fullstack Development</span></div>
-                  </div>
-               </div>
+               <TerminalContent />
              </Card>
            </motion.div>
         </div>
 
-        {/* Infinite Scroll Ticker */}
-        <div className="relative py-10 before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-40 before:bg-gradient-to-r before:from-background before:to-transparent after:absolute after:right-0 after:top-0 after:z-10 after:h-full after:w-40 after:bg-gradient-to-l after:after:from-background after:to-transparent">
-          <motion.div 
-            className="flex items-center min-w-max"
-            animate={{ x: [0, "-50%"] }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 40,
-                ease: "linear",
-              },
-            }}
-          >
-            {repeatedSkills.map((skill, index) => (
-              <SkillItem key={`${skill.name}-${index}`} skill={skill} />
-            ))}
-          </motion.div>
-        </div>
+        {/* Section divider and main filter interface */}
+        <div className="space-y-8 pt-8 border-t border-primary/10">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-6">
+            {/* Category tabs */}
+            <div className="flex flex-wrap gap-2 bg-card/40 border border-primary/10 p-1.5 rounded-xl backdrop-blur-sm">
+              {categories.map(category => (
+                <button
+                  key={category.id}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={`px-4 py-2 rounded-lg text-xs font-semibold tracking-wide uppercase transition-all duration-300 cursor-pointer ${
+                    activeCategory === category.id
+                      ? 'bg-primary text-primary-foreground shadow-md'
+                      : 'text-foreground hover:bg-white/5 hover:text-foreground'
+                  }`}
+                >
+                  {category.label}
+                </button>
+              ))}
+            </div>
+          </div>
 
-        {/* Secondary Ticker (Reverse Direction) */}
-        <div className="relative py-10 before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-40 before:bg-gradient-to-r before:from-background before:to-transparent after:absolute after:right-0 after:top-0 after:z-10 after:h-full after:w-40 after:bg-gradient-to-l after:after:from-background after:to-transparent">
-          <motion.div 
-            className="flex items-center min-w-max"
-            animate={{ x: ["-50%", 0] }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 45,
-                ease: "linear",
-              },
-            }}
-          >
-            {repeatedSkills.slice().reverse().map((skill, index) => (
-              <SkillItem key={`rev-${skill.name}-${index}`} skill={skill} />
-            ))}
-          </motion.div>
+          {/* Grid Container */}
+          <div className="w-full">
+            <motion.div 
+              layout
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
+            >
+              <AnimatePresence mode="popLayout">
+                {filteredSkills.map(skill => (
+                  <SkillItem key={skill.name} skill={skill} />
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </div>
         </div>
 
       </div>

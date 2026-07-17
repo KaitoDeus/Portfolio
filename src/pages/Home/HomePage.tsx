@@ -9,7 +9,6 @@ import SkillsPage from '../Skills/SkillsPage';
 import ProjectsPage from '../Projects/ProjectsPage';
 import ContactPage from '../Contact/ContactPage';
 import backgroundHero from '@/assets/img/avt/background-hero.gif';
-import CVDownloadDialog from '@/components/common/CVDownloadDialog';
 
 const Typewriter = ({ texts, speed = 100, waitTime = 2000 }: { texts: string[], speed?: number, waitTime?: number }) => {
   const [displayText, setDisplayText] = useState('');
@@ -56,7 +55,6 @@ export default function HomePage() {
   const location = useLocation();
 
   const { name, roles } = portfolioService.getRawData();
-  const [isCVDialogOpen, setIsCVDialogOpen] = useState(false);
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -71,10 +69,6 @@ export default function HomePage() {
       window.history.replaceState({}, document.title);
     }
   }, [location]);
-
-  const handleDownloadCV = () => {
-    setIsCVDialogOpen(true);
-  };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -135,7 +129,7 @@ export default function HomePage() {
           </div>
 
           <motion.p 
-            className="mt-4 text-muted-foreground/80 italic text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed"
+            className="mt-4 text-muted-foreground italic text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
@@ -150,14 +144,6 @@ export default function HomePage() {
               onClick={() => scrollToSection('skills')}
             >
               View my Skills
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              onClick={handleDownloadCV} 
-              className="text-lg py-7 px-10 rounded-full border-2 hover:bg-primary/5 w-full sm:w-auto hover:scale-105 transition-all"
-            >
-              Download CV
             </Button>
           </div>
         </motion.div>
@@ -184,11 +170,6 @@ export default function HomePage() {
       <SkillsPage />
       <ProjectsPage />
       <ContactPage />
-
-      <CVDownloadDialog 
-        isOpen={isCVDialogOpen} 
-        onClose={() => setIsCVDialogOpen(false)} 
-      />
     </div>
   );
 }
