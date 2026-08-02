@@ -40,7 +40,7 @@ const Typewriter = ({ texts, speed = 100, waitTime = 2000 }: { texts: string[], 
   }, [displayText, isDeleting, index, texts, speed, waitTime]);
 
   return (
-    <span className="text-foreground font-bold border-b-2 border-foreground/30 pb-0.5">
+    <span className="text-foreground font-bold">
       {displayText}
       <span className="animate-pulse ml-0.5 border-r-2 border-foreground h-8 inline-block align-middle" />
     </span>
@@ -78,13 +78,12 @@ export default function HomePage() {
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center pt-20 px-[5%] relative overflow-hidden">
         {/* Background Layer */}
-        <div className="absolute inset-0 z-0 pointer-events-none mask-[linear-gradient(to_bottom,black_70%,transparent_100%)]">
+        <div className="absolute inset-0 z-0 pointer-events-none mask-[radial-gradient(ellipse_at_center,black_30%,transparent_75%)]">
           <img 
             src={backgroundHero} 
             alt="Background" 
-            className="w-full h-full object-cover opacity-10 dark:opacity-25 filter grayscale contrast-125"
+            className="w-full h-full object-cover opacity-15 dark:opacity-30 filter grayscale contrast-200 mix-blend-multiply dark:mix-blend-screen"
           />
-          <div className="absolute inset-0 bg-linear-to-b from-background/70 via-transparent to-background" />
         </div>
 
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-foreground/5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none z-1" />
@@ -96,7 +95,6 @@ export default function HomePage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
         >
-
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -104,7 +102,7 @@ export default function HomePage() {
           >
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mt-4 mb-6">
               <span className="text-muted-foreground font-normal">Hi, I am </span>
-              <span className="text-foreground underline decoration-foreground/30 underline-offset-8">
+              <span className="text-foreground">
                 {name}
               </span>
             </h1>
@@ -133,22 +131,6 @@ export default function HomePage() {
             >
               View my Skills
             </Button>
-          </div>
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div 
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:block"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-        >
-          <div className="w-6 h-10 border-2 border-border/60 rounded-full flex justify-center p-1 backdrop-blur-sm">
-            <motion.div 
-              className="w-1.5 h-1.5 bg-foreground rounded-full"
-              animate={{ y: [0, 15, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-            />
           </div>
         </motion.div>
       </section>

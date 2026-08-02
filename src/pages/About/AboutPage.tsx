@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+
 import { portfolioService } from '@/core/services/PortfolioService';
 import { ITimelineItem, ICertificate } from '@/core/models/PortfolioModels';
 import Section from '@/components/common/Section';
@@ -77,8 +77,6 @@ export default function AboutPage() {
             </div>
           </div>
         </motion.div>
-
-        <Separator className="bg-border/40" />
 
         {/* Info Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   Code2, 
   Circle
@@ -51,6 +51,53 @@ const iconMap: Record<string, React.ComponentType<{ className?: string; style?: 
   vite: SiVite,
   nodejs: SiNodedotjs, 
   express: SiExpress 
+};
+
+// Helper function to resolve monochrome white/black icon colors into theme text-foreground
+const getIconColor = (color: string) => {
+  if (!color) return 'currentColor';
+  const hex = color.toLowerCase().trim();
+  if (hex === '#ffffff' || hex === '#000000' || hex === '#fff' || hex === '#000') {
+    return 'currentColor';
+  }
+  return color;
+};
+
+const TechMarquee = ({ skills }: { skills: ISkill[] }) => {
+  const marqueeItems = [...skills, ...skills, ...skills];
+
+  return (
+    <div className="w-full overflow-hidden relative py-8 mask-[linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)]">
+      <div className="animate-marquee gap-6 items-center pt-8">
+        {marqueeItems.map((skill, index) => {
+          const Icon = iconMap[skill.icon] || Code2;
+          const color = getIconColor(skill.color);
+
+          return (
+            <div
+              key={`${skill.name}-${index}`}
+              className="relative group cursor-pointer shrink-0"
+              title={skill.name}
+            >
+              {/* Tooltip Name Label on Hover */}
+              <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-300 pointer-events-none whitespace-nowrap bg-foreground text-background text-[11px] font-extrabold px-3 py-1 rounded-full shadow-2xl z-30 border border-border/40">
+                {skill.name}
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-foreground rotate-45" />
+              </div>
+
+              {/* Icon Badge Circle */}
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-card/80 border border-border/70 backdrop-blur-md shadow-lg flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-foreground/50 text-foreground">
+                <Icon
+                  className="w-8 h-8 sm:w-9 sm:h-9 transition-transform duration-300 group-hover:scale-110"
+                  style={{ color }}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
 const TerminalContent = () => {
@@ -133,57 +180,8 @@ const TerminalContent = () => {
   );
 };
 
-const SkillItem = ({ skill }: { skill: ISkill }) => {
-  const Icon = iconMap[skill.icon] || Code2;
-  
-  return (
-    <motion.div 
-      layout
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.3 }}
-      whileHover={{ y: -5 }}
-      className="relative aspect-square rounded-2xl border border-border/60 bg-card/60 backdrop-blur-md p-6 flex flex-col items-center justify-center gap-4 group cursor-pointer transition-all duration-300 hover:border-foreground/40 hover:bg-card/90 hover:shadow-xl overflow-hidden"
-    >
-      <div 
-        className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"
-        style={{ 
-          background: `radial-gradient(circle at center, ${skill.color} 0%, transparent 70%)` 
-        }}
-      />
-
-      <div className="relative z-10 shrink-0">
-        <Icon 
-          className="w-12 h-12 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2" 
-          style={{ 
-            color: skill.color
-          }}
-        />
-      </div>
-
-      <span className="relative z-10 text-xs font-bold tracking-wider text-center uppercase text-foreground/80 group-hover:text-foreground transition-colors duration-300">
-        {skill.name}
-      </span>
-    </motion.div>
-  );
-};
-
 export default function SkillsPage() {
   const allSkills = portfolioService.getSkills();
-  const [activeCategory, setActiveCategory] = useState<string>('all');
-  
-  const categories = [
-    { id: 'all', label: 'All' },
-    { id: 'frontend', label: 'Frontend' },
-    { id: 'backend', label: 'Backend' },
-    { id: 'database', label: 'Database' },
-    { id: 'devops', label: 'DevOps & Tools' }
-  ];
-
-  const filteredSkills = activeCategory === 'all' 
-    ? allSkills 
-    : allSkills.filter(skill => skill.category === activeCategory);
 
   return (
     <Section id="skills">
@@ -193,7 +191,7 @@ export default function SkillsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
            <div className="space-y-6">
               <h2 className="text-4xl lg:text-5xl font-bold tracking-tighter text-foreground">
-                 Professional <span className="underline decoration-foreground/30 underline-offset-8">Skills</span>
+                 Professional <span>Skills</span>
               </h2>
               <p className="text-xl text-muted-foreground border-l-4 border-foreground/40 pl-4 py-1">
                  Technologies I use to bring ideas to life.
@@ -219,41 +217,8 @@ export default function SkillsPage() {
            </motion.div>
         </div>
 
-        {/* Section divider and main filter interface */}
-        <div className="space-y-8 pt-8 border-t border-border/40">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-6">
-            {/* Category tabs */}
-            <div className="flex flex-wrap gap-2 bg-card/60 border border-border/60 p-1.5 rounded-xl backdrop-blur-md shadow-sm">
-              {categories.map(category => (
-                <button
-                  key={category.id}
-                  onClick={() => setActiveCategory(category.id)}
-                  className={`px-4 py-2 rounded-lg text-xs font-semibold tracking-wide uppercase transition-all duration-300 cursor-pointer ${
-                    activeCategory === category.id
-                      ? 'bg-foreground text-background shadow-md'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-foreground/5'
-                  }`}
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Grid Container */}
-          <div className="w-full">
-            <motion.div 
-              layout
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
-            >
-              <AnimatePresence mode="popLayout">
-                {filteredSkills.map(skill => (
-                  <SkillItem key={skill.name} skill={skill} />
-                ))}
-              </AnimatePresence>
-            </motion.div>
-          </div>
-        </div>
+        {/* Antigravity-Style Infinite Tech Icons Ribbon */}
+        <TechMarquee skills={allSkills} />
 
       </div>
     </Section>

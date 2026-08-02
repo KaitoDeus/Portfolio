@@ -177,10 +177,7 @@ export default function ContactPage() {
             transition={{ duration: 0.6 }}
           >
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/80 border border-border/60 text-foreground text-[10px] font-bold uppercase tracking-widest mb-4">
-                <div className="w-1.5 h-1.5 rounded-full bg-foreground animate-pulse" />
-                Available for hire
-              </div>
+
               <h2 className="text-5xl lg:text-7xl font-extrabold mb-8 tracking-tighter leading-none text-foreground">
                 Connect with me!
               </h2>

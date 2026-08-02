@@ -83,36 +83,23 @@
 }
 
 /* Base styles */
-html {
-  scroll-behavior: smooth;
+html, body {
   scroll-padding-top: 80px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  font-family: "Montserrat", "Inter", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button {
   cursor: pointer;
 }
 
-body {
-  font-family: "Montserrat", "Inter", sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Custom scrollbar */
+/* Hide scrollbar for Chrome, Safari, Opera */
 ::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: hsl(var(--muted-foreground) / 0.3);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: hsl(var(--foreground) / 0.5);
-}
-
-::-webkit-scrollbar-track {
-  background-color: hsl(var(--background));
+  display: none;
+  width: 0px;
+  background: transparent;
 }
 
 @layer base {
@@ -151,3 +138,22 @@ body {
     cursor: none !important;
   }
 }
+
+/* Infinite Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+
+
