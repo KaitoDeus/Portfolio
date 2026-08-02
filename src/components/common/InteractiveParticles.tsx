@@ -41,13 +41,14 @@ export default function InteractiveParticles() {
     const mouse = {
       x: -1000,
       y: -1000,
-      radius: 160,
+      radius: 140,
+      radiusSq: 140 * 140,
     };
 
     // Mobile vs Desktop particle density optimization
     const isMobile = width < 768;
-    const maxCount = isMobile ? 40 : 100;
-    const count = Math.min(Math.floor((width * height) / 12000), maxCount);
+    const maxCount = isMobile ? 35 : 65;
+    const count = Math.min(Math.floor((width * height) / 14000), maxCount);
     const particles: Particle[] = [];
 
     const initParticles = () => {
@@ -60,13 +61,13 @@ export default function InteractiveParticles() {
           y,
           originX: x,
           originY: y,
-          vx: (Math.random() - 0.5) * 0.7,
-          vy: (Math.random() - 0.5) * 0.7,
-          size: Math.random() * 3.5 + 2,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6,
+          size: Math.random() * 3 + 2,
           color: COLORS[Math.floor(Math.random() * COLORS.length)],
-          alpha: Math.random() * 0.6 + 0.2,
+          alpha: Math.random() * 0.5 + 0.2,
           angle: Math.random() * Math.PI * 2,
-          spin: (Math.random() - 0.5) * 0.04,
+          spin: (Math.random() - 0.5) * 0.03,
         });
       }
     };
@@ -129,32 +130,32 @@ export default function InteractiveParticles() {
         if (p.originY < 0) p.originY = height;
         if (p.originY > height) p.originY = 0;
 
-        // Distance to mouse
-        const dx = mouse.x - p.x;
-        const dy = mouse.y - p.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+        // Fast squared distance check to cursor
+        if (mouse.x > 0) {
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const distSq = dx * dx + dy * dy;
 
-        // Repulsion physics from cursor
-        if (dist < mouse.radius) {
-          const force = (mouse.radius - dist) / mouse.radius;
-          const angle = Math.atan2(dy, dx);
-          const pushX = Math.cos(angle) * force * 8;
-          const pushY = Math.sin(angle) * force * 8;
-
-          p.x -= pushX;
-          p.y -= pushY;
+          if (distSq < mouse.radiusSq && distSq > 0) {
+            const dist = Math.sqrt(distSq);
+            const force = (mouse.radius - dist) / mouse.radius;
+            p.x -= (dx / dist) * force * 7;
+            p.y -= (dy / dist) * force * 7;
+          } else {
+            p.x += (p.originX - p.x) * 0.05;
+            p.y += (p.originY - p.y) * 0.05;
+          }
         } else {
-          // Smooth return to floating position
           p.x += (p.originX - p.x) * 0.05;
           p.y += (p.originY - p.y) * 0.05;
         }
 
-        // Fast canvas drawing without save/restore overhead
+        // Fast canvas drawing
         ctx.globalAlpha = p.alpha;
         ctx.fillStyle = p.color;
         ctx.beginPath();
         if (i % 3 === 0) {
-          ctx.ellipse(p.x, p.y, p.size * 1.5, p.size * 0.8, p.angle, 0, Math.PI * 2);
+          ctx.ellipse(p.x, p.y, p.size * 1.4, p.size * 0.8, p.angle, 0, Math.PI * 2);
         } else {
           ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         }
@@ -179,7 +180,7 @@ export default function InteractiveParticles() {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-0 opacity-75 transition-opacity duration-500"
+      className="pointer-events-none fixed inset-0 z-[1] opacity-85 transition-opacity duration-500"
     />
   );
 }

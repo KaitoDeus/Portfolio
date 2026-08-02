@@ -68,6 +68,8 @@ export default function Pagination({
             size="icon"
             onClick={() => onJump(page)}
             className="w-10"
+            aria-label={`Page ${page}`}
+            aria-current={currentPage === page ? "page" : undefined}
           >
             {page}
           </Button>

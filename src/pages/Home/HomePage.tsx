@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { portfolioService } from '@/core/services/PortfolioService';
 import { Button } from '@/components/ui/button';
 import { usePageTitle } from '@/shared/hooks/usePageTitle';
 import { useLocation } from 'react-router-dom';
-import AboutPage from '../About/AboutPage';
-import SkillsPage from '../Skills/SkillsPage';
-import ProjectsPage from '../Projects/ProjectsPage';
-import ContactPage from '../Contact/ContactPage';
-import backgroundHero from '@/assets/img/avt/background-hero.gif';
 
-const Typewriter = ({ texts, speed = 100, waitTime = 2000 }: { texts: string[], speed?: number, waitTime?: number }) => {
+const AboutPage = lazy(() => import('../About/AboutPage'));
+const SkillsPage = lazy(() => import('../Skills/SkillsPage'));
+const ProjectsPage = lazy(() => import('../Projects/ProjectsPage'));
+const ContactPage = lazy(() => import('../Contact/ContactPage'));
+
+const Typewriter = ({ texts, speed = 80, waitTime = 1800 }: { texts: string[], speed?: number, waitTime?: number }) => {
   const [displayText, setDisplayText] = useState('');
   const [index, setIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -56,13 +55,14 @@ export default function HomePage() {
   useEffect(() => {
     if (location.state?.scrollTo) {
       const id = location.state.scrollTo;
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         const element = document.getElementById(id);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
         }
       }, 100);
       window.history.replaceState({}, document.title);
+      return () => clearTimeout(timer);
     }
   }, [location]);
 
@@ -77,36 +77,15 @@ export default function HomePage() {
     <div className="flex flex-col w-full">
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center pt-20 px-[5%] relative overflow-hidden">
-        {/* Background Layer */}
-        <div className="absolute inset-0 z-0 pointer-events-none mask-[radial-gradient(ellipse_at_center,black_30%,transparent_75%)]">
-          <img 
-            src={backgroundHero} 
-            alt="Background" 
-            className="w-full h-full object-cover opacity-15 dark:opacity-30 filter grayscale contrast-200 mix-blend-multiply dark:mix-blend-screen"
-          />
-        </div>
-
-        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-foreground/5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none z-1" />
-        <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-foreground/5 blur-3xl rounded-full -translate-x-1/2 translate-y-1/2 pointer-events-none z-1" />
-
-        <motion.div 
-          className="flex flex-col items-center text-center max-w-4xl relative z-10"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
+        <div className="flex flex-col items-center text-center max-w-4xl relative z-10">
+          <div>
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mt-4 mb-6">
               <span className="text-muted-foreground font-normal">Hi, I am </span>
               <span className="text-foreground">
                 {name}
               </span>
             </h1>
-          </motion.div>
+          </div>
 
           {/* Typewriter Effect */}
           <div className="flex flex-wrap items-center justify-center gap-x-2 text-2xl md:text-3xl lg:text-3xl text-muted-foreground font-medium h-18">
@@ -114,14 +93,9 @@ export default function HomePage() {
              <Typewriter texts={roles} />
           </div>
 
-          <motion.p 
-            className="mt-4 text-muted-foreground italic text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-          >
+          <p className="mt-4 text-muted-foreground italic text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
             "The best way to predict the future is to create it."
-          </motion.p>
+          </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mt-12 flex-wrap justify-center w-full px-4 sm:px-0">
             <Button 
@@ -132,14 +106,16 @@ export default function HomePage() {
               View my Skills
             </Button>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Other Sections */}
-      <AboutPage />
-      <SkillsPage />
-      <ProjectsPage />
-      <ContactPage />
+      <Suspense fallback={null}>
+        <AboutPage />
+        <SkillsPage />
+        <ProjectsPage />
+        <ContactPage />
+      </Suspense>
     </div>
   );
 }

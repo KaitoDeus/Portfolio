@@ -49,15 +49,12 @@ export default function AboutPage() {
     <Section id="about" title="About Me">
       <div className="max-w-6xl mx-auto space-y-12 relative" ref={targetRef}>
         {/* Hero Bio Section */}
-        <motion.div
-          className="flex flex-col lg:flex-row items-center gap-10"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+        <div className="flex flex-col lg:flex-row items-center gap-10">
           <img
             src={avatars.about}
             alt="Profile"
+            loading="lazy"
+            decoding="async"
             className="w-64 h-64 lg:w-80 lg:h-80 rounded-2xl object-cover border-2 border-border/80 shadow-2xl"
           />
           <div className="flex-1 text-center lg:text-left">
@@ -76,11 +73,11 @@ export default function AboutPage() {
               </Badge>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Info Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <InfoCard delay={0.1}>
+          <InfoCard>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-foreground font-bold">
                 <Calendar className="w-5 h-5" /> Personal Information
@@ -94,7 +91,7 @@ export default function AboutPage() {
             </CardContent>
           </InfoCard>
 
-          <InfoCard delay={0.2}>
+          <InfoCard>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-foreground font-bold">
                 <Target className="w-5 h-5" /> Career Goals
@@ -125,7 +122,7 @@ export default function AboutPage() {
             </CardContent>
           </InfoCard>
 
-          <InfoCard delay={0.3}>
+          <InfoCard>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-foreground font-bold">
                 <Gamepad2 className="w-5 h-5" /> Hobbies
@@ -153,12 +150,7 @@ export default function AboutPage() {
 
         {/* Certificates & Education */}
         <div className="space-y-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-          >
+          <div>
             <Card className="border-border/60 bg-card/60 backdrop-blur-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-foreground font-bold">
@@ -177,6 +169,8 @@ export default function AboutPage() {
                         <img
                           src={cert.image}
                           alt={cert.title}
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-contain"
                         />
                       </div>
@@ -188,7 +182,7 @@ export default function AboutPage() {
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <TimelineCard
@@ -218,9 +212,9 @@ export default function AboutPage() {
             onClick={() => setSelectedCert(null)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              exit={{ scale: 0.95, opacity: 0 }}
               className="relative max-w-5xl w-full bg-card rounded-2xl overflow-hidden shadow-2xl border border-border"
               onClick={(e) => e.stopPropagation()}
             >
@@ -237,6 +231,8 @@ export default function AboutPage() {
                 <img 
                   src={selectedCert.image} 
                   alt={selectedCert.title} 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-auto max-h-[80vh] object-contain mx-auto rounded-lg"
                 />
               </div>
@@ -251,22 +247,15 @@ export default function AboutPage() {
 // Inner components
 function InfoCard({
   children,
-  delay,
 }: {
   children: React.ReactNode;
-  delay: number;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay }}
-    >
+    <div>
       <Card className="h-full border-border/60 bg-card/60 backdrop-blur-md transition-all hover:border-foreground/40">
         {children}
       </Card>
-    </motion.div>
+    </div>
   );
 }
 
@@ -291,12 +280,7 @@ function TimelineCard({
   colorClass: string;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.5 }}
-    >
+    <div>
       <Card className="h-full border-border/60 bg-card/60 backdrop-blur-md">
         <CardHeader>
           <CardTitle className={`flex items-center gap-2 font-bold ${colorClass}`}>
@@ -318,6 +302,8 @@ function TimelineCard({
                     <img
                       src={item.logo}
                       alt={item.title || ''}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-contain"
                     />
                   ) : (
@@ -365,6 +351,6 @@ function TimelineCard({
           ))}
         </CardContent>
       </Card>
-    </motion.div>
+    </div>
   );
 }

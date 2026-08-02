@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { 
   Code2, 
   Circle
@@ -80,13 +79,13 @@ const TechMarquee = ({ skills }: { skills: ISkill[] }) => {
               title={skill.name}
             >
               {/* Tooltip Name Label on Hover */}
-              <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-300 pointer-events-none whitespace-nowrap bg-foreground text-background text-[11px] font-extrabold px-3 py-1 rounded-full shadow-2xl z-30 border border-border/40">
+              <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-300 pointer-events-none whitespace-nowrap bg-foreground text-background text-[11px] font-extrabold px-3 py-1 rounded-full shadow-lg z-30 border border-border/40">
                 {skill.name}
                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-foreground rotate-45" />
               </div>
 
               {/* Icon Badge Circle */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-card/80 border border-border/70 backdrop-blur-md shadow-lg flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-foreground/50 text-foreground">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-card border border-border/70 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-foreground/50 text-foreground">
                 <Icon
                   className="w-8 h-8 sm:w-9 sm:h-9 transition-transform duration-300 group-hover:scale-110"
                   style={{ color }}
@@ -112,13 +111,11 @@ const TerminalContent = () => {
           return prev + 1;
         } else {
           clearInterval(interval);
-          setTimeout(() => {
-            setShowOutput(true);
-          }, 300);
+          setShowOutput(true);
           return prev;
         }
       });
-    }, 120);
+    }, 50);
 
     return () => clearInterval(interval);
   }, []);
@@ -132,49 +129,25 @@ const TerminalContent = () => {
         <span className="font-semibold">
           {typedText}
           {!showOutput && (
-            <motion.span
-              animate={{ opacity: [1, 0, 1] }}
-              transition={{ repeat: Infinity, duration: 0.8 }}
-              className="inline-block w-1.5 h-4 bg-foreground ml-1 align-middle animate-pulse"
-            />
+            <span className="inline-block w-1.5 h-4 bg-foreground ml-1 align-middle animate-pulse" />
           )}
         </span>
       </div>
       
       {showOutput && (
-        <motion.div 
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.15
-              }
-            }
-          }}
-          className="grid grid-cols-1 gap-1"
-        >
+        <div className="grid grid-cols-1 gap-1">
           {[
             { label: 'OS', value: 'Microsoft Windows' },
             { label: 'Shell', value: 'bash / powershell' },
             { label: 'Editor', value: 'Visual Studio (Code)' },
             { label: 'Focus', value: 'Software Engineer' }
           ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              variants={{
-                hidden: { opacity: 0, x: -5 },
-                visible: { opacity: 1, x: 0 }
-              }}
-              className="flex gap-4"
-            >
+            <div key={idx} className="flex gap-4">
               <span className="font-bold w-12 shrink-0 opacity-60">{item.label}</span>
               <span className="text-foreground font-medium">{item.value}</span>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       )}
     </div>
   );
@@ -198,11 +171,7 @@ export default function SkillsPage() {
               </p>
            </div>
 
-           <motion.div
-             initial={{ opacity: 0, scale: 0.95 }}
-             whileInView={{ opacity: 1, scale: 1 }}
-             viewport={{ once: true }}
-           >
+           <div>
              <Card className="bg-card/70 border-border/60 shadow-2xl overflow-hidden font-mono text-xs md:text-sm backdrop-blur-md">
                <div className="flex items-center gap-2 px-4 py-3 bg-secondary/50 border-b border-border/60">
                  <div className="flex gap-1.5">
@@ -214,7 +183,7 @@ export default function SkillsPage() {
                </div>
                <TerminalContent />
              </Card>
-           </motion.div>
+           </div>
         </div>
 
         {/* Antigravity-Style Infinite Tech Icons Ribbon */}

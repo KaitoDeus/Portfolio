@@ -169,13 +169,7 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
           
           {/* Left Content: Intro & Socials */}
-          <motion.div 
-            className="lg:col-span-5 space-y-10 lg:pt-4"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="lg:col-span-5 space-y-10 lg:pt-4">
             <div>
 
               <h2 className="text-5xl lg:text-7xl font-extrabold mb-8 tracking-tighter leading-none text-foreground">
@@ -196,6 +190,7 @@ export default function ContactPage() {
                       rel="noopener noreferrer"
                       className="group flex items-center justify-center w-14 h-14 rounded-2xl bg-card/60 border border-border/60 hover:border-foreground/60 hover:bg-foreground/10 backdrop-blur-md transition-all duration-300 shadow-lg"
                       title={link.platform}
+                      aria-label={link.platform}
                     >
                       <Icon className="w-6 h-6 text-muted-foreground group-hover:text-foreground group-hover:scale-110 transition-all" />
                     </a>
@@ -221,35 +216,25 @@ export default function ContactPage() {
                  </div>
                </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right Content: Chatbox UI */}
-          <motion.div 
-            className="lg:col-span-7"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          <div className="lg:col-span-7">
             <Card className="border-border/60 bg-card/70 backdrop-blur-2xl shadow-2xl rounded-[2.5rem] overflow-hidden">
               <CardContent className="p-0 flex flex-col h-125 relative">
                 
                 {/* Empty State */}
                 {messages.length === 0 && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none gap-8 pb-16">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.8, ease: "easeOut" }}
-                      className="relative"
-                    >
-                      <div className="absolute -inset-4 bg-foreground/5 rounded-full blur-2xl animate-pulse" />
+                    <div className="relative">
                       <img 
                         src={modelAvatar} 
                         alt="Model" 
+                        loading="lazy"
+                        decoding="async"
                         className="w-32 h-32 object-cover rounded-full border-4 border-border/60 relative z-10 shadow-2xl" 
                       />
-                    </motion.div>
+                    </div>
                     <p className="text-xl font-medium text-muted-foreground/60 tracking-tight">Ask me anything about {name.split(' ').pop()}...</p>
                   </div>
                 )}
@@ -297,6 +282,7 @@ export default function ContactPage() {
                   <form onSubmit={handleSendMessage} className="relative group">
                     <Input 
                       placeholder={`Ask anything about ${name.split(' ').pop()}...`}
+                      aria-label={`Ask anything about ${name.split(' ').pop()}`}
                       className="bg-background/60 border border-border/60 group-hover:border-foreground/30 focus:border-foreground/50 focus-visible:ring-0 focus-visible:ring-offset-0 h-14 pl-8 pr-16 rounded-full text-foreground placeholder:text-muted-foreground/50 transition-all duration-500 shadow-inner"
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
@@ -304,6 +290,7 @@ export default function ContactPage() {
                     <Button 
                       type="submit"
                       disabled={!inputValue.trim() || isLoading}
+                      aria-label="Send Message"
                       className="absolute right-2 top-1.5 w-11 h-11 rounded-full bg-foreground text-background hover:bg-foreground/80 p-0 transition-all active:scale-95 shadow-md"
                     >
                       <Send size={18} />
@@ -312,7 +299,7 @@ export default function ContactPage() {
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
 
         </div>
       </div>

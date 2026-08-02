@@ -16,7 +16,7 @@ export default function Header() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('theme');
     if (saved === 'dark' || saved === 'light') return saved;
-    return 'dark'; // Default to dark (Pure Black)
+    return 'light'; // Default to light mode
   });
 
   const location = useLocation();
@@ -33,22 +33,30 @@ export default function Header() {
   }, [theme]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      if (location.pathname === '/') {
-        const sections = navItems.map(item => document.getElementById(item.id));
-        const scrollPosition = currentScrollY + window.innerHeight / 3;
+    let ticking = false;
 
-        sections.forEach(section => {
-          if (section) {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-              setActiveSection(section.id);
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (location.pathname === '/') {
+            const currentScrollY = window.scrollY;
+            const scrollPosition = currentScrollY + window.innerHeight / 3;
+
+            for (const item of navItems) {
+              const section = document.getElementById(item.id);
+              if (section) {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                  setActiveSection(item.id);
+                  break;
+                }
+              }
             }
           }
+          ticking = false;
         });
+        ticking = true;
       }
     };
 
@@ -77,11 +85,13 @@ export default function Header() {
       <header className="fixed top-0 left-0 right-0 z-40 px-10 py-6 hidden lg:flex items-center justify-center pointer-events-none">
         <div className="flex items-center gap-3 pointer-events-auto">
           {/* Center: Nav Pill */}
-          <nav className="flex items-center bg-card/80 backdrop-blur-2xl border border-border/40 p-1.5 rounded-full shadow-xl">
+          <nav aria-label="Main Navigation" className="flex items-center bg-card/80 backdrop-blur-2xl border border-border/40 p-1.5 rounded-full shadow-xl">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
+                aria-label={item.label}
+                aria-current={activeSection === item.id ? 'page' : undefined}
                 className={cn(
                   "px-6 py-2 rounded-full text-sm font-medium transition-all duration-300",
                   activeSection === item.id 
@@ -110,7 +120,7 @@ export default function Header() {
       </header>
 
       {/* 2. MOBILE & TABLET BOTTOM NAV (Hidden on lg screens) */}
-      <nav className="fixed z-40 left-1/2 -translate-x-1/2 w-[92%] max-w-md lg:hidden bottom-6">
+      <nav aria-label="Mobile Navigation" className="fixed z-40 left-1/2 -translate-x-1/2 w-[92%] max-w-md lg:hidden bottom-6">
         <div className="bg-card/90 backdrop-blur-3xl border border-border/40 p-1.5 rounded-[2rem] shadow-[0_10px_30px_rgba(0,0,0,0.2)] flex items-center justify-around">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -119,6 +129,8 @@ export default function Header() {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
+                aria-label={item.label}
+                aria-current={isActive ? 'page' : undefined}
                 className={cn(
                   "relative flex flex-col items-center justify-center py-2.5 px-3 rounded-full transition-all duration-300 min-w-[50px]",
                   isActive ? "text-foreground font-bold" : "text-muted-foreground"
