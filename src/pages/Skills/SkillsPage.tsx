@@ -21,7 +21,6 @@ import Section from '@/components/common/Section';
 import { portfolioService } from '@/core/services/PortfolioService';
 import { ISkill } from '@/core/models/PortfolioModels';
 
-// Map icon strings to components
 const iconMap: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
   java: FaJava,
   spring: SiSpringboot,
@@ -80,16 +79,16 @@ const TerminalContent = () => {
   const typedText = command.slice(0, typedLength);
 
   return (
-    <div className="p-6 space-y-4 text-zinc-400 font-mono text-xs md:text-sm h-[150px]">
-      <div className="flex gap-2 text-zinc-500">
+    <div className="p-6 space-y-4 font-mono text-xs md:text-sm h-[150px] text-foreground/90">
+      <div className="flex gap-2 opacity-80">
         <span>$</span>
-        <span className="text-zinc-300">
+        <span className="font-semibold">
           {typedText}
           {!showOutput && (
             <motion.span
               animate={{ opacity: [1, 0, 1] }}
               transition={{ repeat: Infinity, duration: 0.8 }}
-              className="inline-block w-1.5 h-4 bg-zinc-300 ml-1 align-middle animate-pulse"
+              className="inline-block w-1.5 h-4 bg-foreground ml-1 align-middle animate-pulse"
             />
           )}
         </span>
@@ -124,8 +123,8 @@ const TerminalContent = () => {
               }}
               className="flex gap-4"
             >
-              <span className="text-blue-400 font-bold w-12 shrink-0">{item.label}</span>
-              <span className="text-foreground">{item.value}</span>
+              <span className="font-bold w-12 shrink-0 opacity-60">{item.label}</span>
+              <span className="text-foreground font-medium">{item.value}</span>
             </motion.div>
           ))}
         </motion.div>
@@ -145,11 +144,10 @@ const SkillItem = ({ skill }: { skill: ISkill }) => {
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.3 }}
       whileHover={{ y: -5 }}
-      className="relative aspect-square rounded-2xl border border-primary/10 bg-card/30 p-6 flex flex-col items-center justify-center gap-4 group cursor-pointer transition-all duration-300 hover:border-primary/30 hover:bg-card/60 hover:shadow-[0_0_25px_rgba(var(--primary),0.05)] overflow-hidden"
+      className="relative aspect-square rounded-2xl border border-border/60 bg-card/60 backdrop-blur-md p-6 flex flex-col items-center justify-center gap-4 group cursor-pointer transition-all duration-300 hover:border-foreground/40 hover:bg-card/90 hover:shadow-xl overflow-hidden"
     >
-      {/* Background radial glow based on skill color on hover */}
       <div 
-        className="absolute inset-0 opacity-0 group-hover:opacity-15 transition-opacity duration-500 pointer-events-none"
+        className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"
         style={{ 
           background: `radial-gradient(circle at center, ${skill.color} 0%, transparent 70%)` 
         }}
@@ -175,7 +173,6 @@ export default function SkillsPage() {
   const allSkills = portfolioService.getSkills();
   const [activeCategory, setActiveCategory] = useState<string>('all');
   
-  // categories list
   const categories = [
     { id: 'all', label: 'All' },
     { id: 'frontend', label: 'Frontend' },
@@ -195,10 +192,10 @@ export default function SkillsPage() {
         {/* Top Header & Terminal */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
            <div className="space-y-6">
-              <h2 className="text-4xl lg:text-5xl font-bold tracking-tighter">
-                 Professional <span className="text-primary">Skills</span>
+              <h2 className="text-4xl lg:text-5xl font-bold tracking-tighter text-foreground">
+                 Professional <span className="underline decoration-foreground/30 underline-offset-8">Skills</span>
               </h2>
-              <p className="text-xl text-foreground border-l-4 border-primary/50 pl-4 py-1">
+              <p className="text-xl text-muted-foreground border-l-4 border-foreground/40 pl-4 py-1">
                  Technologies I use to bring ideas to life.
               </p>
            </div>
@@ -208,14 +205,14 @@ export default function SkillsPage() {
              whileInView={{ opacity: 1, scale: 1 }}
              viewport={{ once: true }}
            >
-             <Card className="bg-zinc-950/80 border-zinc-800 shadow-2xl overflow-hidden font-mono text-xs md:text-sm backdrop-blur-md">
-               <div className="flex items-center gap-2 px-4 py-3 bg-zinc-900/50 border-b border-zinc-800">
+             <Card className="bg-card/70 border-border/60 shadow-2xl overflow-hidden font-mono text-xs md:text-sm backdrop-blur-md">
+               <div className="flex items-center gap-2 px-4 py-3 bg-secondary/50 border-b border-border/60">
                  <div className="flex gap-1.5">
                    <Circle className="w-3 h-3 fill-red-500/80 text-red-500/80" />
                    <Circle className="w-3 h-3 fill-yellow-500/80 text-yellow-500/80" />
                    <Circle className="w-3 h-3 fill-green-500/80 text-green-500/80" />
                  </div>
-                 <span className="ml-2 text-zinc-500">~/stack/overview</span>
+                 <span className="ml-2 text-muted-foreground text-xs">~/stack/overview</span>
                </div>
                <TerminalContent />
              </Card>
@@ -223,18 +220,18 @@ export default function SkillsPage() {
         </div>
 
         {/* Section divider and main filter interface */}
-        <div className="space-y-8 pt-8 border-t border-primary/10">
+        <div className="space-y-8 pt-8 border-t border-border/40">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-6">
             {/* Category tabs */}
-            <div className="flex flex-wrap gap-2 bg-card/40 border border-primary/10 p-1.5 rounded-xl backdrop-blur-sm">
+            <div className="flex flex-wrap gap-2 bg-card/60 border border-border/60 p-1.5 rounded-xl backdrop-blur-md shadow-sm">
               {categories.map(category => (
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
                   className={`px-4 py-2 rounded-lg text-xs font-semibold tracking-wide uppercase transition-all duration-300 cursor-pointer ${
                     activeCategory === category.id
-                      ? 'bg-primary text-primary-foreground shadow-md'
-                      : 'text-foreground hover:bg-white/5 hover:text-foreground'
+                      ? 'bg-foreground text-background shadow-md'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-foreground/5'
                   }`}
                 >
                   {category.label}

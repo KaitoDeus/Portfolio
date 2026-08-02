@@ -33,7 +33,6 @@ export default function ProjectsPage() {
       result = result.filter(p => p.category === selectedCategory);
     }
 
-    // Sort
     if (sortOrder === 'newest') {
       result.sort((a, b) => new Date(b.startDate || 0).getTime() - new Date(a.startDate || 0).getTime());
     } else if (sortOrder === 'oldest') {
@@ -43,7 +42,6 @@ export default function ProjectsPage() {
     return result;
   }, [projects, sortOrder, selectedCategory]);
 
-  // Set items per page (e.g. 6)
   const ITEMS_PER_PAGE = 6;
   
   const { 
@@ -60,19 +58,19 @@ export default function ProjectsPage() {
     <Section id="projects" title="My Projects">
       {loading ? (
           <div className="flex justify-center items-center h-48">
-             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-foreground"></div>
           </div>
       ) : (
         <>
           {/* Category Tabs */}
-          <div className="flex justify-center mb-12 gap-2">
+          <div className="flex justify-center mb-12 gap-2 flex-wrap px-4">
             {(['all', 'personal', 'school', 'unity'] as const).map(cat => (
               <button
                 key={cat}
-                className={`px-6 py-2 rounded-full font-medium transition-colors ${
+                className={`px-6 py-2 rounded-full font-medium text-sm transition-all duration-300 ${
                   selectedCategory === cat
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted/50 text-muted-foreground hover:bg-muted/80'
+                    ? 'bg-foreground text-background shadow-md scale-105'
+                    : 'bg-card/60 backdrop-blur-md text-muted-foreground border border-border/60 hover:text-foreground hover:bg-card/90'
                 }`}
                 onClick={() => {
                   setSelectedCategory(cat);
@@ -92,7 +90,6 @@ export default function ProjectsPage() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            // We use key here to force re-render/re-animation when page changes
             key={`${currentPage}-${selectedCategory}`} 
           >
             <AnimatePresence mode='popLayout'>
@@ -106,20 +103,20 @@ export default function ProjectsPage() {
                   layout
                   className="h-full"
                 >
-                  <Card className="overflow-hidden border-border bg-card text-card-foreground transition-all relative h-full flex flex-col">
+                  <Card className="overflow-hidden border-border/60 bg-card/60 backdrop-blur-md text-card-foreground transition-all duration-300 hover:border-foreground/40 hover:shadow-xl relative h-full flex flex-col group">
                     <CardContent className="p-4 flex flex-col grow">
-                      <div className="overflow-hidden rounded-lg mb-4">
+                      <div className="overflow-hidden rounded-lg mb-4 bg-secondary/30">
                         <img 
                           src={project.image} 
                           alt={project.title}
                           loading="lazy"
-                          className="w-full h-52 object-fill"
+                          className="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>
-                      <h4 className="text-lg font-semibold mb-2">{project.title}</h4>
+                      <h4 className="text-lg font-bold mb-2 text-foreground">{project.title}</h4>
                       <div className="flex flex-wrap gap-1.5 mb-4 grow content-start">
                         {project.technologies?.map(tech => (
-                          <span key={tech} className="text-[11px] px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground font-medium">
+                          <span key={tech} className="text-[11px] px-2.5 py-0.5 rounded-full bg-secondary/80 text-foreground font-medium border border-border/40">
                             {tech}
                           </span>
                         ))}
@@ -130,13 +127,13 @@ export default function ProjectsPage() {
                             href={project.githubLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground py-2 px-2 rounded-md text-sm font-medium transition-colors"
+                            className="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-foreground py-2 px-2 rounded-lg text-sm font-medium transition-colors border border-border/40"
                           >
                             <Github className="w-4 h-4" />
                             <span>GitHub</span>
                           </a>
                         ) : (
-                          <div className="flex items-center justify-center gap-1.5 bg-muted text-muted-foreground py-2 px-2 rounded-md text-sm font-medium cursor-not-allowed">
+                          <div className="flex items-center justify-center gap-1.5 bg-muted text-muted-foreground py-2 px-2 rounded-lg text-sm font-medium cursor-not-allowed border border-border/30">
                             <Github className="w-4 h-4" />
                             <span>GitHub</span>
                           </div>
@@ -146,13 +143,13 @@ export default function ProjectsPage() {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-1.5 bg-primary/10 hover:bg-primary/20 text-primary py-2 px-2 rounded-md text-sm font-medium transition-colors"
+                            className="flex items-center justify-center gap-1.5 bg-foreground text-background hover:bg-foreground/90 py-2 px-2 rounded-lg text-sm font-medium transition-colors shadow-sm"
                           >
                             <Globe className="w-4 h-4" />
                             <span>Demo</span>
                           </a>
                         ) : (
-                          <div className="flex items-center justify-center gap-1.5 bg-muted text-muted-foreground py-2 px-2 rounded-md text-sm font-medium cursor-not-allowed">
+                          <div className="flex items-center justify-center gap-1.5 bg-muted text-muted-foreground py-2 px-2 rounded-lg text-sm font-medium cursor-not-allowed border border-border/30">
                             <Globe className="w-4 h-4" />
                             <span>Demo</span>
                           </div>

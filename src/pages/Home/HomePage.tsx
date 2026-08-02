@@ -19,17 +19,14 @@ const Typewriter = ({ texts, speed = 100, waitTime = 2000 }: { texts: string[], 
     let timer: ReturnType<typeof setTimeout>;
     const currentText = texts[index];
 
-    // Handle switching modes
     if (!isDeleting && displayText === currentText) {
       timer = setTimeout(() => setIsDeleting(true), waitTime);
     } else if (isDeleting && displayText === '') {
-      // Use setTimeout to avoid synchronous setState in effect body
       timer = setTimeout(() => {
         setIsDeleting(false);
         setIndex((prev) => (prev + 1) % texts.length);
       }, 0);
     } else {
-      // Typing or Deleting logic
       timer = setTimeout(() => {
         setDisplayText(prev => 
           isDeleting 
@@ -43,9 +40,9 @@ const Typewriter = ({ texts, speed = 100, waitTime = 2000 }: { texts: string[], 
   }, [displayText, isDeleting, index, texts, speed, waitTime]);
 
   return (
-    <span className="text-primary font-bold">
+    <span className="text-foreground font-bold border-b-2 border-foreground/30 pb-0.5">
       {displayText}
-      <span className="animate-pulse ml-0.5 border-r-2 border-primary h-8 inline-block align-middle" />
+      <span className="animate-pulse ml-0.5 border-r-2 border-foreground h-8 inline-block align-middle" />
     </span>
   );
 };
@@ -65,7 +62,6 @@ export default function HomePage() {
           element.scrollIntoView({ behavior: 'smooth' });
         }
       }, 100);
-      // Clear state
       window.history.replaceState({}, document.title);
     }
   }, [location]);
@@ -81,18 +77,18 @@ export default function HomePage() {
     <div className="flex flex-col w-full">
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center pt-20 px-[5%] relative overflow-hidden">
-        {/* Background GIF Layer with Fade Out Mask */}
-        <div className="absolute inset-0 z-0 pointer-events-none mask-[linear-gradient(to_bottom,black_60%,transparent_100%)]">
+        {/* Background Layer */}
+        <div className="absolute inset-0 z-0 pointer-events-none mask-[linear-gradient(to_bottom,black_70%,transparent_100%)]">
           <img 
             src={backgroundHero} 
             alt="Background" 
-            className="w-full h-full object-cover opacity-20 filter brightness-50"
+            className="w-full h-full object-cover opacity-10 dark:opacity-25 filter grayscale contrast-125"
           />
-          <div className="absolute inset-0 bg-linear-to-b from-background/60 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-b from-background/70 via-transparent to-background" />
         </div>
 
-        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none z-1" />
-        <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-orange/5 blur-3xl rounded-full -translate-x-1/2 translate-y-1/2 pointer-events-none z-1" />
+        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-foreground/5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none z-1" />
+        <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-foreground/5 blur-3xl rounded-full -translate-x-1/2 translate-y-1/2 pointer-events-none z-1" />
 
         <motion.div 
           className="flex flex-col items-center text-center max-w-4xl relative z-10"
@@ -100,30 +96,22 @@ export default function HomePage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="px-6 py-2 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-semibold tracking-widest uppercase mb-4"
-          >
-            Welcome to my Portfolio
-          </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight mt-4 mb-6">
-              <span className="text-foreground">Hi, I am </span>
-              <span className="text-primary bg-clip-text bg-linear-to-r from-primary to-primary/70">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mt-4 mb-6">
+              <span className="text-muted-foreground font-normal">Hi, I am </span>
+              <span className="text-foreground underline decoration-foreground/30 underline-offset-8">
                 {name}
               </span>
             </h1>
           </motion.div>
 
           {/* Typewriter Effect */}
-          <div className="flex flex-wrap items-center justify-center gap-x-1 text-2xl md:text-3xl lg:text-3xl text-muted-foreground font-medium h-18">
+          <div className="flex flex-wrap items-center justify-center gap-x-2 text-2xl md:text-3xl lg:text-3xl text-muted-foreground font-medium h-18">
              <span>I'm a </span>
              <Typewriter texts={roles} />
           </div>
@@ -140,7 +128,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 mt-12 flex-wrap justify-center w-full px-4 sm:px-0">
             <Button 
               size="lg" 
-               className="shadow-xl shadow-primary/20 text-lg py-7 px-10 rounded-full w-full sm:w-auto hover:scale-105 transition-all"
+              className="bg-foreground text-background hover:bg-foreground/80 font-bold text-base py-6 px-10 rounded-full w-full sm:w-auto hover:scale-105 transition-all shadow-xl"
               onClick={() => scrollToSection('skills')}
             >
               View my Skills
@@ -155,9 +143,9 @@ export default function HomePage() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
         >
-          <div className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center p-1">
+          <div className="w-6 h-10 border-2 border-border/60 rounded-full flex justify-center p-1 backdrop-blur-sm">
             <motion.div 
-              className="w-1.5 h-1.5 bg-primary rounded-full"
+              className="w-1.5 h-1.5 bg-foreground rounded-full"
               animate={{ y: [0, 15, 0] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
             />

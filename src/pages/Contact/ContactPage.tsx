@@ -9,7 +9,6 @@ import Section from '@/components/common/Section';
 import { chatService, IChatHistory } from '@/core/services/ChatService';
 import modelAvatar from '@/assets/img/avt/model.webp';
 
-
 const socialIcons: Record<string, React.ElementType> = {
   github: Github,
   linkedin: Linkedin,
@@ -21,7 +20,6 @@ const ChatMessage = ({ sender, text, timestamp }: { sender: 'me' | 'visitor', te
   
   const parseText = (content: string) => {
     return content.split('\n').map((line, i) => {
-      // Check for links
       const urlRegex = /(https?:\/\/[^\s]+|mailto:[^\s]+)/g;
       const parts = line.split(urlRegex);
       
@@ -42,7 +40,7 @@ const ChatMessage = ({ sender, text, timestamp }: { sender: 'me' | 'visitor', te
                   href={part} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-cyan-400 hover:text-cyan-300 underline font-semibold inline-flex items-center gap-1 transition-colors"
+                  className="underline font-bold inline-flex items-center gap-1 transition-colors hover:opacity-80"
                 >
                   <Icon size={12} />
                   {displayUrl}
@@ -63,13 +61,15 @@ const ChatMessage = ({ sender, text, timestamp }: { sender: 'me' | 'visitor', te
       className={`flex ${isMe ? 'justify-start' : 'justify-end'} mb-4`}
     >
       <div className={`flex max-w-[85%] ${isMe ? 'flex-row' : 'flex-row-reverse'} items-end gap-2`}>
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${isMe ? 'bg-cyan-500/20 text-cyan-400' : 'bg-white/10 text-white/50'}`}>
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+          isMe ? 'bg-foreground/10 text-foreground' : 'bg-foreground text-background'
+        }`}>
           {isMe ? <Bot size={16} /> : <User size={16} />}
         </div>
         <div className={`px-4 py-3 rounded-2xl text-sm ${
           isMe 
-            ? 'bg-secondary/50 text-white rounded-bl-none border border-white/5 shadow-inner' 
-            : 'bg-cyan-500 text-black font-medium rounded-br-none shadow-lg shadow-cyan-500/20'
+            ? 'bg-secondary/60 text-foreground rounded-bl-none border border-border/40 backdrop-blur-sm' 
+            : 'bg-foreground text-background font-medium rounded-br-none shadow-md'
         }`}>
           <div className="space-y-1">
             {parseText(text)}
@@ -116,13 +116,11 @@ export default function ContactPage() {
     setIsLoading(true);
 
     try {
-      // Prepare history for AI
       const history: IChatHistory[] = messages.map(m => ({
         role: m.sender === 'visitor' ? 'user' : 'assistant',
         content: m.text
       }));
 
-      // Create a system prompt describing the portfolio owner
       const systemPrompt = `You are a helpful AI assistant for ${name}'s portfolio (English: Khai, Vietnamese: Khải). 
       Your goal is to provide helpful, polite, and detailed information about Khải's skills, projects, and professional background.
 
@@ -179,17 +177,17 @@ export default function ContactPage() {
             transition={{ duration: 0.6 }}
           >
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-4">
-                <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/80 border border-border/60 text-foreground text-[10px] font-bold uppercase tracking-widest mb-4">
+                <div className="w-1.5 h-1.5 rounded-full bg-foreground animate-pulse" />
                 Available for hire
               </div>
-              <h2 className="text-5xl lg:text-7xl font-extrabold mb-8 tracking-tighter leading-none text-white">
+              <h2 className="text-5xl lg:text-7xl font-extrabold mb-8 tracking-tighter leading-none text-foreground">
                 Connect with me!
               </h2>
             </div>
 
             <div className="space-y-6">
-              <p className="text-sm font-bold uppercase tracking-[0.3em] text-cyan-400/50">Follow Me</p>
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground">Follow Me</p>
               <div className="flex flex-wrap gap-4">
                 {socialLinks.map((link) => {
                   const Icon = socialIcons[link.platform.toLowerCase()] || Github;
@@ -199,29 +197,29 @@ export default function ContactPage() {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex items-center justify-center w-14 h-14 rounded-2xl bg-secondary/20 border border-white/5 hover:border-cyan-400/50 hover:bg-cyan-400/10 transition-all duration-300 shadow-lg"
+                      className="group flex items-center justify-center w-14 h-14 rounded-2xl bg-card/60 border border-border/60 hover:border-foreground/60 hover:bg-foreground/10 backdrop-blur-md transition-all duration-300 shadow-lg"
                       title={link.platform}
                     >
-                      <Icon className="w-6 h-6 text-muted-foreground group-hover:text-cyan-400 group-hover:scale-110 transition-all" />
+                      <Icon className="w-6 h-6 text-muted-foreground group-hover:text-foreground group-hover:scale-110 transition-all" />
                     </a>
                   );
                 })}
               </div>
             </div>
 
-            <div className="pt-10 border-t border-white/10 space-y-6">
+            <div className="pt-10 border-t border-border/40 space-y-6">
                <div className="space-y-4">
-                 <p className="text-2xl font-black tracking-tighter text-white">
-                    {name} <span className="text-cyan-400/30 font-thin mx-3">/</span> © {currentYear}
+                 <p className="text-2xl font-black tracking-tighter text-foreground">
+                    {name} <span className="opacity-30 font-thin mx-3">/</span> © {currentYear}
                  </p>
                  <div className="flex flex-wrap items-center gap-3 text-[10px] font-bold text-muted-foreground uppercase tracking-[0.3em]">
                     <span>Built with</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-white">React</span>
-                      <span className="w-1 h-1 rounded-full bg-cyan-400" />
-                      <span className="text-white">TypeScript</span>
-                      <span className="w-1 h-1 rounded-full bg-cyan-400" />
-                      <span className="text-white">Tailwind</span>
+                      <span className="text-foreground">React</span>
+                      <span className="w-1 h-1 rounded-full bg-foreground/40" />
+                      <span className="text-foreground">TypeScript</span>
+                      <span className="w-1 h-1 rounded-full bg-foreground/40" />
+                      <span className="text-foreground">Tailwind</span>
                     </div>
                  </div>
                </div>
@@ -236,10 +234,10 @@ export default function ContactPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Card className="border-white/5 bg-[#0d0d1a]/80 backdrop-blur-2xl shadow-2xl rounded-[2.5rem] overflow-hidden">
+            <Card className="border-border/60 bg-card/70 backdrop-blur-2xl shadow-2xl rounded-[2.5rem] overflow-hidden">
               <CardContent className="p-0 flex flex-col h-125 relative">
                 
-                {/* Empty State / Background Text */}
+                {/* Empty State */}
                 {messages.length === 0 && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none gap-8 pb-16">
                     <motion.div
@@ -248,14 +246,14 @@ export default function ContactPage() {
                       transition={{ duration: 0.8, ease: "easeOut" }}
                       className="relative"
                     >
-                      <div className="absolute -inset-4 bg-cyan-500/10 rounded-full blur-2xl animate-pulse" />
+                      <div className="absolute -inset-4 bg-foreground/5 rounded-full blur-2xl animate-pulse" />
                       <img 
                         src={modelAvatar} 
                         alt="Model" 
-                        className="w-32 h-32 object-cover rounded-full border-4 border-white/5 relative z-10 shadow-2xl" 
+                        className="w-32 h-32 object-cover rounded-full border-4 border-border/60 relative z-10 shadow-2xl" 
                       />
                     </motion.div>
-                    <p className="text-xl font-medium text-white/20 tracking-tight">Ask me anything about {name.split(' ').pop()}...</p>
+                    <p className="text-xl font-medium text-muted-foreground/60 tracking-tight">Ask me anything about {name.split(' ').pop()}...</p>
                   </div>
                 )}
 
@@ -272,10 +270,10 @@ export default function ContactPage() {
                         className="flex justify-start mb-4"
                       >
                          <div className="flex flex-row items-center gap-2">
-                           <div className="w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
+                           <div className="w-8 h-8 rounded-full bg-foreground/10 text-foreground flex items-center justify-center">
                               <Bot size={16} />
                            </div>
-                           <div className="px-4 py-2 rounded-2xl bg-secondary/50 text-white/50 text-xs italic">
+                           <div className="px-4 py-2 rounded-2xl bg-secondary/60 text-muted-foreground text-xs italic border border-border/40">
                               Typing...
                            </div>
                          </div>
@@ -292,7 +290,7 @@ export default function ContactPage() {
                       <button
                         key={suggestion}
                         onClick={() => sendMessage(suggestion)}
-                        className="px-5 py-2 rounded-full bg-white/3 border border-white/10 text-xs font-medium text-white/60 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                        className="px-5 py-2 rounded-full bg-secondary/60 border border-border/60 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary hover:border-foreground/30 transition-all duration-300"
                       >
                         {suggestion}
                       </button>
@@ -302,16 +300,16 @@ export default function ContactPage() {
                   <form onSubmit={handleSendMessage} className="relative group">
                     <Input 
                       placeholder={`Ask anything about ${name.split(' ').pop()}...`}
-                      className="bg-black/40 border border-white/5 group-hover:border-white/10 focus:border-cyan-500/30 focus-visible:ring-0 focus-visible:ring-offset-0 h-14 pl-8 pr-16 rounded-full text-white placeholder:text-white/20 transition-all duration-500 shadow-inner"
+                      className="bg-background/60 border border-border/60 group-hover:border-foreground/30 focus:border-foreground/50 focus-visible:ring-0 focus-visible:ring-offset-0 h-14 pl-8 pr-16 rounded-full text-foreground placeholder:text-muted-foreground/50 transition-all duration-500 shadow-inner"
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
                     />
                     <Button 
                       type="submit"
                       disabled={!inputValue.trim() || isLoading}
-                      className="absolute right-2 top-1.5 w-11 h-11 rounded-full bg-transparent hover:bg-white/5 text-cyan-400 p-0 transition-all active:scale-95"
+                      className="absolute right-2 top-1.5 w-11 h-11 rounded-full bg-foreground text-background hover:bg-foreground/80 p-0 transition-all active:scale-95 shadow-md"
                     >
-                      <Send size={20} />
+                      <Send size={18} />
                     </Button>
                   </form>
                 </div>
@@ -324,6 +322,3 @@ export default function ContactPage() {
     </Section>
   );
 }
-
-
-
