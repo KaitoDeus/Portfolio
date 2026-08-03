@@ -1,5 +1,4 @@
-import { useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef } from 'react';
 import {
   Gamepad2,
   Code,
@@ -13,14 +12,15 @@ import {
   Music,
   BookOpen,
   CircleDot,
-  X,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 import { portfolioService } from '@/core/services/PortfolioService';
-import { ITimelineItem, ICertificate } from '@/core/models/PortfolioModels';
+import { ICertificate } from '@/core/models/PortfolioModels';
 import Section from '@/components/common/Section';
+import { TimelineCard } from './components/TimelineCard';
+import { CertModal } from './components/CertModal';
 
 const hobbyIcons: Record<string, React.ElementType> = {
   game: Gamepad2,
@@ -125,7 +125,7 @@ export default function AboutPage() {
           <InfoCard>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-foreground font-bold">
-                <Gamepad2 className="w-5 h-5" /> Hobbies
+                <Gamepad2 className="w-5 h-5" /> Interests & Hobbies
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -135,8 +135,8 @@ export default function AboutPage() {
                   return (
                     <Badge
                       key={index}
-                      variant="outline"
-                      className="py-2 px-3 hover:bg-foreground hover:text-background transition-colors cursor-default border-border/60 bg-card/40 backdrop-blur-sm"
+                      variant="secondary"
+                      className="px-3.5 py-1.5 text-xs font-semibold bg-secondary/50 border border-border/40 text-foreground hover:bg-secondary transition-colors"
                     >
                       <Icon className="w-4 h-4 mr-1" />
                       {hobby.title}
@@ -202,44 +202,10 @@ export default function AboutPage() {
       </div>
 
       {/* Certificate Modal */}
-      <AnimatePresence>
-        {selectedCert && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md"
-            onClick={() => setSelectedCert(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="relative max-w-5xl w-full bg-card rounded-2xl overflow-hidden shadow-2xl border border-border"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="p-4 border-b border-border/60 flex justify-between items-center">
-                <h3 className="text-xl font-bold text-foreground">{selectedCert.title}</h3>
-                <button 
-                  onClick={() => setSelectedCert(null)}
-                  className="p-2 hover:bg-secondary rounded-full transition-colors text-muted-foreground hover:text-foreground"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-              <div className="p-4 bg-background/40">
-                <img 
-                  src={selectedCert.image} 
-                  alt={selectedCert.title} 
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-auto max-h-[80vh] object-contain mx-auto rounded-lg"
-                />
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <CertModal
+        selectedCert={selectedCert}
+        onClose={() => setSelectedCert(null)}
+      />
     </Section>
   );
 }
@@ -264,93 +230,6 @@ function InfoRow({ label, value }: { label: string; value: string }) {
     <div>
       <span className="text-muted-foreground text-sm">{label}</span>
       <p className="font-medium text-foreground">{value}</p>
-    </div>
-  );
-}
-
-function TimelineCard({
-  title,
-  icon: Icon,
-  items,
-  colorClass,
-}: {
-  title: string;
-  icon: React.ElementType;
-  items: ITimelineItem[];
-  colorClass: string;
-}) {
-  return (
-    <div>
-      <Card className="h-full border-border/60 bg-card/60 backdrop-blur-md">
-        <CardHeader>
-          <CardTitle className={`flex items-center gap-2 font-bold ${colorClass}`}>
-            <Icon className="w-6 h-6" /> {title}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-8">
-          {items.map((item, index) => (
-            <div key={index} className="flex gap-4 group">
-              <div className="shrink-0">
-                <div
-                  className={`w-16 h-16 rounded-xl flex items-center justify-center transition-colors overflow-hidden ${
-                    item.logo
-                      ? 'bg-transparent'
-                      : 'bg-secondary/40 border border-border/40 group-hover:border-foreground/40'
-                  }`}
-                >
-                  {item.logo ? (
-                    <img
-                      src={item.logo}
-                      alt={item.title || ''}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-contain"
-                    />
-                  ) : (
-                    <Icon className="w-8 h-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                  )}
-                </div>
-              </div>
-
-              <div className="grow space-y-1">
-                <h4 className="text-lg font-bold group-hover:text-foreground transition-colors leading-tight">
-                  {item.title}
-                </h4>
-
-                {item.subtitle && (
-                  <p className="text-muted-foreground text-sm font-medium">
-                    {item.subtitle}
-                  </p>
-                )}
-
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <span className="font-semibold">{item.year}</span>
-                </div>
-
-                {item.extra && (
-                  <p className="text-sm font-medium text-foreground/90 whitespace-pre-wrap">
-                    {item.extra}
-                  </p>
-                )}
-
-                {item.details && item.details.length > 0 && (
-                  <ul className="mt-3 space-y-1">
-                    {item.details.map((detail: string, dIdx: number) => (
-                      <li
-                        key={dIdx}
-                        className="text-sm text-muted-foreground flex items-center gap-2"
-                      >
-                        <div className="w-1 h-1 rounded-full bg-foreground/50 shrink-0" />
-                        {detail}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
     </div>
   );
 }

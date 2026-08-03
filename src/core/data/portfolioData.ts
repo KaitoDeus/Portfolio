@@ -7,16 +7,15 @@ import aiFluencyFramework from '@/assets/img/cert/Al-Fluency-Framework-Foundatio
 import logoUTH from '@/assets/logo/logo-UTH.webp';
 import logoCDN from '@/assets/logo/Logo-CĐN.webp';
 
-import projectCaro from '@/assets/img/proj/project_caro.webp';
-import projectEvWarranty from '@/assets/img/proj/project_evwarranty.webp';
-import projectPhotoPalette from '@/assets/img/proj/project_photopalette.webp';
-import projectNeoShop from '@/assets/img/proj/project_neoshop.webp';
-import projectFarmerStore from '@/assets/img/proj/project_farmerstore.webp';
-import projectChristmas from '@/assets/img/proj/project_christmas.webp';
-import projectMedicare from '@/assets/img/proj/project_medicare.webp';
-import projectUthwm from '@/assets/img/proj/project_uthwm.webp';
-import projectTeliViettel from '@/assets/img/proj/project_teli-viettel.webp';
-import projectFirst2DGame from '@/assets/img/proj/project_first2dgame.webp';
+import {
+  projectCaro,
+  projectPhotoPalette,
+  projectNeoShop,
+  projectMedicare,
+  projectUthwm,
+  projectTeliViettel,
+  projectFirst2DGame,
+} from '@/assets/img/proj';
 
 export const portfolioData: IPortfolioData = {
   name: 'Anh Khai',
@@ -79,7 +78,7 @@ export const portfolioData: IPortfolioData = {
       location: 'Hồ Chí Minh',
       subtitle: 'Intermediate Degree, IT (Software Application)',
       logo: logoCDN,
-      extra: '',
+      extra: "Graduation Project: [FARMER KUN's STORE](https://kenkaneki395.wixsite.com/site)",
       details: [],
     },
   ],
@@ -93,12 +92,11 @@ export const portfolioData: IPortfolioData = {
       extra: `HEART of CLASSY - Handbag E-Commerce Website
 - In progress (Jun 01 2026 - Aug 30 2026)
 
-TELI Viettel - Digital Learning Platform
+[TELI Viettel](https://teli-viettel.vercel.app/) - Digital Learning Platform
 - Academic project developed for the Project Management course at Van Lang University
 - Built an AI-powered web platform to help teachers in remote areas generate teaching materials more efficiently
 - Collaborated on the project from Mar 13 - Mar 23, 2026, in an agile team environment
-- Applied Figma MCP to ensure code closely matched the original design specifications
-- Live Demo: https://teli-viettel.vercel.app/`,
+- Applied Figma MCP to ensure code closely matched the original design specifications`,
     },
   ],
   skills: [
@@ -151,14 +149,7 @@ TELI Viettel - Digital Learning Platform
       level: 'Advanced',
       description: 'Utility-first, Responsive Layouts',
     },
-    {
-      name: 'Three.js',
-      icon: 'threejs',
-      color: '#ffffff',
-      category: 'frontend',
-      level: 'Intermediate',
-      description: '3D Web Experiences, WebGL',
-    },
+
 
     // Backend
     {
@@ -193,22 +184,7 @@ TELI Viettel - Digital Learning Platform
       level: 'Intermediate',
       description: 'Enterprise Framework, CLR',
     },
-    {
-      name: 'Python',
-      icon: 'python',
-      color: '#3776AB',
-      category: 'backend',
-      level: 'Intermediate',
-      description: 'Data Science, FastAPI, Automation',
-    },
-    {
-      name: 'FastAPI',
-      icon: 'fastapi',
-      color: '#05998B',
-      category: 'backend',
-      level: 'Intermediate',
-      description: 'High Performance Python Backend',
-    },
+
     {
       name: 'NodeJS',
       icon: 'nodejs',
@@ -285,14 +261,7 @@ TELI Viettel - Digital Learning Platform
       level: 'Advanced',
       description: 'Modern Frontend Build Tool',
     },
-    {
-      name: 'MediaPipe AI',
-      icon: 'mediapipe',
-      color: '#0070F3',
-      category: 'devops',
-      level: 'Beginner',
-      description: 'On-device Machine Learning',
-    },
+
     {
       name: 'Velo (Wix)',
       icon: 'wix',
@@ -375,30 +344,7 @@ TELI Viettel - Digital Learning Platform
       startDate: '2026-01-22',
       category: 'personal',
     },
-    {
-      id: 'merry-christmas',
-      title: 'Merry Christmas 3D AI',
-      image: projectChristmas,
-      role: 'Interactive 3D Website',
-      link: 'https://merry-christmas-khai-25.vercel.app',
-      githubLink: 'https://github.com/KaitoDeus/Merry-Christmas-25',
-      status: 'completed',
-      technologies: ['Three.js', 'Python', 'FastAPI', 'MediaPipe AI'],
-      startDate: '2025-12-24',
-      category: 'personal',
-    },
-    {
-      id: 'ev-warranty',
-      title: 'EV Warranty System',
-      image: projectEvWarranty,
-      role: 'Dashboard Web Application',
-      link: 'https://ev-warranty-system.up.railway.app/',
-      githubLink: 'https://github.com/KaitoDeus/EV-Warranty-System',
-      status: 'completed',
-      technologies: ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'],
-      startDate: '2025-12-19',
-      category: 'school',
-    },
+
     {
       id: 'caro',
       title: 'Game Caro',
@@ -435,18 +381,7 @@ TELI Viettel - Digital Learning Platform
       startDate: '2024-12-19',
       category: 'school',
     },
-    {
-      id: 'famer-kun',
-      title: 'FAMER-KUN Store',
-      image: projectFarmerStore,
-      role: 'E-commerce Web Application',
-      link: 'https://kenkaneki395.wixsite.com/site',
-      githubLink: 'https://github.com/KaitoDeus/FAMER-KUN.Store',
-      status: 'completed',
-      technologies: ['Velo', 'JavaScript', 'Wix'],
-      startDate: '2022-05-01',
-      category: 'school',
-    },
+
     {
       id: 'first-2d-game',
       title: 'First 2D Game Tutorial',

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Github, Linkedin, Mail, User, Bot, ExternalLink } from 'lucide-react';
+import { Send, Github, Linkedin, Mail, Bot } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,78 +9,12 @@ import Section from '@/components/common/Section';
 import { chatService, IChatHistory } from '@/core/services/ChatService';
 import modelAvatar from '@/assets/img/avt/model.webp';
 
+import { ChatMessage } from './components/ChatMessage';
+
 const socialIcons: Record<string, React.ElementType> = {
   github: Github,
   linkedin: Linkedin,
   mail: Mail,
-};
-
-const ChatMessage = ({ sender, text, timestamp }: { sender: 'me' | 'visitor', text: string, timestamp: string }) => {
-  const isMe = sender === 'me';
-  
-  const parseText = (content: string) => {
-    return content.split('\n').map((line, i) => {
-      const urlRegex = /(https?:\/\/[^\s]+|mailto:[^\s]+)/g;
-      const parts = line.split(urlRegex);
-      
-      return (
-        <div key={i} className="min-h-[1.5em] flex flex-wrap items-center gap-x-1">
-          {parts.map((part, j) => {
-            if (part.match(urlRegex)) {
-              const isMail = part.startsWith('mailto:');
-              const displayUrl = part.replace('mailto:', '');
-              let Icon = ExternalLink;
-              if (part.includes('linkedin')) Icon = Linkedin;
-              else if (part.includes('github')) Icon = Github;
-              else if (isMail) Icon = Mail;
-
-              return (
-                <a 
-                  key={j} 
-                  href={part} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="underline font-bold inline-flex items-center gap-1 transition-colors hover:opacity-80"
-                >
-                  <Icon size={12} />
-                  {displayUrl}
-                </a>
-              );
-            }
-            return part;
-          })}
-        </div>
-      );
-    });
-  };
-
-  return (
-    <motion.div 
-      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      className={`flex ${isMe ? 'justify-start' : 'justify-end'} mb-4`}
-    >
-      <div className={`flex max-w-[85%] ${isMe ? 'flex-row' : 'flex-row-reverse'} items-end gap-2`}>
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-          isMe ? 'bg-foreground/10 text-foreground' : 'bg-foreground text-background'
-        }`}>
-          {isMe ? <Bot size={16} /> : <User size={16} />}
-        </div>
-        <div className={`px-4 py-3 rounded-2xl text-sm ${
-          isMe 
-            ? 'bg-secondary/60 text-foreground rounded-bl-none border border-border/40 backdrop-blur-sm' 
-            : 'bg-foreground text-background font-medium rounded-br-none shadow-md'
-        }`}>
-          <div className="space-y-1">
-            {parseText(text)}
-          </div>
-          <div className={`text-[10px] mt-2 opacity-50 ${isMe ? 'text-left' : 'text-right'}`}>
-            {timestamp}
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
 };
 
 export default function ContactPage() {

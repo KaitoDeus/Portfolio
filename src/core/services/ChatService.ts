@@ -1,3 +1,5 @@
+import { AI_CONFIG } from '@/core/config/aiConfig';
+
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 export interface IChatHistory {
@@ -23,7 +25,7 @@ export const chatService = {
         parts: [{ text: message }]
       });
 
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+      const response = await fetch(`${AI_CONFIG.BASE_URL}/${AI_CONFIG.MODEL}:generateContent?key=${GEMINI_API_KEY}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,10 +35,7 @@ export const chatService = {
           systemInstruction: systemPrompt ? {
             parts: [{ text: systemPrompt }]
           } : undefined,
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 512,
-          }
+          generationConfig: AI_CONFIG.GENERATION_CONFIG
         })
       });
 
