@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useRef } from 'react';
 import {
   Gamepad2,
@@ -19,6 +21,7 @@ import { Badge } from '@/components/ui/badge';
 import { portfolioService } from '@/core/services/PortfolioService';
 import { ICertificate } from '@/core/models/PortfolioModels';
 import Section from '@/components/common/Section';
+import { getImageSrc } from '@/shared/lib/utils';
 import { TimelineCard } from './components/TimelineCard';
 import { CertModal } from './components/CertModal';
 
@@ -45,13 +48,15 @@ export default function AboutPage() {
   const targetRef = useRef(null);
   const [selectedCert, setSelectedCert] = useState<ICertificate | null>(null);
 
+  const avatarSrc = getImageSrc(avatars.about);
+
   return (
     <Section id="about" title="About Me">
       <div className="max-w-6xl mx-auto space-y-12 relative" ref={targetRef}>
         {/* Hero Bio Section */}
         <div className="flex flex-col lg:flex-row items-center gap-10">
           <img
-            src={avatars.about}
+            src={avatarSrc}
             alt="Profile"
             loading="lazy"
             decoding="async"
@@ -159,26 +164,32 @@ export default function AboutPage() {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {certificates.map((cert, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-4 p-4 rounded-xl bg-secondary/40 border border-border/40 hover:bg-secondary/70 transition-all cursor-pointer group/cert"
-                      onClick={() => setSelectedCert(cert)}
-                    >
-                      <div className="w-24 h-16 rounded-lg overflow-hidden bg-background/80 border border-border/40 group-hover/cert:border-foreground/40 transition-colors">
-                        <img
-                          src={cert.image}
-                          alt={cert.title}
-                          loading="lazy"
-                          decoding="async"
-                          className="w-full h-full object-contain"
-                        />
+                  {certificates.map((cert, index) => {
+                    const certImgSrc = getImageSrc(cert.image);
+
+                    return (
+                      <div
+                        key={index}
+                        className="flex items-center gap-4 p-4 rounded-xl bg-secondary/40 border border-border/40 hover:bg-secondary/70 transition-all cursor-pointer group/cert"
+                        onClick={() => setSelectedCert(cert)}
+                      >
+                        <div className="w-24 h-16 rounded-lg overflow-hidden bg-background/80 border border-border/40 group-hover/cert:border-foreground/40 transition-colors">
+                          <img
+                            src={certImgSrc}
+                            alt={cert.title}
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-foreground group-hover/cert:underline transition-colors">
+                            {cert.title}
+                          </h4>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-foreground group-hover/cert:underline transition-colors">{cert.title}</h4>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>

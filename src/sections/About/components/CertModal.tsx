@@ -1,6 +1,9 @@
+'use client';
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { ICertificate } from '@/core/models/PortfolioModels';
+import { getImageSrc } from '@/shared/lib/utils';
 
 interface ICertModalProps {
   selectedCert: ICertificate | null;
@@ -27,17 +30,18 @@ export function CertModal({ selectedCert, onClose }: ICertModalProps) {
           >
             <div className="p-4 border-b border-border/60 flex justify-between items-center">
               <h3 className="text-xl font-bold text-foreground">{selectedCert.title}</h3>
-              <button 
+              <button
                 onClick={onClose}
+                aria-label="Close modal"
                 className="p-2 hover:bg-secondary rounded-full transition-colors text-muted-foreground hover:text-foreground"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
             <div className="p-4 bg-background/40">
-              <img 
-                src={selectedCert.image} 
-                alt={selectedCert.title} 
+              <img
+                src={getImageSrc(selectedCert.image)}
+                alt={selectedCert.title}
                 loading="lazy"
                 decoding="async"
                 className="w-full h-auto max-h-[80vh] object-contain mx-auto rounded-lg"

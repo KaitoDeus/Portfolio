@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Github, Linkedin, Mail, Bot } from 'lucide-react';
@@ -8,6 +10,7 @@ import { portfolioService } from '@/core/services/PortfolioService';
 import Section from '@/components/common/Section';
 import { chatService, IChatHistory } from '@/core/services/ChatService';
 import modelAvatar from '@/assets/img/avt/model.webp';
+import { getImageSrc } from '@/shared/lib/utils';
 
 import { ChatMessage } from './components/ChatMessage';
 
@@ -24,6 +27,8 @@ export default function ContactPage() {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  const modelAvatarSrc = getImageSrc(modelAvatar);
 
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -105,7 +110,6 @@ export default function ContactPage() {
           {/* Left Content: Intro & Socials */}
           <div className="lg:col-span-5 space-y-10 lg:pt-4">
             <div>
-
               <h2 className="text-5xl lg:text-7xl font-extrabold mb-8 tracking-tighter leading-none text-foreground">
                 Connect with me!
               </h2>
@@ -141,7 +145,7 @@ export default function ContactPage() {
                  <div className="flex flex-wrap items-center gap-3 text-[10px] font-bold text-muted-foreground uppercase tracking-[0.3em]">
                     <span>Built with</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-foreground">React</span>
+                      <span className="text-foreground">Next.js</span>
                       <span className="w-1 h-1 rounded-full bg-foreground/40" />
                       <span className="text-foreground">TypeScript</span>
                       <span className="w-1 h-1 rounded-full bg-foreground/40" />
@@ -162,7 +166,7 @@ export default function ContactPage() {
                   <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none gap-8 pb-16">
                     <div className="relative">
                       <img 
-                        src={modelAvatar} 
+                        src={modelAvatarSrc} 
                         alt="Model" 
                         loading="lazy"
                         decoding="async"

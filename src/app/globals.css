@@ -87,7 +87,6 @@ html, body {
   scroll-padding-top: 80px;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-  font-family: "Montserrat", "Inter", sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -120,8 +119,6 @@ button {
   }
 }
 
-
-
 /* Infinite Marquee Animation */
 @keyframes marquee {
   0% {
@@ -137,6 +134,3 @@ button {
   width: max-content;
   animation: marquee 35s linear infinite;
 }
-
-
-

@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, User, Bot, ExternalLink } from 'lucide-react';
 
@@ -18,7 +20,7 @@ export const ChatMessage = ({ sender, text, timestamp }: IChatMessageProps) => {
       return (
         <div key={i} className="min-h-[1.5em] flex flex-wrap items-center gap-x-1">
           {parts.map((part, j) => {
-            if (part.match(urlRegex)) {
+            if (part && part.match(urlRegex)) {
               const isMail = part.startsWith('mailto:');
               const displayUrl = part.replace('mailto:', '');
               let Icon = ExternalLink;

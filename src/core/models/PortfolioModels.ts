@@ -1,3 +1,7 @@
+import type { StaticImageData } from 'next/image';
+
+export type ImageSource = string | StaticImageData;
+
 export interface ISocialLink {
   platform: string;
   url: string;
@@ -15,7 +19,7 @@ export interface IPersonalInfo {
 export interface IProject {
   id: string;
   title: string;
-  image: string;
+  image: ImageSource;
   role: string;
   link: string;
   githubLink: string;
@@ -36,7 +40,7 @@ export interface ISkill {
 
 export interface ICertificate {
   title: string;
-  image: string;
+  image: ImageSource;
   rating: number;
   status: string;
 }
@@ -52,7 +56,7 @@ export interface ITimelineItem {
   location: string | null;
   subtitle?: string | null;
   extra?: string | null;
-  logo?: string;
+  logo?: ImageSource;
   details?: string[];
 }
 
@@ -61,7 +65,7 @@ export interface IPortfolioData {
   roles: string[];
   tagline: string;
   bio: string;
-  avatars: { hero: string; about: string; skills: string; contact: string };
+  avatars: { hero: ImageSource; about: ImageSource; skills: ImageSource; contact: ImageSource };
   socialLinks: ISocialLink[];
   personalInfo: IPersonalInfo;
   hobbies: IHobby[];

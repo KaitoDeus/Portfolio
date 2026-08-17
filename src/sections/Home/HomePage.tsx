@@ -1,13 +1,12 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+'use client';
+
+import { useState, useEffect } from 'react';
 import { portfolioService } from '@/core/services/PortfolioService';
 import { Button } from '@/components/ui/button';
-import { usePageTitle } from '@/shared/hooks/usePageTitle';
-import { useLocation } from 'react-router-dom';
-
-const AboutPage = lazy(() => import('../About/AboutPage'));
-const SkillsPage = lazy(() => import('../Skills/SkillsPage'));
-const ProjectsPage = lazy(() => import('../Projects/ProjectsPage'));
-const ContactPage = lazy(() => import('../Contact/ContactPage'));
+import AboutPage from '../About/AboutPage';
+import SkillsPage from '../Skills/SkillsPage';
+import ProjectsPage from '../Projects/ProjectsPage';
+import ContactPage from '../Contact/ContactPage';
 
 const Typewriter = ({ texts, speed = 80, waitTime = 1800 }: { texts: string[], speed?: number, waitTime?: number }) => {
   const [displayText, setDisplayText] = useState('');
@@ -47,24 +46,7 @@ const Typewriter = ({ texts, speed = 80, waitTime = 1800 }: { texts: string[], s
 };
 
 export default function HomePage() {
-  usePageTitle('Portfolio');
-  const location = useLocation();
-
   const { name, roles } = portfolioService.getRawData();
-
-  useEffect(() => {
-    if (location.state?.scrollTo) {
-      const id = location.state.scrollTo;
-      const timer = setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-      window.history.replaceState({}, document.title);
-      return () => clearTimeout(timer);
-    }
-  }, [location]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -89,12 +71,12 @@ export default function HomePage() {
 
           {/* Typewriter Effect */}
           <div className="flex flex-wrap items-center justify-center gap-x-2 text-2xl md:text-3xl lg:text-3xl text-muted-foreground font-medium h-18">
-             <span>I'm a </span>
+             <span>I&apos;m a </span>
              <Typewriter texts={roles} />
           </div>
 
           <p className="mt-4 text-muted-foreground italic text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
-            "The best way to predict the future is to create it."
+            &ldquo;The best way to predict the future is to create it.&rdquo;
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mt-12 flex-wrap justify-center w-full px-4 sm:px-0">
@@ -110,12 +92,10 @@ export default function HomePage() {
       </section>
 
       {/* Other Sections */}
-      <Suspense fallback={null}>
-        <AboutPage />
-        <SkillsPage />
-        <ProjectsPage />
-        <ContactPage />
-      </Suspense>
+      <AboutPage />
+      <SkillsPage />
+      <ProjectsPage />
+      <ContactPage />
     </div>
   );
 }
