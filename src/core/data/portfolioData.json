@@ -1,0 +1,317 @@
+{
+  "name": "Anh Khai",
+  "roles": [
+    "Software Developer"
+  ],
+  "tagline": "I'm a",
+  "bio": "Third-year IT student with practical experience in software and game development. Experienced in building desktop applications, web applications, and game projects using modern development technologies. Seeking a Software Developer Internship to contribute, learn, and grow in a professional engineering environment.",
+  "avatars": {
+    "hero": "/src/assets/img/avt/avatar.webp",
+    "about": "/src/assets/img/avt/avatar.webp",
+    "skills": "/src/assets/img/avt/avatar.webp",
+    "contact": "/src/assets/img/avt/avatar.webp"
+  },
+  "socialLinks": [
+    {
+      "platform": "linkedin",
+      "url": "https://www.linkedin.com/in/kaitodeus/?locale=en_US",
+      "label": "LinkedIn Profile"
+    },
+    {
+      "platform": "github",
+      "url": "https://github.com/KaitoDeus",
+      "label": "GitHub Profile"
+    },
+    {
+      "platform": "mail",
+      "url": "mailto:khaivo300605@gmail.com",
+      "label": "Email Me"
+    }
+  ],
+  "personalInfo": {
+    "fullname": "Vo Anh Khai",
+    "dateOfBirth": "30/06/2005",
+    "gender": "Male",
+    "address": "Gia Dinh Ward, HCMC",
+    "careerObjective": ""
+  },
+  "hobbies": [
+    { "icon": "game", "title": "Gaming" },
+    { "icon": "code", "title": "Programming" },
+    { "icon": "music", "title": "Classical Music" },
+    { "icon": "book", "title": "Reading" },
+    { "icon": "football", "title": "Football" },
+    { "icon": "brain", "title": "Learning new Tech" }
+  ],
+  "education": [
+    {
+      "year": "Sept 2023 - Jun 2027",
+      "title": "University of Transport Ho Chi Minh City",
+      "location": "Hồ Chí Minh",
+      "subtitle": "Bachelor's degree, Information Technology",
+      "logo": "/src/assets/logo/logo-UTH.webp",
+      "extra": "",
+      "details": []
+    },
+    {
+      "year": "Aug 2020 - Jul 2022",
+      "title": "Ho Chi Minh Vocational College",
+      "location": "Hồ Chí Minh",
+      "subtitle": "Intermediate Degree, IT (Software Application)",
+      "logo": "/src/assets/logo/Logo-CĐN.webp",
+      "extra": "Graduation Project: [FARMER KUN's STORE](https://kenkaneki395.wixsite.com/site)",
+      "details": []
+    }
+  ],
+  "career": [
+    {
+      "year": "March 2026 - Present",
+      "title": "Freelance",
+      "location": "Remote",
+      "subtitle": "Web Developer",
+      "logo": "/freelance.jpg",
+      "extra": "HEART of CLASSY - Handbag E-Commerce Website\n- In progress (Jun 01 2026 - Aug 30 2026)\n\n[TELI Viettel](https://teli-viettel.vercel.app/) - Digital Learning Platform\n- Academic project developed for the Project Management course at Van Lang University\n- Built an AI-powered web platform to help teachers in remote areas generate teaching materials more efficiently\n- Collaborated on the project from Mar 13 - Mar 23, 2026, in an agile team environment\n- Applied Figma MCP to ensure code closely matched the original design specifications",
+      "details": []
+    }
+  ],
+  "skills": [
+    {
+      "name": "React",
+      "icon": "react",
+      "color": "#61DAFB",
+      "category": "frontend"
+    },
+    {
+      "name": "TypeScript",
+      "icon": "typescript",
+      "color": "#3178C6",
+      "category": "frontend"
+    },
+    {
+      "name": "JavaScript",
+      "icon": "javascript",
+      "color": "#f7df1e",
+      "category": "frontend"
+    },
+    {
+      "name": "HTML5",
+      "icon": "html5",
+      "color": "#e44d26",
+      "category": "frontend"
+    },
+    {
+      "name": "CSS3",
+      "icon": "css3",
+      "color": "#1572b6",
+      "category": "frontend"
+    },
+    {
+      "name": "Tailwind CSS",
+      "icon": "tailwindcss",
+      "color": "#06B6D4",
+      "category": "frontend"
+    },
+    {
+      "name": "Java",
+      "icon": "java",
+      "color": "#f89820",
+      "category": "backend"
+    },
+    {
+      "name": "Spring Boot",
+      "icon": "spring",
+      "color": "#6DB33F",
+      "category": "backend"
+    },
+    {
+      "name": "C#",
+      "icon": "csharp",
+      "color": "#239120",
+      "category": "backend"
+    },
+    {
+      "name": ".NET",
+      "icon": "dotnet",
+      "color": "#512BD4",
+      "category": "backend"
+    },
+    {
+      "name": "NodeJS",
+      "icon": "nodejs",
+      "color": "#339933",
+      "category": "backend"
+    },
+    {
+      "name": "ExpressJS",
+      "icon": "express",
+      "color": "#ffffff",
+      "category": "backend"
+    },
+    {
+      "name": "MySQL",
+      "icon": "mysql",
+      "color": "#4479A1",
+      "category": "database"
+    },
+    {
+      "name": "SQL Server",
+      "icon": "sql",
+      "color": "#CC2927",
+      "category": "database"
+    },
+    {
+      "name": "PostgreSQL",
+      "icon": "postgresql",
+      "color": "#4169E1",
+      "category": "database"
+    },
+    {
+      "name": "MongoDB",
+      "icon": "mongodb",
+      "color": "#47A248",
+      "category": "database"
+    },
+    {
+      "name": "Docker",
+      "icon": "docker",
+      "color": "#2496ED",
+      "category": "devops"
+    },
+    {
+      "name": "Git",
+      "icon": "git",
+      "color": "#F05032",
+      "category": "devops"
+    },
+    {
+      "name": "Vite",
+      "icon": "vite",
+      "color": "#646CFF",
+      "category": "devops"
+    },
+    {
+      "name": "Velo (Wix)",
+      "icon": "wix",
+      "color": "#ffffff",
+      "category": "devops"
+    },
+    {
+      "name": "Vercel",
+      "icon": "vercel",
+      "color": "#000000",
+      "category": "devops"
+    },
+    {
+      "name": "Render",
+      "icon": "render",
+      "color": "#46E3B7",
+      "category": "devops"
+    }
+  ],
+  "certificates": [
+    {
+      "title": "Gemini Certified Educator",
+      "image": "/src/assets/img/cert/gemini-educator.webp",
+      "rating": 1,
+      "status": ""
+    },
+    {
+      "title": "Intermediate Diploma",
+      "image": "/src/assets/img/cert/intermediate-diploma.webp",
+      "rating": 1,
+      "status": ""
+    },
+    {
+      "title": "AI Fluency Framework: Foundations",
+      "image": "/src/assets/img/cert/Al-Fluency-Framework-Foundations.webp",
+      "rating": 1,
+      "status": ""
+    }
+  ],
+  "projects": [
+    {
+      "id": "teli-viettel",
+      "title": "TELI Viettel",
+      "image": "/src/assets/img/proj/project_teli-viettel.webp",
+      "role": "AI-Powered Learning Platform",
+      "link": "https://teli-viettel.vercel.app/",
+      "githubLink": "https://github.com/KaitoDeus/TELI_Viettel",
+      "status": "completed",
+      "technologies": ["React", "TypeScript", "Tailwind CSS", "Gemini AI"],
+      "startDate": "2026-03-25",
+      "category": "personal"
+    },
+    {
+      "id": "photo-palette",
+      "title": "Photo Palette",
+      "image": "/src/assets/img/proj/project_photopalette.webp",
+      "role": "Landing Page",
+      "link": "https://photo-palette.vercel.app/",
+      "githubLink": "https://github.com/KaitoDeus/Photo-Palette",
+      "status": "completed",
+      "technologies": ["React", "TypeScript", "Tailwind CSS"],
+      "startDate": "2026-02-04",
+      "category": "personal"
+    },
+    {
+      "id": "neoshop",
+      "title": "NeoShop E-commerce",
+      "image": "/src/assets/img/proj/project_neoshop.webp",
+      "role": "E-commerce Fullstack Web Application",
+      "link": "https://neoshop-ecommerce.vercel.app/",
+      "githubLink": "https://github.com/KaitoDeus/NeoShop",
+      "status": "completed",
+      "technologies": ["React", "Java", "Spring Boot", "PostgreSQL", "Docker"],
+      "startDate": "2026-01-22",
+      "category": "personal"
+    },
+    {
+      "id": "caro",
+      "title": "Game Caro",
+      "image": "/src/assets/img/proj/project_caro.webp",
+      "role": "Desktop Application",
+      "link": "https://gamecaro-uth.vercel.app/",
+      "githubLink": "https://github.com/KaitoDeus/CARO",
+      "status": "completed",
+      "technologies": ["C#", ".NET", "Windows Forms"],
+      "startDate": "2025-12-02",
+      "category": "school"
+    },
+    {
+      "id": "medicare",
+      "title": "Medicare Webapp",
+      "image": "/src/assets/img/proj/project_medicare.webp",
+      "role": "Healthcare Web Application",
+      "link": "https://medicare-webapp-goll.onrender.com/",
+      "githubLink": "https://github.com/KaitoDeus/MediCare_Webapp",
+      "status": "completed",
+      "technologies": ["MongoDB", "ExpressJS", "React", "NodeJS"],
+      "startDate": "2025-11-01",
+      "category": "school"
+    },
+    {
+      "id": "uth-wm",
+      "title": "UTH - Work Management",
+      "image": "/src/assets/img/proj/project_uthwm.webp",
+      "role": "Desktop Application",
+      "link": "",
+      "githubLink": "https://github.com/KaitoDeus/UTH-WM",
+      "status": "completed",
+      "technologies": ["C#", ".NET", "Windows Forms"],
+      "startDate": "2024-12-19",
+      "category": "school"
+    },
+    {
+      "id": "first-2d-game",
+      "title": "First 2D Game Tutorial",
+      "image": "/src/assets/img/proj/project_first2dgame.webp",
+      "role": "Unity Developer",
+      "link": "https://kaitodesu.itch.io/first2dgametutorial",
+      "githubLink": "https://github.com/KaitoDeus/First2DGameTutorial",
+      "status": "completed",
+      "technologies": ["C#", "Unity"],
+      "startDate": "2024-05-01",
+      "category": "unity"
+    }
+  ]
+}

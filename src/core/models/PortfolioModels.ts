@@ -34,8 +34,6 @@ export interface ISkill {
   icon: string;
   color: string;
   category: 'core' | 'frontend' | 'backend' | 'database' | 'devops' | 'tools';
-  level: 'Beginner' | 'Intermediate' | 'Advanced';
-  description: string;
 }
 
 export interface ICertificate {

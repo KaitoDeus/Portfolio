@@ -26,8 +26,6 @@ The project strictly follows the **Single Source of Truth** and **Clean Architec
   - `icon`: Icon mapping key resolved via `iconMap` (`react-icons` or `lucide-react`).
   - `color`: Official HEX brand color.
   - `category`: `'core' | 'frontend' | 'backend' | 'database' | 'devops' | 'tools'`.
-  - `level`: Skill proficiency (`'Beginner' | 'Intermediate' | 'Advanced'`).
-  - `description`: Scope and competencies summary.
 - **`ICertificate`**: Certifications & credentials (`title`, `image`, `rating`, `status`).
 - **`ITimelineItem`**: Education history (`education`) and career timeline (`career`) with `year`, `title`, `location`, `subtitle`, `extra` (supports markdown links), `logo`, `details`.
 
@@ -71,14 +69,15 @@ The project strictly follows the **Single Source of Truth** and **Clean Architec
   - Quick question pills ('Work', 'About me', 'Projects', 'Contact').
   - Real-time chat stream parser automatically formatting URLs, GitHub/LinkedIn links, and mailto links.
 
-### 2.7 Interactive Canvas Background (`src/components/common/InteractiveParticles.tsx`)
-- HTML5 Canvas particle system running at a buttery-smooth 60fps.
-- Dynamic repulsion physics reacting to mouse cursor proximity and mobile touch events.
-- Auto-pauses on browser tab visibility change (`visibilitychange`) to preserve CPU/GPU battery life.
+### 2.8 Local Admin CMS Dashboard (`src/app/admin/page.tsx`)
+- **Visual Interface**: Full CRUD dashboard for Projects, Skills, Education/Career Timeline, Certificates, and Profile Info.
+- **File-based Persistence**: Calls `PUT /api/admin/portfolio` to write formatted updates directly to `src/core/data/portfolioData.json`.
+- **Git Push Assistant**: Built-in 1-click clipboard helper for `git add . && git commit -m "..." && git push`.
+- **Production Guard**: Updates are locked in production (`process.env.NODE_ENV === 'production'`).
 
 ---
 
-## 3. SEO & Performance Standards
+## 3. Server Route Handler API Specifications
 
 1. **Font Optimization**: Powered by `next/font/google` (Montserrat) loaded at build-time to eliminate render-blocking external requests.
 2. **Metadata API**: Complete Open Graph, Twitter Cards, Canonical URLs, and Favicon declarations in `src/app/layout.tsx`.
