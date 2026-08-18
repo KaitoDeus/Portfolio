@@ -80,7 +80,6 @@ export const portfolioData: IPortfolioData = {
   projects: jsonData.projects.map((proj) => ({
     ...proj,
     status: proj.status as 'completed' | 'in-progress',
-    category: proj.category as 'personal' | 'school' | 'unity',
     image: resolveAsset(proj.image),
   })),
 };

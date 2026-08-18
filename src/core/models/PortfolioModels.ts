@@ -26,7 +26,6 @@ export interface IProject {
   status: 'completed' | 'in-progress';
   technologies: string[];
   startDate: string;
-  category: 'personal' | 'school' | 'unity';
 }
 
 export interface ISkill {

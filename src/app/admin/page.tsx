@@ -503,7 +503,6 @@ export default function AdminPage() {
                       status: 'completed',
                       technologies: ['React', 'TypeScript'],
                       startDate: new Date().toISOString().split('T')[0],
-                      category: 'personal',
                     },
                   })
                 }
@@ -525,9 +524,6 @@ export default function AdminPage() {
                   </div>
                   <CardHeader className="p-4 pb-2">
                     <div className="flex justify-between items-start gap-2 mb-2">
-                      <Badge variant="outline" className="text-[10px] uppercase font-bold">
-                        {project.category}
-                      </Badge>
                       <Badge variant={project.status === 'completed' ? 'secondary' : 'default'} className="text-[10px]">
                         {project.status}
                       </Badge>
@@ -1020,26 +1016,9 @@ export default function AdminPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-xs font-bold">Category</label>
-                  <select
-                    className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-xs"
-                    value={editingProject.item.category}
-                    onChange={(e) =>
-                      setEditingProject({
-                        ...editingProject,
-                        item: { ...editingProject.item, category: e.target.value as 'personal' | 'school' | 'unity' },
-                      })
-                    }
-                  >
-                    <option value="personal">Personal Project</option>
-                    <option value="school">School Project</option>
-                    <option value="unity">Unity Developer</option>
-                  </select>
-                </div>
-                <div className="space-y-1">
                   <label className="text-xs font-bold">Status</label>
                   <select
-                    className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-xs"
+                    className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-xs font-medium"
                     value={editingProject.item.status}
                     onChange={(e) =>
                       setEditingProject({
@@ -1051,6 +1030,19 @@ export default function AdminPage() {
                     <option value="completed">Completed</option>
                     <option value="in-progress">In Progress</option>
                   </select>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-bold">Start Date</label>
+                  <Input
+                    type="date"
+                    value={editingProject.item.startDate || ''}
+                    onChange={(e) =>
+                      setEditingProject({
+                        ...editingProject,
+                        item: { ...editingProject.item, startDate: e.target.value },
+                      })
+                    }
+                  />
                 </div>
               </div>
 

@@ -11,16 +11,10 @@ import { getImageSrc } from '@/shared/lib/utils';
 
 export default function ProjectsPage() {
   const { projects, loading } = useProjects();
-  
   const [sortOrder] = useState<'newest' | 'oldest'>('newest');
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'personal' | 'school' | 'unity'>('all');
 
-  const filteredAndSortedProjects = useMemo(() => {
-    let result = [...projects];
-
-    if (selectedCategory !== 'all') {
-      result = result.filter(p => p.category === selectedCategory);
-    }
+  const sortedProjects = useMemo(() => {
+    const result = [...projects];
 
     if (sortOrder === 'newest') {
       result.sort((a, b) => new Date(b.startDate || 0).getTime() - new Date(a.startDate || 0).getTime());
@@ -29,7 +23,7 @@ export default function ProjectsPage() {
     }
 
     return result;
-  }, [projects, sortOrder, selectedCategory]);
+  }, [projects, sortOrder]);
 
   const ITEMS_PER_PAGE = 6;
   
@@ -40,51 +34,22 @@ export default function ProjectsPage() {
     next, 
     prev, 
     jump,
-    setCurrentPage
-  } = usePagination(filteredAndSortedProjects, ITEMS_PER_PAGE);
+  } = usePagination(sortedProjects, ITEMS_PER_PAGE);
 
   return (
     <Section id="projects" title="My Projects">
       {loading ? (
-          <div className="flex justify-center items-center h-48">
-             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-foreground"></div>
-          </div>
+        <div className="flex justify-center items-center h-48">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-foreground"></div>
+        </div>
       ) : (
         <>
-          {/* Category Tabs */}
-          <div className="flex justify-center mb-12 gap-2 flex-wrap px-4">
-            {(['all', 'personal', 'school', 'unity'] as const).map(cat => (
-              <button
-                key={cat}
-                className={`px-6 py-2 rounded-full font-medium text-sm transition-all duration-300 ${
-                  selectedCategory === cat
-                    ? 'bg-foreground text-background shadow-md scale-105'
-                    : 'bg-card/60 backdrop-blur-md text-muted-foreground border border-border/60 hover:text-foreground hover:bg-card/90'
-                }`}
-                onClick={() => {
-                  setSelectedCategory(cat);
-                  setCurrentPage(1);
-                }}
-              >
-                {cat === 'all' && 'All'}
-                {cat === 'personal' && 'Personal Projects'}
-                {cat === 'school' && 'School Projects'}
-                {cat === 'unity' && 'Unity Developer'}
-              </button>
-            ))}
-          </div>
-
-          <div 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 lg:px-0"
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 lg:px-0">
             {paginatedProjects.map((project, index) => {
               const projectImgSrc = getImageSrc(project.image);
 
               return (
-                <div
-                  key={project.id + index}
-                  className="h-full"
-                >
+                <div key={project.id || index} className="h-full">
                   <Card className="overflow-hidden border-border/60 bg-card/60 backdrop-blur-md text-card-foreground transition-all duration-300 hover:border-foreground/40 hover:shadow-xl relative h-full flex flex-col group">
                     <CardContent className="p-4 flex flex-col grow">
                       <div className="overflow-hidden rounded-lg mb-4 bg-secondary/30">
@@ -98,7 +63,7 @@ export default function ProjectsPage() {
                       </div>
                       <h4 className="text-lg font-bold mb-2 text-foreground">{project.title}</h4>
                       <div className="flex flex-wrap gap-1.5 mb-4 grow content-start">
-                        {project.technologies?.map(tech => (
+                        {project.technologies?.map((tech) => (
                           <span key={tech} className="text-[11px] px-2.5 py-0.5 rounded-full bg-secondary/80 text-foreground font-medium border border-border/40">
                             {tech}
                           </span>
@@ -146,11 +111,11 @@ export default function ProjectsPage() {
           </div>
 
           <Pagination 
-             currentPage={currentPage}
-             totalPages={totalPages}
-             onNext={next}
-             onPrev={prev}
-             onJump={jump}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onNext={next}
+            onPrev={prev}
+            onJump={jump}
           />
         </>
       )}
