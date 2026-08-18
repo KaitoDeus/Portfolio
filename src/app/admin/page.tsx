@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import {
   FolderKanban,
@@ -20,13 +20,14 @@ import {
   ArrowLeft,
   Terminal,
   RefreshCw,
+  Upload,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
-import { IPortfolioData, IProject, ISkill, ITimelineItem, ICertificate } from '@/core/models/PortfolioModels';
+import { IPortfolioData, IProject, ISkill, ITimelineItem, ICertificate, ImageSource } from '@/core/models/PortfolioModels';
 import { getImageSrc } from '@/shared/lib/utils';
 import { portfolioData } from '@/core/data/portfolioData';
 
@@ -37,6 +38,11 @@ export default function AdminPage() {
   const [isLocal, setIsLocal] = useState(true);
   const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [copiedGit, setCopiedGit] = useState(false);
+  const [uploadingImg, setUploadingImg] = useState(false);
+
+  // File input refs for uploading
+  const projectFileRef = useRef<HTMLInputElement>(null);
+  const certFileRef = useRef<HTMLInputElement>(null);
 
   // Edit / Add Modals state
   const [editingProject, setEditingProject] = useState<{ index: number; item: IProject } | null>(null);
@@ -64,35 +70,103 @@ export default function AdminPage() {
     };
   }, []);
 
+  const handleUpload = async (file: File, onDone: (url: string) => void) => {
+    if (!file) return;
+    setUploadingImg(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const result = await res.json();
+      if (res.ok && result.url) {
+        onDone(result.url);
+        setStatusMessage({ type: 'success', text: 'Image uploaded successfully to /uploads!' });
+      } else {
+        setStatusMessage({ type: 'error', text: result.error || 'Failed to upload image' });
+      }
+    } catch (err) {
+      console.error('Upload error:', err);
+      setStatusMessage({ type: 'error', text: 'Failed to upload image file.' });
+    } finally {
+      setUploadingImg(false);
+    }
+  };
+
+  const serializePortfolioData = (input: IPortfolioData) => {
+    const cleanImage = (img: ImageSource | string | undefined | null): string => {
+      if (!img) return '';
+      if (typeof img === 'string') return img;
+      if (typeof img === 'object' && 'src' in img) return img.src;
+      return String(img);
+    };
+
+    return {
+      ...input,
+      avatars: {
+        hero: cleanImage(input.avatars?.hero),
+        about: cleanImage(input.avatars?.about),
+        skills: cleanImage(input.avatars?.skills),
+        contact: cleanImage(input.avatars?.contact),
+      },
+      education: (input.education || []).map((item) => ({
+        ...item,
+        logo: cleanImage(item.logo),
+      })),
+      career: (input.career || []).map((item) => ({
+        ...item,
+        logo: cleanImage(item.logo),
+      })),
+      certificates: (input.certificates || []).map((cert) => ({
+        ...cert,
+        image: cleanImage(cert.image),
+      })),
+      projects: (input.projects || []).map((proj) => ({
+        ...proj,
+        image: cleanImage(proj.image),
+      })),
+    };
+  };
+
   const handleSaveToFile = async () => {
     if (!data) return;
     setSaving(true);
     setStatusMessage(null);
 
     try {
+      const cleanData = serializePortfolioData(data);
       const res = await fetch('/api/admin/portfolio', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify(cleanData),
       });
 
-      const result = await res.json();
-
-      if (res.ok) {
-        setStatusMessage({ type: 'success', text: result.message || 'Saved to file successfully!' });
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        const result = await res.json();
+        if (res.ok) {
+          setStatusMessage({ type: 'success', text: result.message || 'Saved to file successfully!' });
+        } else {
+          setStatusMessage({ type: 'error', text: result.error || 'Failed to save changes' });
+        }
       } else {
-        setStatusMessage({ type: 'error', text: result.error || 'Failed to save changes' });
+        const text = await res.text();
+        console.error('Non-JSON response:', text);
+        setStatusMessage({ type: 'error', text: `Server returned unexpected response (${res.status}).` });
       }
     } catch (err) {
       console.error('Save error:', err);
-      setStatusMessage({ type: 'error', text: 'Network error while saving data to local file.' });
+      const msg = err instanceof Error ? err.message : String(err);
+      setStatusMessage({ type: 'error', text: `Network error: ${msg}` });
     } finally {
       setSaving(false);
     }
   };
 
   const copyGitCommand = () => {
-    const cmd = 'git add src/core/data/portfolioData.json && git commit -m "feat(portfolio): update portfolio data" && git push';
+    const cmd = 'git add . && git commit -m "feat(portfolio): update portfolio data" && git push';
     navigator.clipboard.writeText(cmd);
     setCopiedGit(true);
     setTimeout(() => setCopiedGit(false), 3000);
@@ -173,8 +247,6 @@ export default function AdminPage() {
     const updated = data.certificates.filter((_, i) => i !== index);
     setData({ ...data, certificates: updated });
   };
-
-
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -326,7 +398,7 @@ export default function AdminPage() {
                       id: `project-${Date.now()}`,
                       title: '',
                       role: 'Developer',
-                      image: '/src/assets/img/proj/project_neoshop.webp',
+                      image: '/assets/img/proj/project_neoshop.webp',
                       link: '',
                       githubLink: '',
                       status: 'completed',
@@ -345,6 +417,13 @@ export default function AdminPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {data.projects.map((project, idx) => (
                 <Card key={project.id || idx} className="border-border/60 bg-card/60 overflow-hidden flex flex-col justify-between group">
+                  <div className="h-36 bg-secondary/30 border-b border-border/40 overflow-hidden flex items-center justify-center relative">
+                    <img
+                      src={getImageSrc(project.image)}
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
                   <CardHeader className="p-4 pb-2">
                     <div className="flex justify-between items-start gap-2 mb-2">
                       <Badge variant="outline" className="text-[10px] uppercase font-bold">
@@ -558,7 +637,7 @@ export default function AdminPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xl font-bold">Certificates & Awards</h3>
-                  <p className="text-xs text-muted-foreground">Manage your credentials and credentials images.</p>
+                  <p className="text-xs text-muted-foreground">Manage your credentials and upload certificate photos.</p>
                 </div>
                 <Button
                   size="sm"
@@ -567,7 +646,7 @@ export default function AdminPage() {
                       index: -1,
                       item: {
                         title: '',
-                        image: '/src/assets/img/cert/gemini-educator.webp',
+                        image: '/assets/img/cert/gemini-educator.webp',
                         rating: 1,
                         status: '',
                       },
@@ -579,24 +658,25 @@ export default function AdminPage() {
                 </Button>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {data.certificates.map((cert, idx) => (
-                  <Card key={idx} className="border-border/60 bg-card/60">
+                  <Card key={idx} className="border-border/60 bg-card/60 overflow-hidden flex flex-col justify-between group">
+                    <div className="h-36 bg-secondary/30 p-2 overflow-hidden flex items-center justify-center">
+                      <img
+                        src={getImageSrc(cert.image)}
+                        alt={cert.title}
+                        className="max-h-full max-w-full object-contain rounded transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
                     <CardContent className="p-4 space-y-3">
-                      <div className="h-28 rounded-lg bg-secondary/50 overflow-hidden flex items-center justify-center">
-                        <img
-                          src={getImageSrc(cert.image)}
-                          alt={cert.title}
-                          className="h-full object-contain"
-                        />
-                      </div>
                       <h4 className="font-bold text-sm line-clamp-1">{cert.title}</h4>
-                      <div className="flex justify-end gap-2 pt-2 border-t border-border/40">
-                        <Button variant="ghost" size="icon-sm" onClick={() => setEditingCert({ index: idx, item: { ...cert } })}>
-                          <Edit2 size={14} />
+                      <p className="text-[11px] text-muted-foreground font-mono truncate">{typeof cert.image === 'string' ? cert.image : 'Static Asset'}</p>
+                      <div className="flex items-center gap-2 pt-2 border-t border-border/40">
+                        <Button variant="outline" size="sm" onClick={() => setEditingCert({ index: idx, item: { ...cert } })} className="flex-1">
+                          <Edit2 size={13} className="mr-1" /> Edit
                         </Button>
-                        <Button variant="ghost" size="icon-sm" onClick={() => deleteCert(idx)} className="text-red-500">
-                          <Trash2 size={14} />
+                        <Button variant="destructive" size="sm" onClick={() => deleteCert(idx)} className="shrink-0 px-3 flex items-center justify-center">
+                          <Trash2 size={13} />
                         </Button>
                       </div>
                     </CardContent>
@@ -709,6 +789,20 @@ export default function AdminPage() {
               </button>
             </CardHeader>
             <CardContent className="space-y-4">
+              {/* Thumbnail Live Preview */}
+              {editingProject.item.image && (
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-muted-foreground">Thumbnail Preview</label>
+                  <div className="h-40 w-full rounded-xl bg-secondary/40 border border-border/60 overflow-hidden flex items-center justify-center">
+                    <img
+                      src={getImageSrc(editingProject.item.image)}
+                      alt="Project Preview"
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
+                </div>
+              )}
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-xs font-bold">Project Title</label>
@@ -820,18 +914,49 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-xs font-bold">Image Path or URL</label>
-                <Input
-                  value={typeof editingProject.item.image === 'string' ? editingProject.item.image : ''}
-                  placeholder="/src/assets/img/proj/project_neoshop.webp"
-                  onChange={(e) =>
-                    setEditingProject({
-                      ...editingProject,
-                      item: { ...editingProject.item, image: e.target.value },
-                    })
-                  }
-                />
+              {/* Image upload & Path */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold">Image (Upload from computer or input path)</label>
+                <div className="flex gap-2">
+                  <Input
+                    value={typeof editingProject.item.image === 'string' ? editingProject.item.image : ''}
+                    placeholder="/assets/img/proj/my-project.webp or https://..."
+                    onChange={(e) =>
+                      setEditingProject({
+                        ...editingProject,
+                        item: { ...editingProject.item, image: e.target.value },
+                      })
+                    }
+                    className="flex-1 font-mono text-xs"
+                  />
+                  <input
+                    type="file"
+                    ref={projectFileRef}
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        handleUpload(file, (url) => {
+                          setEditingProject({
+                            ...editingProject,
+                            item: { ...editingProject.item, image: url },
+                          });
+                        });
+                      }
+                    }}
+                  />
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    disabled={uploadingImg}
+                    onClick={() => projectFileRef.current?.click()}
+                    className="shrink-0 font-semibold text-xs"
+                  >
+                    {uploadingImg ? <RefreshCw className="w-3.5 h-3.5 mr-1.5 animate-spin" /> : <Upload className="w-3.5 h-3.5 mr-1.5" />}
+                    Upload Image
+                  </Button>
+                </div>
               </div>
 
               <div className="flex justify-end gap-2 pt-4">
@@ -930,8 +1055,6 @@ export default function AdminPage() {
                   />
                 </div>
               </div>
-
-
 
               <div className="flex justify-end gap-2 pt-4">
                 <Button variant="outline" onClick={() => setEditingSkill(null)}>
@@ -1049,10 +1172,25 @@ export default function AdminPage() {
               </button>
             </CardHeader>
             <CardContent className="space-y-4">
+              {/* Thumbnail Live Preview */}
+              {editingCert.item.image && (
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-muted-foreground">Thumbnail Preview</label>
+                  <div className="h-36 w-full rounded-xl bg-secondary/40 border border-border/60 overflow-hidden flex items-center justify-center">
+                    <img
+                      src={getImageSrc(editingCert.item.image)}
+                      alt="Certificate Preview"
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
+                </div>
+              )}
+
               <div className="space-y-1">
                 <label className="text-xs font-bold">Certificate Title</label>
                 <Input
                   value={editingCert.item.title}
+                  placeholder="e.g. FPT Talent Assessment"
                   onChange={(e) =>
                     setEditingCert({
                       ...editingCert,
@@ -1061,18 +1199,55 @@ export default function AdminPage() {
                   }
                 />
               </div>
-              <div className="space-y-1">
-                <label className="text-xs font-bold">Image Path or URL</label>
-                <Input
-                  value={typeof editingCert.item.image === 'string' ? editingCert.item.image : ''}
-                  onChange={(e) =>
-                    setEditingCert({
-                      ...editingCert,
-                      item: { ...editingCert.item, image: e.target.value },
-                    })
-                  }
-                />
+
+              {/* Upload Image & Path Input */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold">Certificate Image</label>
+                <div className="flex gap-2">
+                  <Input
+                    value={typeof editingCert.item.image === 'string' ? editingCert.item.image : ''}
+                    placeholder="/assets/img/cert/... or /uploads/..."
+                    onChange={(e) =>
+                      setEditingCert({
+                        ...editingCert,
+                        item: { ...editingCert.item, image: e.target.value },
+                      })
+                    }
+                    className="flex-1 font-mono text-xs"
+                  />
+                  <input
+                    type="file"
+                    ref={certFileRef}
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        handleUpload(file, (url) => {
+                          setEditingCert({
+                            ...editingCert,
+                            item: { ...editingCert.item, image: url },
+                          });
+                        });
+                      }
+                    }}
+                  />
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    disabled={uploadingImg}
+                    onClick={() => certFileRef.current?.click()}
+                    className="shrink-0 font-semibold text-xs"
+                  >
+                    {uploadingImg ? <RefreshCw className="w-3.5 h-3.5 mr-1.5 animate-spin" /> : <Upload className="w-3.5 h-3.5 mr-1.5" />}
+                    Upload Image
+                  </Button>
+                </div>
+                <p className="text-[11px] text-muted-foreground">
+                  Click <strong>Upload Image</strong> to pick any picture from your PC, or type a URL.
+                </p>
               </div>
+
               <div className="flex justify-end gap-2 pt-4">
                 <Button variant="outline" onClick={() => setEditingCert(null)}>
                   Cancel

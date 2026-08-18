@@ -19,6 +19,7 @@ import {
 } from '@/assets/img/proj';
 
 const staticAssetMap: Record<string, ImageSource> = {
+  // Legacy /src/assets/
   '/src/assets/img/avt/avatar.webp': avatar,
   '/src/assets/img/cert/gemini-educator.webp': geminiEducator,
   '/src/assets/img/cert/intermediate-diploma.webp': intermediateDiploma,
@@ -32,6 +33,21 @@ const staticAssetMap: Record<string, ImageSource> = {
   '/src/assets/img/proj/project_uthwm.webp': projectUthwm,
   '/src/assets/img/proj/project_teli-viettel.webp': projectTeliViettel,
   '/src/assets/img/proj/project_first2dgame.webp': projectFirst2DGame,
+
+  // Public /assets/
+  '/assets/img/avt/avatar.webp': avatar,
+  '/assets/img/cert/gemini-educator.webp': geminiEducator,
+  '/assets/img/cert/intermediate-diploma.webp': intermediateDiploma,
+  '/assets/img/cert/Al-Fluency-Framework-Foundations.webp': aiFluencyFramework,
+  '/assets/logo/logo-UTH.webp': logoUTH,
+  '/assets/logo/Logo-CĐN.webp': logoCDN,
+  '/assets/img/proj/project_caro.webp': projectCaro,
+  '/assets/img/proj/project_photopalette.webp': projectPhotoPalette,
+  '/assets/img/proj/project_neoshop.webp': projectNeoShop,
+  '/assets/img/proj/project_medicare.webp': projectMedicare,
+  '/assets/img/proj/project_uthwm.webp': projectUthwm,
+  '/assets/img/proj/project_teli-viettel.webp': projectTeliViettel,
+  '/assets/img/proj/project_first2dgame.webp': projectFirst2DGame,
 };
 
 const resolveAsset = (pathOrUrl: ImageSource | string): ImageSource => {

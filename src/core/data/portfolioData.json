@@ -1,15 +1,15 @@
 {
-  "name": "Anh Khai",
+  "name": "Kaito",
   "roles": [
     "Software Developer"
   ],
   "tagline": "I'm a",
   "bio": "Third-year IT student with practical experience in software and game development. Experienced in building desktop applications, web applications, and game projects using modern development technologies. Seeking a Software Developer Internship to contribute, learn, and grow in a professional engineering environment.",
   "avatars": {
-    "hero": "/src/assets/img/avt/avatar.webp",
-    "about": "/src/assets/img/avt/avatar.webp",
-    "skills": "/src/assets/img/avt/avatar.webp",
-    "contact": "/src/assets/img/avt/avatar.webp"
+    "hero": "/assets/img/avt/avatar.webp",
+    "about": "/assets/img/avt/avatar.webp",
+    "skills": "/assets/img/avt/avatar.webp",
+    "contact": "/assets/img/avt/avatar.webp"
   },
   "socialLinks": [
     {
@@ -36,12 +36,30 @@
     "careerObjective": ""
   },
   "hobbies": [
-    { "icon": "game", "title": "Gaming" },
-    { "icon": "code", "title": "Programming" },
-    { "icon": "music", "title": "Classical Music" },
-    { "icon": "book", "title": "Reading" },
-    { "icon": "football", "title": "Football" },
-    { "icon": "brain", "title": "Learning new Tech" }
+    {
+      "icon": "game",
+      "title": "Gaming"
+    },
+    {
+      "icon": "code",
+      "title": "Programming"
+    },
+    {
+      "icon": "music",
+      "title": "Classical Music"
+    },
+    {
+      "icon": "book",
+      "title": "Reading"
+    },
+    {
+      "icon": "football",
+      "title": "Football"
+    },
+    {
+      "icon": "brain",
+      "title": "Learning new Tech"
+    }
   ],
   "education": [
     {
@@ -49,7 +67,7 @@
       "title": "University of Transport Ho Chi Minh City",
       "location": "Hồ Chí Minh",
       "subtitle": "Bachelor's degree, Information Technology",
-      "logo": "/src/assets/logo/logo-UTH.webp",
+      "logo": "/assets/logo/logo-UTH.webp",
       "extra": "",
       "details": []
     },
@@ -58,7 +76,7 @@
       "title": "Ho Chi Minh Vocational College",
       "location": "Hồ Chí Minh",
       "subtitle": "Intermediate Degree, IT (Software Application)",
-      "logo": "/src/assets/logo/Logo-CĐN.webp",
+      "logo": "/assets/logo/Logo-CĐN.webp",
       "extra": "Graduation Project: [FARMER KUN's STORE](https://kenkaneki395.wixsite.com/site)",
       "details": []
     }
@@ -136,18 +154,6 @@
       "category": "backend"
     },
     {
-      "name": "NodeJS",
-      "icon": "nodejs",
-      "color": "#339933",
-      "category": "backend"
-    },
-    {
-      "name": "ExpressJS",
-      "icon": "express",
-      "color": "#ffffff",
-      "category": "backend"
-    },
-    {
       "name": "MySQL",
       "icon": "mysql",
       "color": "#4479A1",
@@ -166,12 +172,6 @@
       "category": "database"
     },
     {
-      "name": "MongoDB",
-      "icon": "mongodb",
-      "color": "#47A248",
-      "category": "database"
-    },
-    {
       "name": "Docker",
       "icon": "docker",
       "color": "#2496ED",
@@ -182,134 +182,103 @@
       "icon": "git",
       "color": "#F05032",
       "category": "devops"
-    },
-    {
-      "name": "Vite",
-      "icon": "vite",
-      "color": "#646CFF",
-      "category": "devops"
-    },
-    {
-      "name": "Velo (Wix)",
-      "icon": "wix",
-      "color": "#ffffff",
-      "category": "devops"
-    },
-    {
-      "name": "Vercel",
-      "icon": "vercel",
-      "color": "#000000",
-      "category": "devops"
-    },
-    {
-      "name": "Render",
-      "icon": "render",
-      "color": "#46E3B7",
-      "category": "devops"
     }
   ],
   "certificates": [
     {
       "title": "Gemini Certified Educator",
-      "image": "/src/assets/img/cert/gemini-educator.webp",
+      "image": "/assets/img/cert/gemini-educator.webp",
       "rating": 1,
       "status": ""
     },
     {
       "title": "Intermediate Diploma",
-      "image": "/src/assets/img/cert/intermediate-diploma.webp",
+      "image": "/assets/img/cert/intermediate-diploma.webp",
       "rating": 1,
       "status": ""
     },
     {
       "title": "AI Fluency Framework: Foundations",
-      "image": "/src/assets/img/cert/Al-Fluency-Framework-Foundations.webp",
+      "image": "/assets/img/cert/Al-Fluency-Framework-Foundations.webp",
+      "rating": 1,
+      "status": ""
+    },
+    {
+      "title": "FPT Talent Assessment",
+      "image": "/assets/img/cert/fpt-talent.jpg",
+      "rating": 1,
+      "status": ""
+    },
+    {
+      "title": "Google Workspace: Tips & Tricks - Using effectively AI without open Gemini app",
+      "image": "/uploads/1787082465660-google-workspace.png",
       "rating": 1,
       "status": ""
     }
   ],
   "projects": [
     {
-      "id": "teli-viettel",
-      "title": "TELI Viettel",
-      "image": "/src/assets/img/proj/project_teli-viettel.webp",
-      "role": "AI-Powered Learning Platform",
-      "link": "https://teli-viettel.vercel.app/",
-      "githubLink": "https://github.com/KaitoDeus/TELI_Viettel",
-      "status": "completed",
-      "technologies": ["React", "TypeScript", "Tailwind CSS", "Gemini AI"],
-      "startDate": "2026-03-25",
-      "category": "personal"
-    },
-    {
       "id": "photo-palette",
       "title": "Photo Palette",
-      "image": "/src/assets/img/proj/project_photopalette.webp",
+      "image": "/assets/img/proj/project_photopalette.webp",
       "role": "Landing Page",
       "link": "https://photo-palette.vercel.app/",
       "githubLink": "https://github.com/KaitoDeus/Photo-Palette",
       "status": "completed",
-      "technologies": ["React", "TypeScript", "Tailwind CSS"],
+      "technologies": [
+        "React",
+        "TypeScript",
+        "Tailwind CSS"
+      ],
       "startDate": "2026-02-04",
       "category": "personal"
     },
     {
       "id": "neoshop",
       "title": "NeoShop E-commerce",
-      "image": "/src/assets/img/proj/project_neoshop.webp",
+      "image": "/assets/img/proj/project_neoshop.webp",
       "role": "E-commerce Fullstack Web Application",
       "link": "https://neoshop-ecommerce.vercel.app/",
       "githubLink": "https://github.com/KaitoDeus/NeoShop",
       "status": "completed",
-      "technologies": ["React", "Java", "Spring Boot", "PostgreSQL", "Docker"],
+      "technologies": [
+        "React",
+        "Java",
+        "Spring Boot",
+        "PostgreSQL",
+        "Docker"
+      ],
       "startDate": "2026-01-22",
       "category": "personal"
     },
     {
       "id": "caro",
       "title": "Game Caro",
-      "image": "/src/assets/img/proj/project_caro.webp",
+      "image": "/assets/img/proj/project_caro.webp",
       "role": "Desktop Application",
       "link": "https://gamecaro-uth.vercel.app/",
       "githubLink": "https://github.com/KaitoDeus/CARO",
       "status": "completed",
-      "technologies": ["C#", ".NET", "Windows Forms"],
+      "technologies": [
+        "C#",
+        ".NET",
+        "Windows Forms"
+      ],
       "startDate": "2025-12-02",
-      "category": "school"
-    },
-    {
-      "id": "medicare",
-      "title": "Medicare Webapp",
-      "image": "/src/assets/img/proj/project_medicare.webp",
-      "role": "Healthcare Web Application",
-      "link": "https://medicare-webapp-goll.onrender.com/",
-      "githubLink": "https://github.com/KaitoDeus/MediCare_Webapp",
-      "status": "completed",
-      "technologies": ["MongoDB", "ExpressJS", "React", "NodeJS"],
-      "startDate": "2025-11-01",
-      "category": "school"
-    },
-    {
-      "id": "uth-wm",
-      "title": "UTH - Work Management",
-      "image": "/src/assets/img/proj/project_uthwm.webp",
-      "role": "Desktop Application",
-      "link": "",
-      "githubLink": "https://github.com/KaitoDeus/UTH-WM",
-      "status": "completed",
-      "technologies": ["C#", ".NET", "Windows Forms"],
-      "startDate": "2024-12-19",
       "category": "school"
     },
     {
       "id": "first-2d-game",
       "title": "First 2D Game Tutorial",
-      "image": "/src/assets/img/proj/project_first2dgame.webp",
+      "image": "/assets/img/proj/project_first2dgame.webp",
       "role": "Unity Developer",
       "link": "https://kaitodesu.itch.io/first2dgametutorial",
       "githubLink": "https://github.com/KaitoDeus/First2DGameTutorial",
       "status": "completed",
-      "technologies": ["C#", "Unity"],
+      "technologies": [
+        "C#",
+        "Unity"
+      ],
       "startDate": "2024-05-01",
       "category": "unity"
     }
