@@ -21,6 +21,13 @@ import {
   Terminal,
   RefreshCw,
   Upload,
+  Search,
+  Sparkles,
+  GripVertical,
+  ArrowUpDown,
+  Layers,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -30,6 +37,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { IPortfolioData, IProject, ISkill, ITimelineItem, ICertificate, ImageSource } from '@/core/models/PortfolioModels';
 import { getImageSrc } from '@/shared/lib/utils';
 import { portfolioData } from '@/core/data/portfolioData';
+import { getDeviconSvgUrl, DEVICONS_LIST, IDeviconItem } from '@/shared/lib/devicon';
 
 export default function AdminPage() {
   const [data, setData] = useState<IPortfolioData>(portfolioData);
@@ -39,6 +47,11 @@ export default function AdminPage() {
   const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [copiedGit, setCopiedGit] = useState(false);
   const [uploadingImg, setUploadingImg] = useState(false);
+
+  // Devicon Picker state inside Edit Skill modal
+  const [deviconSearch, setDeviconSearch] = useState('');
+  const [deviconCategoryFilter, setDeviconCategoryFilter] = useState<'all' | 'frontend' | 'backend' | 'database' | 'devops' | 'tools'>('all');
+  const [draggedSkillIndex, setDraggedSkillIndex] = useState<number | null>(null);
 
   // File input refs for uploading
   const projectFileRef = useRef<HTMLInputElement>(null);
@@ -175,6 +188,21 @@ export default function AdminPage() {
   // --- Project Helpers ---
   const saveProject = (project: IProject, index: number) => {
     if (!data) return;
+    if (!project.title.trim()) {
+      setStatusMessage({ type: 'error', text: 'Project title cannot be empty!' });
+      return;
+    }
+    const duplicate = data.projects.find(
+      (p, i) => i !== index && p.title.trim().toLowerCase() === project.title.trim().toLowerCase()
+    );
+    if (duplicate) {
+      setStatusMessage({
+        type: 'error',
+        text: `Duplicate project: "${duplicate.title}" already exists in your projects list!`,
+      });
+      return;
+    }
+
     const updated = [...data.projects];
     if (index >= 0) {
       updated[index] = project;
@@ -183,6 +211,7 @@ export default function AdminPage() {
     }
     setData({ ...data, projects: updated });
     setEditingProject(null);
+    setStatusMessage({ type: 'success', text: `Project "${project.title}" saved successfully!` });
   };
 
   const deleteProject = (index: number) => {
@@ -194,6 +223,21 @@ export default function AdminPage() {
   // --- Skill Helpers ---
   const saveSkill = (skill: ISkill, index: number) => {
     if (!data) return;
+    if (!skill.name.trim()) {
+      setStatusMessage({ type: 'error', text: 'Skill name cannot be empty!' });
+      return;
+    }
+    const duplicate = data.skills.find(
+      (s, i) => i !== index && s.name.trim().toLowerCase() === skill.name.trim().toLowerCase()
+    );
+    if (duplicate) {
+      setStatusMessage({
+        type: 'error',
+        text: `Duplicate skill: "${duplicate.name}" already exists in your skills list (Position #${data.skills.indexOf(duplicate) + 1}).`,
+      });
+      return;
+    }
+
     const updated = [...data.skills];
     if (index >= 0) {
       updated[index] = skill;
@@ -202,6 +246,7 @@ export default function AdminPage() {
     }
     setData({ ...data, skills: updated });
     setEditingSkill(null);
+    setStatusMessage({ type: 'success', text: `Skill "${skill.name}" saved successfully!` });
   };
 
   const deleteSkill = (index: number) => {
@@ -209,6 +254,44 @@ export default function AdminPage() {
     const updated = data.skills.filter((_, i) => i !== index);
     setData({ ...data, skills: updated });
   };
+
+  const moveSkill = (fromIdx: number, toIdx: number) => {
+    if (!data || toIdx < 0 || toIdx >= data.skills.length) return;
+    const updated = [...data.skills];
+    const [moved] = updated.splice(fromIdx, 1);
+    updated.splice(toIdx, 0, moved);
+    setData({ ...data, skills: updated });
+  };
+
+  const sortSkillsByCategory = () => {
+    if (!data) return;
+    const order: Record<string, number> = { frontend: 1, backend: 2, database: 3, devops: 4, tools: 5, core: 6 };
+    const sorted = [...data.skills].sort((a, b) => {
+      const orderA = order[a.category] || 99;
+      const orderB = order[b.category] || 99;
+      if (orderA !== orderB) return orderA - orderB;
+      return a.name.localeCompare(b.name);
+    });
+    setData({ ...data, skills: sorted });
+    setStatusMessage({ type: 'success', text: 'Skills grouped by category!' });
+  };
+
+  const sortSkillsAZ = () => {
+    if (!data) return;
+    const sorted = [...data.skills].sort((a, b) => a.name.localeCompare(b.name));
+    setData({ ...data, skills: sorted });
+    setStatusMessage({ type: 'success', text: 'Skills sorted alphabetically (A-Z)!' });
+  };
+
+  // Filtered Devicons for quick picker
+  const filteredDevicons = DEVICONS_LIST.filter((item) => {
+    const matchesSearch =
+      item.name.toLowerCase().includes(deviconSearch.toLowerCase()) ||
+      item.iconKey.toLowerCase().includes(deviconSearch.toLowerCase());
+    const matchesCategory =
+      deviconCategoryFilter === 'all' || item.category === deviconCategoryFilter;
+    return matchesSearch && matchesCategory;
+  });
 
   // --- Timeline Helpers ---
   const saveTimeline = (type: 'education' | 'career', item: ITimelineItem, index: number) => {
@@ -232,6 +315,21 @@ export default function AdminPage() {
   // --- Certificate Helpers ---
   const saveCert = (cert: ICertificate, index: number) => {
     if (!data) return;
+    if (!cert.title.trim()) {
+      setStatusMessage({ type: 'error', text: 'Certificate title cannot be empty!' });
+      return;
+    }
+    const duplicate = data.certificates.find(
+      (c, i) => i !== index && c.title.trim().toLowerCase() === cert.title.trim().toLowerCase()
+    );
+    if (duplicate) {
+      setStatusMessage({
+        type: 'error',
+        text: `Duplicate certificate: "${duplicate.title}" already exists in your certificates list!`,
+      });
+      return;
+    }
+
     const updated = [...data.certificates];
     if (index >= 0) {
       updated[index] = cert;
@@ -240,6 +338,7 @@ export default function AdminPage() {
     }
     setData({ ...data, certificates: updated });
     setEditingCert(null);
+    setStatusMessage({ type: 'success', text: `Certificate "${cert.title}" saved successfully!` });
   };
 
   const deleteCert = (index: number) => {
@@ -465,51 +564,140 @@ export default function AdminPage() {
         {/* TAB 2: SKILLS */}
         {activeTab === 'skills' && (
           <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <h2 className="text-2xl font-bold">Skills Management</h2>
-                <p className="text-sm text-muted-foreground">Manage your technical stack, colors, categories, and icon mappings.</p>
+                <p className="text-sm text-muted-foreground">
+                  Drag &amp; drop cards or click the arrows to reorder. Changes sync with the homepage marquee ribbon.
+                </p>
               </div>
-              <Button
-                onClick={() =>
-                  setEditingSkill({
-                    index: -1,
-                    item: {
-                      name: '',
-                      icon: 'react',
-                      color: '#61DAFB',
-                      category: 'frontend',
-                    },
-                  })
-                }
-                className="bg-foreground text-background hover:bg-foreground/90 font-bold"
-              >
-                <Plus className="w-4 h-4 mr-1.5" /> Add Skill
-              </Button>
+              <div className="flex items-center gap-2 w-full sm:w-auto flex-wrap">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={sortSkillsByCategory}
+                  className="text-xs font-semibold"
+                  title="Group Frontend -> Backend -> Database -> DevOps -> Tools"
+                >
+                  <Layers className="w-3.5 h-3.5 mr-1 text-blue-500" /> Group by Category
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={sortSkillsAZ}
+                  className="text-xs font-semibold"
+                  title="Sort skills A to Z"
+                >
+                  <ArrowUpDown className="w-3.5 h-3.5 mr-1 text-green-500" /> Sort A-Z
+                </Button>
+                <Button
+                  onClick={() =>
+                    setEditingSkill({
+                      index: -1,
+                      item: {
+                        name: '',
+                        icon: 'react',
+                        color: '#61DAFB',
+                        category: 'frontend',
+                      },
+                    })
+                  }
+                  className="bg-foreground text-background hover:bg-foreground/90 font-bold"
+                >
+                  <Plus className="w-4 h-4 mr-1.5" /> Add Skill
+                </Button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {data.skills.map((skill, idx) => (
                 <div
                   key={idx}
-                  className="p-4 rounded-xl bg-card/60 border border-border/60 flex items-center justify-between gap-3 group hover:border-foreground/40 transition-colors"
+                  draggable
+                  onDragStart={() => setDraggedSkillIndex(idx)}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={() => {
+                    if (draggedSkillIndex !== null && draggedSkillIndex !== idx) {
+                      moveSkill(draggedSkillIndex, idx);
+                      setDraggedSkillIndex(null);
+                    }
+                  }}
+                  className={`p-3.5 rounded-xl bg-card/60 border border-border/60 flex items-center justify-between gap-3 group hover:border-foreground/50 transition-all ${
+                    draggedSkillIndex === idx ? 'opacity-40 scale-95 border-dashed border-foreground' : ''
+                  }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full border border-border/80 flex items-center justify-center font-bold text-xs" style={{ color: skill.color }}>
-                      {skill.name.slice(0, 2).toUpperCase()}
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    {/* Drag Handle */}
+                    <div
+                      className="cursor-grab active:cursor-grabbing text-muted-foreground/40 group-hover:text-muted-foreground transition-colors shrink-0"
+                      title="Drag to reorder"
+                    >
+                      <GripVertical size={16} />
                     </div>
-                    <div>
-                      <p className="font-bold text-sm text-foreground">{skill.name}</p>
-                      <p className="text-[11px] text-muted-foreground uppercase">{skill.category}</p>
+
+                    {/* Sequence index badge */}
+                    <span className="text-[10px] font-mono font-bold text-muted-foreground/60 w-4 text-center shrink-0">
+                      {idx + 1}
+                    </span>
+
+                    {/* Icon Logo */}
+                    <div
+                      className="w-9 h-9 rounded-xl bg-background/90 border border-border/80 p-1.5 flex items-center justify-center shrink-0 shadow-xs"
+                      style={{ borderColor: skill.color ? `${skill.color}50` : undefined }}
+                    >
+                      <img
+                        src={getDeviconSvgUrl(skill.icon || skill.name)}
+                        alt={skill.name}
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                          (e.target as HTMLElement).style.display = 'none';
+                        }}
+                      />
+                    </div>
+
+                    {/* Title & Category */}
+                    <div className="min-w-0">
+                      <p className="font-bold text-sm text-foreground truncate">{skill.name}</p>
+                      <p className="text-[10px] text-muted-foreground uppercase font-semibold">{skill.category}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100">
-                    <Button variant="ghost" size="icon-sm" onClick={() => setEditingSkill({ index: idx, item: { ...skill } })}>
-                      <Edit2 size={14} />
-                    </Button>
-                    <Button variant="ghost" size="icon-sm" onClick={() => deleteSkill(idx)} className="text-red-500 hover:text-red-600">
-                      <Trash2 size={14} />
-                    </Button>
+
+                  {/* Action Buttons */}
+                  <div className="flex items-center gap-0.5 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => moveSkill(idx, idx - 1)}
+                      disabled={idx === 0}
+                      title="Move Left / Earlier"
+                      className="p-1 rounded text-muted-foreground hover:text-foreground hover:bg-secondary disabled:opacity-20 disabled:pointer-events-none transition-colors"
+                    >
+                      <ChevronLeft size={14} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => moveSkill(idx, idx + 1)}
+                      disabled={idx === data.skills.length - 1}
+                      title="Move Right / Later"
+                      className="p-1 rounded text-muted-foreground hover:text-foreground hover:bg-secondary disabled:opacity-20 disabled:pointer-events-none transition-colors"
+                    >
+                      <ChevronRight size={14} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditingSkill({ index: idx, item: { ...skill } })}
+                      className="p-1 rounded text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+                      title="Edit Skill"
+                    >
+                      <Edit2 size={13} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => deleteSkill(idx)}
+                      className="p-1 rounded text-red-500 hover:text-red-600 hover:bg-red-500/10 transition-colors"
+                      title="Delete Skill"
+                    >
+                      <Trash2 size={13} />
+                    </button>
                   </div>
                 </div>
               ))}
@@ -975,92 +1163,249 @@ export default function AdminPage() {
       {/* --- EDIT SKILL MODAL --- */}
       {editingSkill && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md">
-          <Card className="max-w-md w-full border-border shadow-2xl">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>{editingSkill.index >= 0 ? 'Edit Skill' : 'Add New Skill'}</CardTitle>
+          <Card className="max-w-xl w-full max-h-[90vh] overflow-y-auto border-border shadow-2xl">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <div className="flex items-center gap-2">
+                <CardTitle>{editingSkill.index >= 0 ? 'Edit Skill' : 'Add New Skill'}</CardTitle>
+                <Badge variant="outline" className="text-[10px] uppercase font-bold">
+                  Devicon
+                </Badge>
+              </div>
               <button onClick={() => setEditingSkill(null)} className="text-muted-foreground hover:text-foreground font-bold">
                 ✕
               </button>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-1">
-                <label className="text-xs font-bold">Skill Name</label>
-                <Input
-                  value={editingSkill.item.name}
-                  onChange={(e) =>
-                    setEditingSkill({
-                      ...editingSkill,
-                      item: { ...editingSkill.item, name: e.target.value },
-                    })
-                  }
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs font-bold">Category</label>
-                <select
-                  className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-xs"
-                  value={editingSkill.item.category}
-                  onChange={(e) =>
-                    setEditingSkill({
-                      ...editingSkill,
-                      item: { ...editingSkill.item, category: e.target.value as 'frontend' | 'backend' | 'database' | 'devops' },
-                    })
-                  }
-                >
-                  <option value="frontend">Frontend</option>
-                  <option value="backend">Backend</option>
-                  <option value="database">Database</option>
-                  <option value="devops">DevOps & Tools</option>
-                </select>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-xs font-bold">Brand Color (HEX)</label>
-                  <div className="flex gap-2">
-                    <Input
-                      type="color"
-                      className="w-10 p-0 h-9 rounded-md cursor-pointer"
-                      value={editingSkill.item.color.startsWith('#') ? editingSkill.item.color : '#61DAFB'}
-                      onChange={(e) =>
-                        setEditingSkill({
-                          ...editingSkill,
-                          item: { ...editingSkill.item, color: e.target.value },
-                        })
-                      }
-                    />
-                    <Input
-                      value={editingSkill.item.color}
-                      onChange={(e) =>
-                        setEditingSkill({
-                          ...editingSkill,
-                          item: { ...editingSkill.item, color: e.target.value },
-                        })
-                      }
+            <CardContent className="space-y-5">
+              {/* Active Icon Preview Header */}
+              <div className="p-4 rounded-xl bg-secondary/40 border border-border/60 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-12 h-12 rounded-xl bg-background border border-border p-2.5 flex items-center justify-center shrink-0 shadow-sm"
+                    style={{ borderColor: editingSkill.item.color ? `${editingSkill.item.color}60` : undefined }}
+                  >
+                    <img
+                      src={getDeviconSvgUrl(editingSkill.item.icon || editingSkill.item.name)}
+                      alt={editingSkill.item.name || 'Icon Preview'}
+                      className="w-full h-full object-contain"
+                      onError={(e) => {
+                        (e.target as HTMLElement).style.display = 'none';
+                      }}
                     />
                   </div>
+                  <div>
+                    <h4 className="font-bold text-base text-foreground">{editingSkill.item.name || 'Skill Name Preview'}</h4>
+                    <p className="text-xs text-muted-foreground uppercase font-mono">{editingSkill.item.icon || 'icon-key'}</p>
+                  </div>
                 </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-bold">Icon Key</label>
-                  <Input
-                    value={editingSkill.item.icon}
-                    placeholder="react, typescript, java..."
-                    onChange={(e) =>
-                      setEditingSkill({
-                        ...editingSkill,
-                        item: { ...editingSkill.item, icon: e.target.value },
-                      })
-                    }
+                <div className="flex items-center gap-2">
+                  <span className="text-xs px-2.5 py-1 rounded-full font-bold uppercase bg-secondary text-foreground border border-border/50">
+                    {editingSkill.item.category}
+                  </span>
+                  <span
+                    className="w-4 h-4 rounded-full border border-border shadow-xs"
+                    style={{ backgroundColor: editingSkill.item.color || '#61DAFB' }}
+                    title={editingSkill.item.color}
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 pt-4">
+              {/* Devicon Quick Selector Gallery */}
+              <div className="space-y-2.5 p-3 rounded-xl border border-border/60 bg-card/60">
+                <div className="flex items-center justify-between gap-2">
+                  <label className="text-xs font-bold flex items-center gap-1.5 text-foreground">
+                    <Sparkles className="w-3.5 h-3.5 text-blue-500" /> Choose from Devicon Library (1-Click Fill)
+                  </label>
+                </div>
+
+                {/* Search & Category filter */}
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <div className="relative flex-1">
+                    <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      placeholder="Search Devicons (e.g. react, docker, java, postgres...)"
+                      value={deviconSearch}
+                      onChange={(e) => setDeviconSearch(e.target.value)}
+                      className="pl-8 h-8 text-xs font-medium"
+                    />
+                  </div>
+                  <div className="flex gap-1 overflow-x-auto pb-1 sm:pb-0">
+                    {(['all', 'frontend', 'backend', 'database', 'devops', 'tools'] as const).map((cat) => (
+                      <button
+                        key={cat}
+                        type="button"
+                        onClick={() => setDeviconCategoryFilter(cat)}
+                        className={`text-[10px] px-2.5 py-1 rounded-md font-bold uppercase whitespace-nowrap transition-colors ${
+                          deviconCategoryFilter === cat
+                            ? 'bg-foreground text-background shadow-xs'
+                            : 'bg-secondary text-muted-foreground hover:text-foreground'
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Devicons Grid */}
+                <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 max-h-36 overflow-y-auto p-1 border border-border/40 rounded-lg bg-background/50">
+                  {filteredDevicons.map((item: IDeviconItem) => (
+                    <button
+                      key={item.iconKey}
+                      type="button"
+                      onClick={() => {
+                        setEditingSkill({
+                          ...editingSkill,
+                          item: {
+                            ...editingSkill.item,
+                            name: item.name,
+                            icon: item.iconKey,
+                            color: item.brandColor,
+                            category: item.category,
+                          },
+                        });
+                      }}
+                      className={`flex flex-col items-center gap-1 p-2 rounded-lg border transition-all text-center group ${
+                        editingSkill.item.icon === item.iconKey
+                          ? 'border-foreground bg-secondary ring-1 ring-foreground'
+                          : 'border-border/40 hover:border-foreground/40 hover:bg-secondary/50'
+                      }`}
+                      title={`${item.name} (${item.category})`}
+                    >
+                      <img src={item.svgUrl} alt={item.name} className="w-5 h-5 object-contain group-hover:scale-110 transition-transform" />
+                      <span className="text-[10px] font-semibold text-foreground truncate w-full">{item.name}</span>
+                    </button>
+                  ))}
+                  {filteredDevicons.length === 0 && (
+                    <div className="col-span-full py-4 text-center text-xs text-muted-foreground">
+                      No tech icons matching &ldquo;{deviconSearch}&rdquo;. You can manually type the name and icon key below.
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Manual Form Inputs */}
+              <div className="space-y-4 pt-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold">Skill Name</label>
+                    <Input
+                      value={editingSkill.item.name}
+                      placeholder="e.g. React, PostgreSQL"
+                      onChange={(e) =>
+                        setEditingSkill({
+                          ...editingSkill,
+                          item: { ...editingSkill.item, name: e.target.value },
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold">Category</label>
+                    <select
+                      className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-xs font-medium"
+                      value={editingSkill.item.category}
+                      onChange={(e) =>
+                        setEditingSkill({
+                          ...editingSkill,
+                          item: { ...editingSkill.item, category: e.target.value as 'frontend' | 'backend' | 'database' | 'devops' | 'tools' | 'core' },
+                        })
+                      }
+                    >
+                      <option value="frontend">Frontend</option>
+                      <option value="backend">Backend</option>
+                      <option value="database">Database</option>
+                      <option value="devops">DevOps</option>
+                      <option value="tools">Tools</option>
+                      <option value="core">Core</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold">Brand Color (HEX)</label>
+                    <div className="flex gap-2">
+                      <Input
+                        type="color"
+                        className="w-10 p-0 h-9 rounded-md cursor-pointer"
+                        value={editingSkill.item.color.startsWith('#') ? editingSkill.item.color : '#61DAFB'}
+                        onChange={(e) =>
+                          setEditingSkill({
+                            ...editingSkill,
+                            item: { ...editingSkill.item, color: e.target.value },
+                          })
+                        }
+                      />
+                      <Input
+                        value={editingSkill.item.color}
+                        placeholder="#61DAFB"
+                        onChange={(e) =>
+                          setEditingSkill({
+                            ...editingSkill,
+                            item: { ...editingSkill.item, color: e.target.value },
+                          })
+                        }
+                        className="font-mono text-xs"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold">Devicon Icon Key</label>
+                    <Input
+                      value={editingSkill.item.icon}
+                      placeholder="react, typescript, java..."
+                      onChange={(e) =>
+                        setEditingSkill({
+                          ...editingSkill,
+                          item: { ...editingSkill.item, icon: e.target.value.toLowerCase().trim() },
+                        })
+                      }
+                      className="font-mono text-xs"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Live Duplicate Warning Alert */}
+              {(() => {
+                const duplicateSkill = data.skills.find(
+                  (s, i) =>
+                    i !== editingSkill.index &&
+                    s.name.trim().toLowerCase() === editingSkill.item.name.trim().toLowerCase() &&
+                    editingSkill.item.name.trim().length > 0
+                );
+                if (!duplicateSkill) return null;
+                const pos = data.skills.indexOf(duplicateSkill) + 1;
+                return (
+                  <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-medium flex items-center gap-2.5">
+                    <AlertCircle size={18} className="shrink-0" />
+                    <div>
+                      <p className="font-bold">Duplicate Skill Detected!</p>
+                      <p>
+                        A skill named <strong>&ldquo;{duplicateSkill.name}&rdquo;</strong> already exists at position #{pos} ({duplicateSkill.category.toUpperCase()}). Please change the name or edit the existing one.
+                      </p>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              <div className="flex justify-end gap-2 pt-4 border-t border-border/40">
                 <Button variant="outline" onClick={() => setEditingSkill(null)}>
                   Cancel
                 </Button>
-                <Button onClick={() => saveSkill(editingSkill.item, editingSkill.index)} className="bg-foreground text-background font-bold">
+                <Button
+                  onClick={() => saveSkill(editingSkill.item, editingSkill.index)}
+                  disabled={
+                    !editingSkill.item.name.trim() ||
+                    data.skills.some(
+                      (s, i) =>
+                        i !== editingSkill.index &&
+                        s.name.trim().toLowerCase() === editingSkill.item.name.trim().toLowerCase() &&
+                        editingSkill.item.name.trim().length > 0
+                    )
+                  }
+                  className="bg-foreground text-background font-bold disabled:opacity-40"
+                >
                   Save Skill
                 </Button>
               </div>

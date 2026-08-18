@@ -94,6 +94,12 @@
   ],
   "skills": [
     {
+      "name": "Next.js",
+      "icon": "nextjs",
+      "color": "#000000",
+      "category": "frontend"
+    },
+    {
       "name": "React",
       "icon": "react",
       "color": "#61DAFB",
@@ -109,18 +115,6 @@
       "name": "JavaScript",
       "icon": "javascript",
       "color": "#f7df1e",
-      "category": "frontend"
-    },
-    {
-      "name": "HTML5",
-      "icon": "html5",
-      "color": "#e44d26",
-      "category": "frontend"
-    },
-    {
-      "name": "CSS3",
-      "icon": "css3",
-      "color": "#1572b6",
       "category": "frontend"
     },
     {
@@ -154,15 +148,21 @@
       "category": "backend"
     },
     {
-      "name": "MySQL",
-      "icon": "mysql",
-      "color": "#4479A1",
-      "category": "database"
+      "name": "Unity",
+      "icon": "unity",
+      "color": "#000000",
+      "category": "tools"
     },
     {
       "name": "SQL Server",
       "icon": "sql",
       "color": "#CC2927",
+      "category": "database"
+    },
+    {
+      "name": "MySQL",
+      "icon": "mysql",
+      "color": "#4479A1",
       "category": "database"
     },
     {
@@ -172,16 +172,28 @@
       "category": "database"
     },
     {
+      "name": "Git",
+      "icon": "git",
+      "color": "#F05032",
+      "category": "devops"
+    },
+    {
       "name": "Docker",
       "icon": "docker",
       "color": "#2496ED",
       "category": "devops"
     },
     {
-      "name": "Git",
-      "icon": "git",
-      "color": "#F05032",
+      "name": "GitHub",
+      "icon": "github",
+      "color": "#181717",
       "category": "devops"
+    },
+    {
+      "name": "VS Code",
+      "icon": "vscode",
+      "color": "#007ACC",
+      "category": "tools"
     }
   ],
   "certificates": [

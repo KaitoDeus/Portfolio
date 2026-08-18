@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { 
-  Code2, 
   Circle
 } from 'lucide-react';
 import { 
@@ -21,6 +20,7 @@ import { Card } from '@/components/ui/card';
 import Section from '@/components/common/Section';
 import { portfolioService } from '@/core/services/PortfolioService';
 import { ISkill } from '@/core/models/PortfolioModels';
+import { getDeviconSvgUrl } from '@/shared/lib/devicon';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
   java: FaJava,
@@ -54,7 +54,6 @@ const iconMap: Record<string, React.ComponentType<{ className?: string; style?: 
   express: SiExpress 
 };
 
-// Helper function to resolve monochrome white/black icon colors into theme text-foreground
 const getIconColor = (color: string) => {
   if (!color) return 'currentColor';
   const hex = color.toLowerCase().trim();
@@ -64,6 +63,42 @@ const getIconColor = (color: string) => {
   return color;
 };
 
+const SkillIcon = ({ skill }: { skill: ISkill }) => {
+  const [hasError, setHasError] = useState(false);
+  const Icon = iconMap[skill.icon];
+  const color = getIconColor(skill.color);
+  const deviconUrl = getDeviconSvgUrl(skill.icon || skill.name);
+
+  if (!hasError && deviconUrl) {
+    return (
+      <img
+        src={deviconUrl}
+        alt={skill.name}
+        className="w-8 h-8 sm:w-9 sm:h-9 object-contain transition-transform duration-300 group-hover:scale-110"
+        onError={() => setHasError(true)}
+      />
+    );
+  }
+
+  if (Icon) {
+    return (
+      <Icon
+        className="w-8 h-8 sm:w-9 sm:h-9 transition-transform duration-300 group-hover:scale-110"
+        style={{ color }}
+      />
+    );
+  }
+
+  return (
+    <div
+      className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs"
+      style={{ color }}
+    >
+      {skill.name.slice(0, 2).toUpperCase()}
+    </div>
+  );
+};
+
 const TechMarquee = ({ skills }: { skills: ISkill[] }) => {
   const marqueeItems = [...skills, ...skills, ...skills];
 
@@ -71,9 +106,6 @@ const TechMarquee = ({ skills }: { skills: ISkill[] }) => {
     <div className="w-full overflow-hidden relative py-8 mask-[linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)]">
       <div className="animate-marquee gap-6 items-center pt-8">
         {marqueeItems.map((skill, index) => {
-          const Icon = iconMap[skill.icon] || Code2;
-          const color = getIconColor(skill.color);
-
           return (
             <div
               key={`${skill.name}-${index}`}
@@ -87,11 +119,8 @@ const TechMarquee = ({ skills }: { skills: ISkill[] }) => {
               </div>
 
               {/* Icon Badge Circle */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-card border border-border/70 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-foreground/50 text-foreground">
-                <Icon
-                  className="w-8 h-8 sm:w-9 sm:h-9 transition-transform duration-300 group-hover:scale-110"
-                  style={{ color }}
-                />
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-card border border-border/70 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-foreground/50 text-foreground p-3.5 shadow-xs">
+                <SkillIcon skill={skill} />
               </div>
             </div>
           );
