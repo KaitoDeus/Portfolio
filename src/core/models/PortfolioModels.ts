@@ -57,6 +57,11 @@ export interface ITimelineItem {
   details?: string[];
 }
 
+export interface ICareerGoals {
+  shortTerm: string;
+  longTerm: string;
+}
+
 export interface IPortfolioData {
   name: string;
   roles: string[];
@@ -65,6 +70,7 @@ export interface IPortfolioData {
   avatars: { hero: ImageSource; about: ImageSource; skills: ImageSource; contact: ImageSource };
   socialLinks: ISocialLink[];
   personalInfo: IPersonalInfo;
+  careerGoals: ICareerGoals;
   hobbies: IHobby[];
   education: ITimelineItem[];
   career: ITimelineItem[];

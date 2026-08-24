@@ -37,6 +37,7 @@ const hobbyIcons: Record<string, React.ElementType> = {
 export default function AboutPage() {
   const {
     personalInfo,
+    careerGoals,
     avatars,
     hobbies,
     education,
@@ -109,9 +110,8 @@ export default function AboutPage() {
                     <span className="text-foreground font-bold">Short-term:</span>
                   </div>
                   <span className="text-sm font-medium text-foreground/80">
-                    Gain experience in full-stack development, hone foundational
-                    knowledge through real-world projects, and learn from
-                    mentors to grow professionally.
+                    {careerGoals?.shortTerm ||
+                      'Gain practical experience in full-stack development, contribute to real-world software projects, and learn from senior engineers to grow professionally as a Software Engineer.'}
                   </span>
                 </li>
                 <li className="flex flex-col gap-1">
@@ -119,8 +119,8 @@ export default function AboutPage() {
                     <span className="text-foreground font-bold">Long-term:</span>
                   </div>
                   <span className="text-sm font-medium text-foreground/80">
-                    Become a proficient C# programmer and obtain English
-                    proficiency certificates (TOEIC/IELTS).
+                    {careerGoals?.longTerm ||
+                      'Advance into a proficient Software Engineer / Technical Lead, master scalable cloud architecture, and obtain international English proficiency certificates (TOEIC/IELTS).'}
                   </span>
                 </li>
               </ul>
@@ -153,62 +153,62 @@ export default function AboutPage() {
           </InfoCard>
         </div>
 
-        {/* Certificates & Education */}
+        {/* Education, Career & Certificates */}
         <div className="space-y-8">
-          <div>
-            <Card className="border-border/60 bg-card/60 backdrop-blur-md">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-foreground font-bold">
-                  <Award className="w-5 h-5" /> Certificates
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {certificates.map((cert, index) => {
-                    const certImgSrc = getImageSrc(cert.image);
+          {/* 1. Education (Full-width) */}
+          <TimelineCard
+            title="Education"
+            icon={GraduationCap}
+            items={education}
+            colorClass="text-foreground"
+          />
 
-                    return (
-                      <div
-                        key={index}
-                        className="flex items-center gap-4 p-4 rounded-xl bg-secondary/40 border border-border/40 hover:bg-secondary/70 transition-all cursor-pointer group/cert"
-                        onClick={() => setSelectedCert(cert)}
-                      >
-                        <div className="w-24 h-16 rounded-lg overflow-hidden bg-background/80 border border-border/40 group-hover/cert:border-foreground/40 transition-colors">
-                          <img
-                            src={certImgSrc}
-                            alt={cert.title}
-                            loading="lazy"
-                            decoding="async"
-                            className="w-full h-full object-contain"
-                          />
-                        </div>
-                        <div className="flex-1">
-                          <h4 className="font-semibold text-foreground group-hover/cert:underline transition-colors">
-                            {cert.title}
-                          </h4>
-                        </div>
+          {/* 2. Career Timeline (Full-width) */}
+          <TimelineCard
+            title="Career Timeline"
+            icon={Briefcase}
+            items={career}
+            colorClass="text-foreground"
+          />
+
+          {/* 3. Certificates (Full-width) */}
+          <Card className="border-border/60 bg-card/60 backdrop-blur-md">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-foreground font-bold">
+                <Award className="w-5 h-5" /> Certificates &amp; Credentials
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {certificates.map((cert, index) => {
+                  const certImgSrc = getImageSrc(cert.image);
+
+                  return (
+                    <div
+                      key={index}
+                      className="flex items-center gap-4 p-4 rounded-xl bg-secondary/40 border border-border/40 hover:bg-secondary/70 transition-all cursor-pointer group/cert"
+                      onClick={() => setSelectedCert(cert)}
+                    >
+                      <div className="w-20 h-14 rounded-lg overflow-hidden bg-background/80 border border-border/40 group-hover/cert:border-foreground/40 transition-colors shrink-0">
+                        <img
+                          src={certImgSrc}
+                          alt={cert.title}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-contain"
+                        />
                       </div>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <TimelineCard
-              title="Education"
-              icon={GraduationCap}
-              items={education}
-              colorClass="text-foreground"
-            />
-            <TimelineCard
-              title="Career Timeline"
-              icon={Briefcase}
-              items={career}
-              colorClass="text-foreground"
-            />
-          </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-foreground group-hover/cert:underline transition-colors text-sm line-clamp-2">
+                          {cert.title}
+                        </h4>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
 

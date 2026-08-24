@@ -940,6 +940,47 @@ export default function AdminPage() {
                   </div>
                 </div>
 
+                <div className="space-y-4 pt-4 border-t border-border/40">
+                  <div>
+                    <h4 className="font-bold text-sm text-foreground">Career Goals (About Section)</h4>
+                    <p className="text-xs text-muted-foreground">Define your short-term and long-term career aspirations.</p>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold uppercase text-muted-foreground">Short-term Career Goal</label>
+                    <Textarea
+                      rows={2}
+                      value={data.careerGoals?.shortTerm || ''}
+                      onChange={(e) =>
+                        setData({
+                          ...data,
+                          careerGoals: {
+                            ...(data.careerGoals || { shortTerm: '', longTerm: '' }),
+                            shortTerm: e.target.value,
+                          },
+                        })
+                      }
+                      placeholder="e.g. Gain practical experience in full-stack development..."
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold uppercase text-muted-foreground">Long-term Career Goal</label>
+                    <Textarea
+                      rows={2}
+                      value={data.careerGoals?.longTerm || ''}
+                      onChange={(e) =>
+                        setData({
+                          ...data,
+                          careerGoals: {
+                            ...(data.careerGoals || { shortTerm: '', longTerm: '' }),
+                            longTerm: e.target.value,
+                          },
+                        })
+                      }
+                      placeholder="e.g. Advance into a proficient Software Engineer..."
+                    />
+                  </div>
+                </div>
+
                 <div className="space-y-3 pt-4 border-t border-border/40">
                   <h4 className="font-bold text-sm">Social Media Links</h4>
                   {data.socialLinks.map((link, idx) => (
@@ -1409,18 +1450,18 @@ export default function AdminPage() {
       {/* --- EDIT TIMELINE MODAL --- */}
       {editingTimeline && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md">
-          <Card className="max-w-md w-full border-border shadow-2xl">
-            <CardHeader className="flex flex-row items-center justify-between">
+          <Card className="max-w-xl w-full max-h-[90vh] overflow-y-auto border-border shadow-2xl">
+            <CardHeader className="flex flex-row items-center justify-between sticky top-0 bg-card z-10 border-b border-border/40 pb-3">
               <CardTitle>
                 {editingTimeline.index >= 0 ? 'Edit' : 'Add'} {editingTimeline.type === 'education' ? 'Education' : 'Career'} Item
               </CardTitle>
-              <button onClick={() => setEditingTimeline(null)} className="text-muted-foreground hover:text-foreground font-bold">
+              <button onClick={() => setEditingTimeline(null)} className="text-muted-foreground hover:text-foreground font-bold text-lg">
                 ✕
               </button>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 pt-4">
               <div className="space-y-1">
-                <label className="text-xs font-bold">Title / Institution</label>
+                <label className="text-xs font-bold">Title / Institution / Company</label>
                 <Input
                   value={editingTimeline.item.title || ''}
                   onChange={(e) =>
@@ -1470,9 +1511,9 @@ export default function AdminPage() {
                 </div>
               </div>
               <div className="space-y-1">
-                <label className="text-xs font-bold">Extra Details (Supports Markdown links)</label>
+                <label className="text-xs font-bold">Extra Details (Supports Markdown links &amp; bullet points)</label>
                 <Textarea
-                  rows={3}
+                  rows={6}
                   value={editingTimeline.item.extra || ''}
                   onChange={(e) =>
                     setEditingTimeline({
@@ -1480,9 +1521,10 @@ export default function AdminPage() {
                       item: { ...editingTimeline.item, extra: e.target.value },
                     })
                   }
+                  className="font-mono text-xs leading-relaxed"
                 />
               </div>
-              <div className="flex justify-end gap-2 pt-4">
+              <div className="flex justify-end gap-2 pt-4 border-t border-border/40 sticky bottom-0 bg-card z-10 pb-1">
                 <Button variant="outline" onClick={() => setEditingTimeline(null)}>
                   Cancel
                 </Button>
@@ -1501,14 +1543,14 @@ export default function AdminPage() {
       {/* --- EDIT CERTIFICATE MODAL --- */}
       {editingCert && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md">
-          <Card className="max-w-md w-full border-border shadow-2xl">
-            <CardHeader className="flex flex-row items-center justify-between">
+          <Card className="max-w-md w-full max-h-[90vh] overflow-y-auto border-border shadow-2xl">
+            <CardHeader className="flex flex-row items-center justify-between sticky top-0 bg-card z-10 border-b border-border/40 pb-3">
               <CardTitle>{editingCert.index >= 0 ? 'Edit Certificate' : 'Add New Certificate'}</CardTitle>
-              <button onClick={() => setEditingCert(null)} className="text-muted-foreground hover:text-foreground font-bold">
+              <button onClick={() => setEditingCert(null)} className="text-muted-foreground hover:text-foreground font-bold text-lg">
                 ✕
               </button>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 pt-4">
               {/* Thumbnail Live Preview */}
               {editingCert.item.image && (
                 <div className="space-y-1.5">
@@ -1585,7 +1627,7 @@ export default function AdminPage() {
                 </p>
               </div>
 
-              <div className="flex justify-end gap-2 pt-4">
+              <div className="flex justify-end gap-2 pt-4 border-t border-border/40 sticky bottom-0 bg-card z-10 pb-1">
                 <Button variant="outline" onClick={() => setEditingCert(null)}>
                   Cancel
                 </Button>
