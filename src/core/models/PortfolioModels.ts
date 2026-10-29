@@ -14,6 +14,8 @@ export interface IPersonalInfo {
   gender: string;
   address: string;
   careerObjective: string;
+  phone?: string;
+  email?: string;
 }
 
 export interface IProject {

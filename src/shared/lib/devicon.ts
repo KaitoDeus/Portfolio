@@ -108,8 +108,22 @@ export const DEVICONS_LIST: IDeviconItem[] = [
     brandColor: '#000000',
     category: 'frontend',
   },
+  {
+    name: 'WebGL',
+    iconKey: 'webgl',
+    svgUrl: `${DEVICON_CDN_BASE}/webgl/webgl-original.svg`,
+    brandColor: '#990000',
+    category: 'frontend',
+  },
 
   // --- BACKEND ---
+  {
+    name: 'Kotlin',
+    iconKey: 'kotlin',
+    svgUrl: `${DEVICON_CDN_BASE}/kotlin/kotlin-original.svg`,
+    brandColor: '#7F52FF',
+    category: 'backend',
+  },
   {
     name: 'Java',
     iconKey: 'java',

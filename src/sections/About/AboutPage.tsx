@@ -94,6 +94,8 @@ export default function AboutPage() {
               <InfoRow label="Date of Birth" value={personalInfo.dateOfBirth} />
               <InfoRow label="Gender" value={personalInfo.gender} />
               <InfoRow label="Address" value={personalInfo.address} />
+              {personalInfo.phone && <InfoRow label="Phone" value={personalInfo.phone} />}
+              {personalInfo.email && <InfoRow label="Email" value={personalInfo.email} />}
             </CardContent>
           </InfoCard>
 

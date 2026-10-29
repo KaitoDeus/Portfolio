@@ -7,6 +7,7 @@ import intermediateDiploma from '@/assets/img/cert/intermediate-diploma.webp';
 import aiFluencyFramework from '@/assets/img/cert/Al-Fluency-Framework-Foundations.webp';
 import logoUTH from '@/assets/logo/logo-UTH.webp';
 import logoCDN from '@/assets/logo/Logo-CĐN.webp';
+import logoVLU from '@/assets/logo/logo-VLU.png';
 
 import {
   projectCaro,
@@ -16,6 +17,9 @@ import {
   projectUthwm,
   projectTeliViettel,
   projectFirst2DGame,
+  projectVietnamB2,
+  projectHabitFlow,
+  project8Puzzle,
 } from '@/assets/img/proj';
 
 const staticAssetMap: Record<string, ImageSource> = {
@@ -26,6 +30,7 @@ const staticAssetMap: Record<string, ImageSource> = {
   '/src/assets/img/cert/Al-Fluency-Framework-Foundations.webp': aiFluencyFramework,
   '/src/assets/logo/logo-UTH.webp': logoUTH,
   '/src/assets/logo/Logo-CĐN.webp': logoCDN,
+  '/src/assets/logo/logo-VLU.png': logoVLU,
   '/src/assets/img/proj/project_caro.webp': projectCaro,
   '/src/assets/img/proj/project_photopalette.webp': projectPhotoPalette,
   '/src/assets/img/proj/project_neoshop.webp': projectNeoShop,
@@ -33,6 +38,9 @@ const staticAssetMap: Record<string, ImageSource> = {
   '/src/assets/img/proj/project_uthwm.webp': projectUthwm,
   '/src/assets/img/proj/project_teli-viettel.webp': projectTeliViettel,
   '/src/assets/img/proj/project_first2dgame.webp': projectFirst2DGame,
+  '/src/assets/img/proj/project_vietnam_b2.png': projectVietnamB2,
+  '/src/assets/img/proj/project_habitflow.png': projectHabitFlow,
+  '/src/assets/img/proj/project_8puzzle.png': project8Puzzle,
 
   // Public /assets/
   '/assets/img/avt/avatar.webp': avatar,
@@ -41,6 +49,7 @@ const staticAssetMap: Record<string, ImageSource> = {
   '/assets/img/cert/Al-Fluency-Framework-Foundations.webp': aiFluencyFramework,
   '/assets/logo/logo-UTH.webp': logoUTH,
   '/assets/logo/Logo-CĐN.webp': logoCDN,
+  '/assets/logo/logo-VLU.png': logoVLU,
   '/assets/img/proj/project_caro.webp': projectCaro,
   '/assets/img/proj/project_photopalette.webp': projectPhotoPalette,
   '/assets/img/proj/project_neoshop.webp': projectNeoShop,
@@ -48,6 +57,9 @@ const staticAssetMap: Record<string, ImageSource> = {
   '/assets/img/proj/project_uthwm.webp': projectUthwm,
   '/assets/img/proj/project_teli-viettel.webp': projectTeliViettel,
   '/assets/img/proj/project_first2dgame.webp': projectFirst2DGame,
+  '/assets/img/proj/project_vietnam_b2.png': projectVietnamB2,
+  '/assets/img/proj/project_habitflow.png': projectHabitFlow,
+  '/assets/img/proj/project_8puzzle.png': project8Puzzle,
 };
 
 const resolveAsset = (pathOrUrl: ImageSource | string): ImageSource => {

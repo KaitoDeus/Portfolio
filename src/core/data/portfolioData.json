@@ -1,7 +1,9 @@
 {
   "name": "Kaito",
   "roles": [
-    "Software Developer"
+    "Software Engineer Intern",
+    "Full Stack Developer",
+    "Game Developer"
   ],
   "tagline": "I'm a",
   "bio": "Final-year IT student with practical experience in software and game development. Experienced in building desktop, web, and game applications using modern development technologies. Seeking a Software Developer (Intern / Fresher) position to contribute, learn, and grow in a professional engineering environment.",
@@ -14,7 +16,7 @@
   "socialLinks": [
     {
       "platform": "linkedin",
-      "url": "https://www.linkedin.com/in/kaitodeus/?locale=en_US",
+      "url": "https://www.linkedin.com/in/kaitodeus",
       "label": "LinkedIn Profile"
     },
     {
@@ -24,16 +26,18 @@
     },
     {
       "platform": "mail",
-      "url": "mailto:khaivo300605@gmail.com",
+      "url": "mailto:kenkaneki395@gmail.com",
       "label": "Email Me"
     }
   ],
   "personalInfo": {
-    "fullname": "Vo Anh Khai",
+    "fullname": "Võ Anh Khải",
     "dateOfBirth": "30/06/2005",
     "gender": "Male",
-    "address": "Gia Dinh Ward, HCMC",
-    "careerObjective": ""
+    "address": "Ho Chi Minh City, Vietnam",
+    "phone": "0902316248",
+    "email": "kenkaneki395@gmail.com",
+    "careerObjective": "Software Developer (Intern / Fresher)"
   },
   "careerGoals": {
     "shortTerm": "Secure a Software Developer (Intern / Fresher / Junior) position to apply my practical full-stack experience (React, Java/C#, Node.js), write clean and maintainable code, and contribute effectively to production-ready projects in an agile team.",
@@ -67,18 +71,18 @@
   ],
   "education": [
     {
-      "year": "Sept 2023 - Jun 2027",
-      "title": "University of Transport Ho Chi Minh City",
-      "location": "Hồ Chí Minh",
-      "subtitle": "Bachelor's degree, Information Technology",
+      "year": "September 2023 - June 2027",
+      "title": "UTH - University of Transport Ho Chi Minh City",
+      "location": "Ho Chi Minh City, Vietnam",
+      "subtitle": "Bachelor's Degree, Information Technology",
       "logo": "/assets/logo/logo-UTH.webp",
       "extra": "English B2 Level - Good at listening and reading skills",
       "details": []
     },
     {
-      "year": "Aug 2020 - Jul 2022",
+      "year": "August 2020 - July 2022",
       "title": "Ho Chi Minh Vocational College",
-      "location": "Hồ Chí Minh",
+      "location": "Ho Chi Minh City, Vietnam",
       "subtitle": "Intermediate Degree, IT (Software Application)",
       "logo": "/assets/logo/Logo-CĐN.webp",
       "extra": "Graduation Project: [FARMER KUN's STORE](https://kenkaneki395.wixsite.com/site)",
@@ -87,16 +91,55 @@
   ],
   "career": [
     {
-      "year": "March 2026 - Present",
-      "title": "Freelance",
-      "location": "Remote",
+      "year": "October 2026 - Present",
+      "title": "FPT Software",
+      "location": "Ho Chi Minh City, Vietnam (Remote)",
+      "subtitle": "Software Engineer Intern",
+      "logo": "/assets/logo/logo-FPT.svg",
+      "extra": "- Working as a Software Engineer Intern at FPT Software (Remote).\n- Participating in modern software engineering practices, agile collaboration, and enterprise project workflows.",
+      "details": []
+    },
+    {
+      "year": "September 2026 - Present",
+      "title": "Jollibee Vietnam Co., Ltd",
+      "location": "Ho Chi Minh City, Vietnam",
+      "subtitle": "Part-Time Crew Member / Staff",
+      "logo": "/assets/logo/logo-Jollibee.svg",
+      "extra": "Customer Service (Dining):\n- Effective communication and customer service skills.\n- Problem-solving and quick response in fast-paced environments.\n- Strong teamwork, discipline, and adaptability.\n\nKitchen Operations:\n- Fried chicken and French fries preparation (Fryman).\n- Noodle preparation and cooking (Pantry).\n- Ingredient and product preparation before peak hours (Backup).\n- Rice cooking, burger assembly, and meal packaging.\n- Compliance with food safety, hygiene, and quality standards.",
+      "details": []
+    },
+    {
+      "year": "June 2026 - September 2026",
+      "title": "UTH - University of Transport Ho Chi Minh City",
+      "location": "Ho Chi Minh City, Vietnam",
       "subtitle": "Web Developer",
-      "logo": "/freelance.jpg",
-      "extra": "[HEART of CLASSY](https://heartofclassy.com/) - Luxury Handbag E-Commerce Website (Jun 01 - Aug 30, 2026)\n- Built a luxury bilingual e-commerce website using Next.js 15, TypeScript, Tailwind CSS, and Sanity CMS.\n- Engineered 3D parallax reels and touch-optimized 3:4 responsive modals for Mobile, iPad Pro, and Desktop (60 FPS).\n- Achieved 100/100 Google Lighthouse scores (FCP 1.2s, LCP 1.7s), Schema.org Merchant rich snippets, and 3/3 AI Agentic Browsing (`llms.txt`).\n- Frontend Techniques: Next.js 15 (App Router, Server/Client Components), TypeScript, Tailwind CSS, Framer Motion (physics gestures & drag locks), Lenis Smooth Scroll, `next-intl` (bilingual routing & currency formatting), 100dvh & touch-event isolation (60 FPS on iOS/iPadOS).\n- Backend & Cloud Architecture: Sanity Headless CMS (GROQ queries, Studio v3, live sync & automated seeding scripts), Next.js API Route Handlers (`/llms.txt`, `sitemap.xml`, `robots.txt` with edge cache headers), Schema.org JSON-LD (Google Merchant validated), and Custom Analytics Service.\n- Optimization & SEO: 100/100 Core Web Vitals (FCP 1.2s, LCP 1.7s, CLS 0, ~154 KiB bundle), 0ms bot-detection bypass, absolute hreflang canonicals, and AI Agentic discovery.\n\n[TELI Viettel](https://teli-viettel.vercel.app/) - Digital Learning Platform (Mar 13 - Mar 23, 2026)\n- Academic project developed for the Project Management course at Van Lang University\n- Built an AI-powered web platform to help teachers in remote areas generate teaching materials more efficiently\n- Collaborated on the project in an agile team environment\n- Applied Figma MCP to ensure code closely matched the original design specifications",
+      "logo": "/assets/logo/logo-UTH.webp",
+      "extra": "[HEART of CLASSY](https://heartofclassy.com/) - Luxury Handbag E-Commerce Website (Jun 01 - Sept 30, 2026)\n- Built a luxury bilingual e-commerce website using Next.js 15, TypeScript, Tailwind CSS, and Sanity CMS.\n- Engineered 3D parallax reels and touch-optimized 3:4 responsive modals for Mobile, iPad Pro, and Desktop (60 FPS).\n- Achieved 100/100 Google Lighthouse scores (FCP 1.2s, LCP 1.7s), Schema.org Merchant rich snippets, and 3/3 AI Agentic Browsing (`llms.txt`).\n- Frontend Techniques: Next.js 15 (App Router, Server/Client Components), TypeScript, Tailwind CSS, Framer Motion (physics gestures & drag locks), Lenis Smooth Scroll, `next-intl` (bilingual routing & currency formatting), 100dvh & touch-event isolation (60 FPS on iOS/iPadOS).\n- Backend & Cloud Architecture: Sanity Headless CMS (GROQ queries, Studio v3, live sync & automated seeding scripts), Next.js API Route Handlers (`/llms.txt`, `sitemap.xml`, `robots.txt` with edge cache headers), Schema.org JSON-LD (Google Merchant validated), and Custom Analytics Service.\n- Optimization & SEO: 100/100 Core Web Vitals (FCP 1.2s, LCP 1.7s, CLS 0, ~154 KiB bundle), 0ms bot-detection bypass, absolute hreflang canonicals, and AI Agentic discovery.",
+      "details": []
+    },
+    {
+      "year": "March 2026 - March 2026",
+      "title": "Van Lang University",
+      "location": "Ho Chi Minh City, Vietnam",
+      "subtitle": "Frontend Developer",
+      "logo": "/assets/logo/logo-VLU.png",
+      "extra": "[TELI Viettel](https://teli-viettel.vercel.app/) - Digital Learning Platform (Mar 13 - Mar 23, 2026)\n- Academic project developed for the Project Management course at Van Lang University.\n- Built an AI-powered web platform to help teachers in remote areas generate teaching materials more efficiently.\n- Collaborated on the project in an agile team environment.\n- Applied Figma MCP to ensure vibe code closely matched the original design specifications.",
       "details": []
     }
   ],
   "skills": [
+    {
+      "name": "WebGL",
+      "icon": "webgl",
+      "color": "#990000",
+      "category": "core"
+    },
+    {
+      "name": "Unity",
+      "icon": "unity",
+      "color": "#000000",
+      "category": "tools"
+    },
     {
       "name": "Next.js",
       "icon": "nextjs",
@@ -152,10 +195,10 @@
       "category": "backend"
     },
     {
-      "name": "Unity",
-      "icon": "unity",
-      "color": "#000000",
-      "category": "tools"
+      "name": "Python",
+      "icon": "python",
+      "color": "#3776AB",
+      "category": "backend"
     },
     {
       "name": "SQL Server",
@@ -192,6 +235,18 @@
       "icon": "github",
       "color": "#181717",
       "category": "devops"
+    },
+    {
+      "name": "Figma",
+      "icon": "figma",
+      "color": "#F24E1E",
+      "category": "tools"
+    },
+    {
+      "name": "Kotlin",
+      "icon": "kotlin",
+      "color": "#7F52FF",
+      "category": "backend"
     },
     {
       "name": "VS Code",
@@ -234,19 +289,52 @@
   ],
   "projects": [
     {
-      "id": "photo-palette",
-      "title": "Photo Palette",
-      "image": "/assets/img/proj/project_photopalette.webp",
-      "role": "Landing Page",
-      "link": "https://photo-palette.vercel.app/",
-      "githubLink": "https://github.com/KaitoDeus/Photo-Palette",
+      "id": "vietnam-b2-driving-simulator",
+      "title": "Vietnam B2 Driving Simulator",
+      "image": "/assets/img/proj/project_vietnam_b2.png",
+      "role": "3D Driving Simulation Game",
+      "link": "https://github.com/KaitoDeus/Vietnam-B2-Driving-Simulator/releases/tag/v0.0.2",
+      "githubLink": "https://github.com/KaitoDeus/Vietnam-B2-Driving-Simulator",
       "status": "completed",
       "technologies": [
-        "React",
-        "TypeScript",
-        "Tailwind CSS"
+        "Unity",
+        "C#",
+        "Rigid Body Dynamics",
+        "3D Physics"
       ],
-      "startDate": "2026-02-04"
+      "startDate": "2026-03-24"
+    },
+    {
+      "id": "habitflow",
+      "title": "HabitFlow",
+      "image": "/assets/img/proj/project_habitflow.png",
+      "role": "Android Mobile Application",
+      "link": "https://github.com/caobahung001/LAPTRINHTHIETBIDIDONG",
+      "githubLink": "https://github.com/caobahung001/LAPTRINHTHIETBIDIDONG",
+      "status": "completed",
+      "technologies": [
+        "Kotlin",
+        "Jetpack Compose",
+        "Room Database",
+        "WorkManager"
+      ],
+      "startDate": "2026-07-31"
+    },
+    {
+      "id": "8-puzzle-game",
+      "title": "8-Puzzle Game (AI Search)",
+      "image": "/assets/img/proj/project_8puzzle.png",
+      "role": "AI Search & Game Application",
+      "link": "https://github.com/KaitoDeus/8-Puzzle-Game",
+      "githubLink": "https://github.com/KaitoDeus/8-Puzzle-Game",
+      "status": "completed",
+      "technologies": [
+        "Python",
+        "Pygame",
+        "A* Algorithm",
+        "BFS"
+      ],
+      "startDate": "2026-04-09"
     },
     {
       "id": "neoshop",
@@ -279,20 +367,6 @@
         "Windows Forms"
       ],
       "startDate": "2025-12-02"
-    },
-    {
-      "id": "first-2d-game",
-      "title": "First 2D Game Tutorial",
-      "image": "/assets/img/proj/project_first2dgame.webp",
-      "role": "Unity Developer",
-      "link": "https://kaitodesu.itch.io/first2dgametutorial",
-      "githubLink": "https://github.com/KaitoDeus/First2DGameTutorial",
-      "status": "completed",
-      "technologies": [
-        "C#",
-        "Unity"
-      ],
-      "startDate": "2024-05-01"
     }
   ]
 }

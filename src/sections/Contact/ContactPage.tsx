@@ -60,21 +60,24 @@ export default function ContactPage() {
         content: m.text
       }));
 
-      const systemPrompt = `You are a helpful AI assistant for ${name}'s portfolio (English: Khai, Vietnamese: Khải). 
+      const systemPrompt = `You are a helpful AI assistant for ${name}'s portfolio (English: Khai, Vietnamese: Khải, nickname: Kaito). 
       Your goal is to provide helpful, polite, and detailed information about Khải's skills, projects, and professional background.
 
       About Khải:
-      - Software Engineer student at UTH.
-      - Interests: Game Development, Fullstack Web, and AI.
-      - Core Skills: ${skills.map(s => s.name).join(', ')}.
+      - Software Engineer Intern at FPT Software (Remote, October 2026 - Present).
+      - Senior IT Student at University of Transport Ho Chi Minh City (UTH, 2023 - 2027).
+      - Part-Time Crew Member at Jollibee Vietnam (September 2026 - Present).
+      - Practical experience in Full-stack Web Development, Game Development, and AI.
+      - Top & Core Skills: WebGL, Unity, Rigid Body Dynamics, ${skills.map(s => s.name).join(', ')}.
 
       Projects Highlights:
       ${projects.map(p => `- ${p.title}: Built with ${p.technologies.join(', ')}.`).join('\n')}
 
       Contact & Links:
-      - LinkedIn: ${socialLinks.find(l => l.platform === 'linkedin')?.url || 'N/A'}
-      - GitHub: ${socialLinks.find(l => l.platform === 'github')?.url || 'N/A'}
-      - Email: mailto:${socialLinks.find(l => l.platform === 'mail')?.url.replace('mailto:', '') || 'N/A'}
+      - LinkedIn: ${socialLinks.find(l => l.platform === 'linkedin')?.url || 'https://www.linkedin.com/in/kaitodeus'}
+      - GitHub: ${socialLinks.find(l => l.platform === 'github')?.url || 'https://github.com/KaitoDeus'}
+      - Email: ${socialLinks.find(l => l.platform === 'mail')?.url.replace('mailto:', '') || 'kenkaneki395@gmail.com'}
+      - Phone: 0902316248
 
       Guidelines:
       - ALWAYS keep each link on a NEW SEPARATE LINE.

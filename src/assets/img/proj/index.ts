@@ -5,6 +5,9 @@ import projectNeoShop from './project_neoshop.webp';
 import projectPhotoPalette from './project_photopalette.webp';
 import projectTeliViettel from './project_teli-viettel.webp';
 import projectUthwm from './project_uthwm.webp';
+import projectVietnamB2 from './project_vietnam_b2.png';
+import projectHabitFlow from './project_habitflow.png';
+import project8Puzzle from './project_8puzzle.png';
 
 export {
   projectCaro,
@@ -14,4 +17,7 @@ export {
   projectPhotoPalette,
   projectTeliViettel,
   projectUthwm,
+  projectVietnamB2,
+  projectHabitFlow,
+  project8Puzzle,
 };
