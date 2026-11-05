@@ -1,21 +1,36 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { 
+  ArrowRight, 
+  FolderKanban, 
+  User, 
+  Lightbulb, 
+  Mail, 
+  ExternalLink, 
+  Github, 
+  Briefcase, 
+  GraduationCap, 
+  Sparkles,
+  Gamepad2,
+  Code
+} from 'lucide-react';
 import { portfolioService } from '@/core/services/PortfolioService';
 import { Button } from '@/components/ui/button';
-import AboutPage from '../About/AboutPage';
-import SkillsPage from '../Skills/SkillsPage';
-import ProjectsPage from '../Projects/ProjectsPage';
-import ContactPage from '../Contact/ContactPage';
+import { Card, CardContent } from '@/components/ui/card';
+import { getImageSrc } from '@/shared/lib/utils';
+import { getDeviconSvgUrl } from '@/shared/lib/devicon';
+import { ISkill } from '@/core/models/PortfolioModels';
 
-const Typewriter = ({ texts, speed = 80, waitTime = 1800 }: { texts: string[], speed?: number, waitTime?: number }) => {
+const Typewriter = ({ texts, speed = 80, waitTime = 1800 }: { texts: string[]; speed?: number; waitTime?: number }) => {
   const [displayText, setDisplayText] = useState('');
   const [index, setIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
-    const currentText = texts[index];
+    const currentText = texts[index] || '';
 
     if (!isDeleting && displayText === currentText) {
       timer = setTimeout(() => setIsDeleting(true), waitTime);
@@ -26,8 +41,8 @@ const Typewriter = ({ texts, speed = 80, waitTime = 1800 }: { texts: string[], s
       }, 0);
     } else {
       timer = setTimeout(() => {
-        setDisplayText(prev => 
-          isDeleting 
+        setDisplayText((prev) =>
+          isDeleting
             ? currentText.substring(0, prev.length - 1)
             : currentText.substring(0, prev.length + 1)
         );
@@ -40,62 +55,354 @@ const Typewriter = ({ texts, speed = 80, waitTime = 1800 }: { texts: string[], s
   return (
     <span className="text-foreground font-bold">
       {displayText}
-      <span className="animate-pulse ml-0.5 border-r-2 border-foreground h-8 inline-block align-middle" />
+      <span className="animate-pulse ml-0.5 border-r-2 border-foreground h-7 sm:h-8 inline-block align-middle" />
     </span>
   );
 };
 
-export default function HomePage() {
-  const { name, roles } = portfolioService.getRawData();
+const SkillMiniIcon = ({ skill }: { skill: ISkill }) => {
+  const [hasError, setHasError] = useState(false);
+  const deviconUrl = getDeviconSvgUrl(skill.icon || skill.name);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  if (!hasError && deviconUrl) {
+    return (
+      <img
+        src={deviconUrl}
+        alt={skill.name}
+        className="w-7 h-7 sm:w-8 sm:h-8 object-contain transition-transform duration-300 group-hover:scale-110"
+        onError={() => setHasError(true)}
+      />
+    );
+  }
 
   return (
-    <div className="flex flex-col w-full">
-      {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center pt-20 px-[5%] relative overflow-hidden">
-        <div className="flex flex-col items-center text-center max-w-4xl relative z-10">
-          <div>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mt-4 mb-6">
-              <span className="text-muted-foreground font-normal">Hi, I am </span>
-              <span className="text-foreground">
-                {name}
-              </span>
-            </h1>
+    <div className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-[10px] text-foreground bg-secondary/80">
+      {skill.name.slice(0, 2).toUpperCase()}
+    </div>
+  );
+};
+
+export default function HomePage() {
+  const data = portfolioService.getRawData();
+  const { name, roles, bio, avatars, skills, projects } = data;
+  const avatarSrc = getImageSrc(avatars.hero);
+  const featuredProjects = projects.slice(0, 3);
+  const marqueeSkills = [...skills, ...skills];
+
+  return (
+    <div className="flex flex-col w-full space-y-24 sm:space-y-32">
+      {/* 1. HERO SECTION */}
+      <section className="min-h-[78vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 relative">
+        <div className="max-w-4xl mx-auto flex flex-col items-center relative z-10">
+          
+          {/* Availability Pill */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm font-semibold mb-8 shadow-xs">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            Available for Software Developer Roles (Intern / Fresher / Junior)
           </div>
+
+          {/* Profile Avatar with subtle glow */}
+          <div className="relative mb-6">
+            <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-2 border-border/80 shadow-2xl relative z-10">
+              <img
+                src={avatarSrc}
+                alt={name}
+                loading="eager"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="absolute inset-0 rounded-full bg-foreground/10 blur-xl -z-10 scale-110" />
+          </div>
+
+          {/* Headline */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4">
+            <span className="text-muted-foreground font-normal">Hi, I am </span>
+            <span className="text-foreground">{name}</span>
+          </h1>
 
           {/* Typewriter Effect */}
-          <div className="flex flex-wrap items-center justify-center gap-x-2 text-2xl md:text-3xl lg:text-3xl text-muted-foreground font-medium h-18">
-             <span>I&apos;m a </span>
-             <Typewriter texts={roles} />
+          <div className="flex flex-wrap items-center justify-center gap-x-2 text-xl sm:text-2xl lg:text-3xl text-muted-foreground font-medium h-14 sm:h-16">
+            <span>I&apos;m a </span>
+            <Typewriter texts={roles} />
           </div>
 
-          <p className="mt-4 text-muted-foreground italic text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
-            &ldquo;The best way to predict the future is to create it.&rdquo;
+          {/* Short Bio summary */}
+          <p className="mt-2 text-muted-foreground text-base sm:text-lg lg:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
+            {bio}
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 mt-12 flex-wrap justify-center w-full px-4 sm:px-0">
-            <Button 
-              size="lg" 
-              className="bg-foreground text-background hover:bg-foreground/80 font-bold text-base py-6 px-10 rounded-full w-full sm:w-auto hover:scale-105 transition-all shadow-xl"
-              onClick={() => scrollToSection('skills')}
+
+          {/* Action CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4 mt-10 justify-center w-full px-4 sm:px-0">
+            <Button
+              asChild
+              size="lg"
+              className="bg-foreground text-background hover:bg-foreground/80 font-bold text-base py-6 px-8 rounded-full shadow-xl hover:scale-105 transition-all"
             >
-              View my Skills
+              <Link href="/projects" className="flex items-center gap-2">
+                <FolderKanban className="w-5 h-5" />
+                <span>Explore Projects</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </Button>
+
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="font-bold text-base py-6 px-8 rounded-full border-border/70 hover:bg-foreground/5 hover:border-foreground/40 transition-all"
+            >
+              <Link href="/about" className="flex items-center gap-2">
+                <User className="w-5 h-5" />
+                <span>About Me</span>
+              </Link>
+            </Button>
+
+            <Button
+              asChild
+              variant="secondary"
+              size="lg"
+              className="font-bold text-base py-6 px-8 rounded-full bg-secondary/80 hover:bg-secondary transition-all"
+            >
+              <Link href="/contact" className="flex items-center gap-2">
+                <Mail className="w-5 h-5" />
+                <span>Get in Touch</span>
+              </Link>
+            </Button>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 2. HIGHLIGHT METRICS (Bento Cards) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          
+          <Card className="border-border/60 bg-card/60 backdrop-blur-md hover:border-foreground/40 transition-all shadow-md group">
+            <CardContent className="p-6 space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-foreground group-hover:scale-110 transition-transform">
+                <Briefcase className="w-5 h-5" />
+              </div>
+              <p className="text-xs uppercase font-bold text-muted-foreground tracking-wider">Current Experience</p>
+              <h2 className="text-lg font-bold text-foreground">FPT Software</h2>
+              <p className="text-xs text-muted-foreground">Software Engineer Intern (Remote)</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-border/60 bg-card/60 backdrop-blur-md hover:border-foreground/40 transition-all shadow-md group">
+            <CardContent className="p-6 space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-foreground group-hover:scale-110 transition-transform">
+                <GraduationCap className="w-5 h-5" />
+              </div>
+              <p className="text-xs uppercase font-bold text-muted-foreground tracking-wider">Education</p>
+              <h2 className="text-lg font-bold text-foreground">University of Transport</h2>
+              <p className="text-xs text-muted-foreground">Senior IT Student (2023 - 2027)</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-border/60 bg-card/60 backdrop-blur-md hover:border-foreground/40 transition-all shadow-md group">
+            <CardContent className="p-6 space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-foreground group-hover:scale-110 transition-transform">
+                <Gamepad2 className="w-5 h-5" />
+              </div>
+              <p className="text-xs uppercase font-bold text-muted-foreground tracking-wider">Specialization</p>
+              <h2 className="text-lg font-bold text-foreground">Game &amp; Simulation</h2>
+              <p className="text-xs text-muted-foreground">Unity, C#, Rigid Body Dynamics</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-border/60 bg-card/60 backdrop-blur-md hover:border-foreground/40 transition-all shadow-md group">
+            <CardContent className="p-6 space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-foreground group-hover:scale-110 transition-transform">
+                <Code className="w-5 h-5" />
+              </div>
+              <p className="text-xs uppercase font-bold text-muted-foreground tracking-wider">Full-Stack Web</p>
+              <h2 className="text-lg font-bold text-foreground">Modern Web &amp; Mobile</h2>
+              <p className="text-xs text-muted-foreground">Next.js 15, Spring Boot, Kotlin</p>
+            </CardContent>
+          </Card>
+
+        </div>
+      </section>
+
+      {/* 3. FEATURED PROJECTS SPOTLIGHT */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border/40 pb-6">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-secondary/80 border border-border/60 text-muted-foreground uppercase tracking-widest mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-foreground" />
+              Featured Work
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground">
+              Featured Projects
+            </h2>
+            <p className="text-muted-foreground text-sm sm:text-base mt-1">
+              Handpicked applications highlighting 3D simulation, mobile architecture, and full-stack development.
+            </p>
+          </div>
+          <Button
+            asChild
+            variant="ghost"
+            className="text-foreground hover:bg-secondary font-semibold shrink-0 group self-start sm:self-auto"
+          >
+            <Link href="/projects" className="flex items-center gap-1.5">
+              <span>View All 5 Projects</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featuredProjects.map((project) => {
+            const imgSrc = getImageSrc(project.image);
+            return (
+              <Card
+                key={project.id}
+                className="overflow-hidden border-border/60 bg-card/60 backdrop-blur-md hover:border-foreground/40 hover:shadow-xl transition-all duration-300 flex flex-col group h-full"
+              >
+                <div className="h-48 overflow-hidden bg-secondary/30 relative">
+                  <img
+                    src={imgSrc}
+                    alt={project.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-background/80 backdrop-blur-md border border-border/60 text-foreground">
+                      {project.role}
+                    </span>
+                  </div>
+                </div>
+
+                <CardContent className="p-5 flex flex-col grow justify-between space-y-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-foreground group-hover:underline">
+                      {project.title}
+                    </h3>
+                    <div className="flex flex-wrap gap-1.5 mt-3">
+                      {project.technologies.slice(0, 4).map((tech) => (
+                        <span
+                          key={tech}
+                          className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-secondary/80 border border-border/40 text-foreground"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border/40">
+                    {project.githubLink && (
+                      <a
+                        href={project.githubLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-secondary hover:bg-secondary/80 text-foreground transition-colors border border-border/40"
+                      >
+                        <Github className="w-3.5 h-3.5" />
+                        <span>Source</span>
+                      </a>
+                    )}
+                    {project.link && (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-foreground text-background hover:bg-foreground/90 transition-colors shadow-xs"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>Live / Release</span>
+                      </a>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 4. SKILLS MARQUEE PREVIEW */}
+      <section className="w-full space-y-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border/40 pb-6">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-secondary/80 border border-border/60 text-muted-foreground uppercase tracking-widest mb-3">
+              <Lightbulb className="w-3.5 h-3.5 text-foreground" />
+              Technical Stack
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground">
+              Core Skills &amp; Arsenal
+            </h2>
+            <p className="text-muted-foreground text-sm sm:text-base mt-1">
+              Proficient in game physics, full-stack frameworks, databases, and DevOps tools.
+            </p>
+          </div>
+          <Button
+            asChild
+            variant="ghost"
+            className="text-foreground hover:bg-secondary font-semibold shrink-0 group self-start sm:self-auto"
+          >
+            <Link href="/skills" className="flex items-center gap-1.5">
+              <span>Explore All Skills &amp; Specs</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </Button>
+        </div>
+
+        {/* Infinite ribbon */}
+        <div className="w-full overflow-hidden relative py-6 mask-[linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)]">
+          <div className="animate-marquee gap-5 items-center">
+            {marqueeSkills.map((skill, index) => (
+              <div
+                key={`${skill.name}-${index}`}
+                className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-card border border-border/60 shadow-xs shrink-0 group hover:scale-105 transition-all"
+              >
+                <SkillMiniIcon skill={skill} />
+                <span className="text-sm font-bold text-foreground whitespace-nowrap">
+                  {skill.name}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Other Sections */}
-      <AboutPage />
-      <SkillsPage />
-      <ProjectsPage />
-      <ContactPage />
+      {/* 5. CALL TO ACTION BANNER */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-6">
+        <Card className="border border-border/70 bg-gradient-to-br from-card/90 via-card/60 to-secondary/30 backdrop-blur-xl shadow-2xl rounded-3xl overflow-hidden p-8 sm:p-12 text-center relative">
+          <div className="max-w-2xl mx-auto space-y-6 relative z-10">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground">
+              Let&apos;s build something extraordinary together.
+            </h2>
+            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
+              Whether you have an internship opportunity, a project proposal, or want to discuss game development and web architectures, I&apos;d love to connect.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 pt-2">
+              <Button
+                asChild
+                size="lg"
+                className="bg-foreground text-background hover:bg-foreground/80 font-bold px-8 py-6 rounded-full shadow-xl hover:scale-105 transition-all"
+              >
+                <Link href="/contact" className="flex items-center gap-2">
+                  <Mail className="w-5 h-5" />
+                  <span>Reach Out &amp; Chat AI</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="font-bold px-8 py-6 rounded-full border-border/80 hover:bg-foreground/5 transition-all"
+              >
+                <Link href="/about">Learn More About Me</Link>
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </section>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
+import MainLayout from '@/components/layout/MainLayout';
 
 const montserrat = Montserrat({
   subsets: ['latin', 'vietnamese'],
@@ -72,7 +73,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className="font-sans antialiased min-h-screen bg-background text-foreground transition-colors duration-300"
       >
-        {children}
+        <MainLayout>{children}</MainLayout>
       </body>
     </html>
   );

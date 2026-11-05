@@ -1,124 +1,274 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Github, Globe } from 'lucide-react';
+import { 
+  Github, 
+  ExternalLink, 
+  Search, 
+  CheckCircle2, 
+  Download 
+} from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import Section from '@/components/common/Section';
-import Pagination from '@/components/common/Pagination';
+import PageHeader from '@/components/common/PageHeader';
 import { useProjects } from '@/shared/hooks/useProjects';
-import { usePagination } from '@/shared/hooks/usePagination';
 import { getImageSrc } from '@/shared/lib/utils';
+import { IProject } from '@/core/models/PortfolioModels';
+
+const FILTER_TAGS = [
+  { id: 'all', label: 'All Projects' },
+  { id: 'unity', label: 'Unity & 3D' },
+  { id: 'web', label: 'Web Applications' },
+  { id: 'mobile', label: 'Mobile (Android)' },
+  { id: 'ai', label: 'AI & Algorithms' },
+];
 
 export default function ProjectsPage() {
   const { projects, loading } = useProjects();
-  const [sortOrder] = useState<'newest' | 'oldest'>('newest');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('all');
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
 
-  const sortedProjects = useMemo(() => {
-    const result = [...projects];
+  const filteredProjects = useMemo(() => {
+    let result = [...projects];
 
-    if (sortOrder === 'newest') {
-      result.sort((a, b) => new Date(b.startDate || 0).getTime() - new Date(a.startDate || 0).getTime());
-    } else if (sortOrder === 'oldest') {
-      result.sort((a, b) => new Date(a.startDate || 0).getTime() - new Date(b.startDate || 0).getTime());
+    // Filter by category tag
+    if (selectedFilter !== 'all') {
+      result = result.filter((p) => {
+        const text = (p.title + ' ' + p.role + ' ' + (p.technologies || []).join(' ')).toLowerCase();
+        if (selectedFilter === 'unity') return text.includes('unity') || text.includes('3d') || text.includes('simulator');
+        if (selectedFilter === 'web') return text.includes('web') || text.includes('react') || text.includes('next.js') || text.includes('ecommerce');
+        if (selectedFilter === 'mobile') return text.includes('android') || text.includes('kotlin') || text.includes('mobile');
+        if (selectedFilter === 'ai') return text.includes('ai') || text.includes('python') || text.includes('algorithm') || text.includes('puzzle');
+        return true;
+      });
     }
 
-    return result;
-  }, [projects, sortOrder]);
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      result = result.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.role.toLowerCase().includes(q) ||
+          (p.technologies || []).some((t) => t.toLowerCase().includes(q))
+      );
+    }
 
-  const ITEMS_PER_PAGE = 6;
-  
-  const { 
-    currentData: paginatedProjects, 
-    currentPage, 
-    totalPages, 
-    next, 
-    prev, 
-    jump,
-  } = usePagination(sortedProjects, ITEMS_PER_PAGE);
+    // Sort by date
+    result.sort((a, b) => {
+      const dateA = new Date(a.startDate || 0).getTime();
+      const dateB = new Date(b.startDate || 0).getTime();
+      return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
+    });
+
+    return result;
+  }, [projects, selectedFilter, searchQuery, sortOrder]);
 
   return (
-    <Section id="projects" title="My Projects">
-      {loading ? (
-        <div className="flex justify-center items-center h-48">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-foreground"></div>
-        </div>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 lg:px-0">
-            {paginatedProjects.map((project, index) => {
-              const projectImgSrc = getImageSrc(project.image);
+    <Section id="projects">
+      <div className="max-w-7xl mx-auto space-y-12">
+        
+        {/* Page Header */}
+        <PageHeader
+          badge="Featured Works"
+          title="Software &amp; Game"
+          highlight="Projects Showcase"
+          description="A curated gallery of real-world applications, 3D simulation engines, full-stack ecommerce systems, and native mobile software."
+        />
 
+        {/* Filter, Search & Sort Toolbar */}
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-2xl bg-card/60 border border-border/60 backdrop-blur-md shadow-xs">
+          
+          {/* Category Filter Pills */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
+            {FILTER_TAGS.map((tag) => {
+              const isActive = selectedFilter === tag.id;
               return (
-                <div key={project.id || index} className="h-full">
-                  <Card className="overflow-hidden border-border/60 bg-card/60 backdrop-blur-md text-card-foreground transition-all duration-300 hover:border-foreground/40 hover:shadow-xl relative h-full flex flex-col group">
-                    <CardContent className="p-4 flex flex-col grow">
-                      <div className="overflow-hidden rounded-lg mb-4 bg-secondary/30">
-                        <img 
-                          src={projectImgSrc} 
-                          alt={project.title}
-                          loading="lazy"
-                          decoding="async"
-                          className="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                      <h4 className="text-lg font-bold mb-2 text-foreground">{project.title}</h4>
-                      <div className="flex flex-wrap gap-1.5 mb-4 grow content-start">
-                        {project.technologies?.map((tech) => (
-                          <span key={tech} className="text-[11px] px-2.5 py-0.5 rounded-full bg-secondary/80 text-foreground font-medium border border-border/40">
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="grid grid-cols-2 gap-2 mt-auto">
-                        {project.githubLink ? (
-                          <a 
-                            href={project.githubLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-foreground py-2 px-2 rounded-lg text-sm font-medium transition-colors border border-border/40"
-                          >
-                            <Github className="w-4 h-4" />
-                            <span>GitHub</span>
-                          </a>
-                        ) : (
-                          <div className="flex items-center justify-center gap-1.5 bg-muted text-muted-foreground py-2 px-2 rounded-lg text-sm font-medium cursor-not-allowed border border-border/30">
-                            <Github className="w-4 h-4" />
-                            <span>GitHub</span>
-                          </div>
-                        )}
-                        {project.link ? (
-                          <a 
-                            href={project.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-1.5 bg-foreground text-background hover:bg-foreground/90 py-2 px-2 rounded-lg text-sm font-medium transition-colors shadow-sm"
-                          >
-                            <Globe className="w-4 h-4" />
-                            <span>Demo</span>
-                          </a>
-                        ) : (
-                          <div className="flex items-center justify-center gap-1.5 bg-muted text-muted-foreground py-2 px-2 rounded-lg text-sm font-medium cursor-not-allowed border border-border/30">
-                            <Globe className="w-4 h-4" />
-                            <span>Demo</span>
-                          </div>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                <button
+                  key={tag.id}
+                  onClick={() => setSelectedFilter(tag.id)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                    isActive
+                      ? 'bg-foreground text-background shadow-xs font-bold'
+                      : 'bg-secondary/60 text-muted-foreground hover:text-foreground hover:bg-secondary'
+                  }`}
+                >
+                  {tag.label}
+                </button>
               );
             })}
           </div>
 
-          <Pagination 
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onNext={next}
-            onPrev={prev}
-            onJump={jump}
-          />
-        </>
-      )}
+          {/* Search Input & Sort Selector */}
+          <div className="flex items-center gap-2.5">
+            <div className="relative w-full md:w-60">
+              <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Input
+                type="text"
+                placeholder="Search projects or stack..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9 h-9 text-xs rounded-full bg-background/60 border-border/60"
+              />
+            </div>
+
+            <select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value as 'newest' | 'oldest')}
+              className="h-9 px-3 text-xs rounded-full bg-secondary/80 border border-border/60 text-foreground font-semibold cursor-pointer outline-none shrink-0"
+              aria-label="Sort order"
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+            </select>
+          </div>
+
+        </div>
+
+        {/* Projects Grid */}
+        {loading ? (
+          <div className="flex justify-center items-center h-56">
+            <div className="animate-spin rounded-full h-9 w-9 border-b-2 border-foreground" />
+          </div>
+        ) : filteredProjects.length === 0 ? (
+          <div className="text-center py-20 border border-dashed border-border/60 rounded-3xl p-8 space-y-3">
+            <p className="text-lg font-bold text-foreground">No projects match your query</p>
+            <p className="text-sm text-muted-foreground">
+              Try adjusting your search terms or clearing selected category filters.
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedFilter('all');
+              }}
+              className="mt-2 rounded-full cursor-pointer"
+            >
+              Reset All Filters
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {filteredProjects.map((project: IProject) => {
+              const projectImgSrc = getImageSrc(project.image);
+              const isSimulator = project.id === 'vietnam-b2-driving-simulator';
+
+              return (
+                <Card
+                  key={project.id}
+                  className="overflow-hidden border-border/60 bg-card/60 backdrop-blur-md text-card-foreground transition-all duration-300 hover:border-foreground/50 hover:shadow-2xl flex flex-col group h-full rounded-2xl"
+                >
+                  {/* Thumbnail */}
+                  <div className="overflow-hidden bg-secondary/30 relative h-52 shrink-0">
+                    <img
+                      src={projectImgSrc}
+                      alt={project.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3">
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-background/80 backdrop-blur-md border border-border/60 text-foreground shadow-xs">
+                        {project.role}
+                      </span>
+                    </div>
+                    {project.status && (
+                      <div className="absolute top-3 right-3">
+                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 backdrop-blur-md">
+                          <CheckCircle2 className="w-3 h-3" />
+                          <span>Done</span>
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Body Content */}
+                  <CardContent className="p-5 flex flex-col grow justify-between space-y-4">
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <h3 className="text-xl font-bold text-foreground group-hover:underline">
+                          {project.title}
+                        </h3>
+                        {project.startDate && (
+                          <span className="text-[11px] text-muted-foreground whitespace-nowrap">
+                            {new Date(project.startDate).toLocaleDateString('en-US', {
+                              month: 'short',
+                              year: 'numeric',
+                            })}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Technology Badges */}
+                      <div className="flex flex-wrap gap-1.5 mt-3">
+                        {project.technologies?.map((tech) => (
+                          <span
+                            key={tech}
+                            className="text-[11px] px-2.5 py-0.5 rounded-full bg-secondary/80 text-foreground font-medium border border-border/40"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action Links */}
+                    <div className="grid grid-cols-2 gap-2 pt-3 border-t border-border/40">
+                      {project.githubLink ? (
+                        <a
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-foreground py-2 px-3 rounded-xl text-xs font-semibold transition-colors border border-border/40"
+                        >
+                          <Github className="w-3.5 h-3.5" />
+                          <span>Source Code</span>
+                        </a>
+                      ) : (
+                        <div className="flex items-center justify-center gap-1.5 bg-muted text-muted-foreground py-2 px-3 rounded-xl text-xs font-semibold cursor-not-allowed border border-border/30">
+                          <Github className="w-3.5 h-3.5" />
+                          <span>Private</span>
+                        </div>
+                      )}
+
+                      {project.link ? (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-1.5 bg-foreground text-background hover:bg-foreground/90 py-2 px-3 rounded-xl text-xs font-semibold transition-colors shadow-xs"
+                        >
+                          {isSimulator ? (
+                            <>
+                              <Download className="w-3.5 h-3.5" />
+                              <span>Get Installer</span>
+                            </>
+                          ) : (
+                            <>
+                              <ExternalLink className="w-3.5 h-3.5" />
+                              <span>Live Demo</span>
+                            </>
+                          )}
+                        </a>
+                      ) : (
+                        <div className="flex items-center justify-center gap-1.5 bg-muted text-muted-foreground py-2 px-3 rounded-xl text-xs font-semibold cursor-not-allowed border border-border/30">
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          <span>No Demo</span>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+
+      </div>
     </Section>
   );
 }

@@ -6,11 +6,14 @@ import { Github, Linkedin, Mail, User, Bot, ExternalLink } from 'lucide-react';
 interface IChatMessageProps {
   sender: 'me' | 'visitor';
   text: string;
-  timestamp: string;
+  timestamp?: string;
+  time?: string;
+  avatarSrc?: string;
 }
 
-export const ChatMessage = ({ sender, text, timestamp }: IChatMessageProps) => {
+export const ChatMessage = ({ sender, text, timestamp, time, avatarSrc }: IChatMessageProps) => {
   const isMe = sender === 'me';
+  const displayTime = timestamp || time || '';
   
   const parseText = (content: string) => {
     return content.split('\n').map((line, i) => {
@@ -55,10 +58,18 @@ export const ChatMessage = ({ sender, text, timestamp }: IChatMessageProps) => {
       className={`flex ${isMe ? 'justify-start' : 'justify-end'} mb-4`}
     >
       <div className={`flex max-w-[85%] ${isMe ? 'flex-row' : 'flex-row-reverse'} items-end gap-2`}>
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+        <div className={`w-8 h-8 rounded-full overflow-hidden flex items-center justify-center shrink-0 ${
           isMe ? 'bg-foreground/10 text-foreground' : 'bg-foreground text-background'
         }`}>
-          {isMe ? <Bot size={16} /> : <User size={16} />}
+          {isMe ? (
+            avatarSrc ? (
+              <img src={avatarSrc} alt="Avatar" className="w-full h-full object-cover" />
+            ) : (
+              <Bot size={16} />
+            )
+          ) : (
+            <User size={16} />
+          )}
         </div>
         <div className={`px-4 py-3 rounded-2xl text-sm ${
           isMe 
@@ -68,9 +79,11 @@ export const ChatMessage = ({ sender, text, timestamp }: IChatMessageProps) => {
           <div className="space-y-1">
             {parseText(text)}
           </div>
-          <div className={`text-[10px] mt-2 opacity-50 ${isMe ? 'text-left' : 'text-right'}`}>
-            {timestamp}
-          </div>
+          {displayTime && (
+            <div className={`text-[10px] mt-2 opacity-50 ${isMe ? 'text-left' : 'text-right'}`}>
+              {displayTime}
+            </div>
+          )}
         </div>
       </div>
     </motion.div>

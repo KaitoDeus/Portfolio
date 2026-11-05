@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 
 interface Particle {
   x: number;
@@ -26,9 +27,13 @@ const COLORS = [
 ];
 
 export default function InteractiveParticles() {
+  const pathname = usePathname();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
+  const isAdmin = pathname?.startsWith('/admin');
+
   useEffect(() => {
+    if (isAdmin) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -177,7 +182,9 @@ export default function InteractiveParticles() {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [isAdmin]);
+
+  if (isAdmin) return null;
 
   return (
     <canvas

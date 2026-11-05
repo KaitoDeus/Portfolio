@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Link from 'next/link';
 import {
   Gamepad2,
   Code,
@@ -14,13 +15,19 @@ import {
   Music,
   BookOpen,
   CircleDot,
+  Mail,
+  Phone,
+  ArrowRight,
+  ExternalLink,
+  Sparkles
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-
+import { Button } from '@/components/ui/button';
 import { portfolioService } from '@/core/services/PortfolioService';
 import { ICertificate } from '@/core/models/PortfolioModels';
 import Section from '@/components/common/Section';
+import PageHeader from '@/components/common/PageHeader';
 import { getImageSrc } from '@/shared/lib/utils';
 import { TimelineCard } from './components/TimelineCard';
 import { CertModal } from './components/CertModal';
@@ -46,96 +53,141 @@ export default function AboutPage() {
     bio,
   } = portfolioService.getRawData();
 
-  const targetRef = useRef(null);
+  const targetRef = useRef<HTMLDivElement>(null);
   const [selectedCert, setSelectedCert] = useState<ICertificate | null>(null);
-
   const avatarSrc = getImageSrc(avatars.about);
 
   return (
-    <Section id="about" title="About Me">
-      <div className="max-w-6xl mx-auto space-y-12 relative" ref={targetRef}>
-        {/* Hero Bio Section */}
-        <div className="flex flex-col lg:flex-row items-center gap-10">
-          <img
-            src={avatarSrc}
-            alt="Profile"
-            loading="lazy"
-            decoding="async"
-            className="w-64 h-64 lg:w-80 lg:h-80 rounded-2xl object-cover border-2 border-border/80 shadow-2xl"
-          />
-          <div className="flex-1 text-center lg:text-left">
-            <h3 className="text-3xl font-bold mb-4 text-foreground">
-              Using technology to change the world
-            </h3>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-6 text-left">
-              {bio}
-            </p>
-            <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
-              <Badge variant="outline" className="text-sm py-1 px-3 border-border/60 bg-card/50 backdrop-blur-sm">
-                <GraduationCap className="w-4 h-4 mr-1" /> Information Technology
-              </Badge>
-              <Badge variant="outline" className="text-sm py-1 px-3 border-border/60 bg-card/50 backdrop-blur-sm">
-                <MapPin className="w-4 h-4 mr-1" /> Ho Chi Minh City
-              </Badge>
+    <Section id="about">
+      <div className="max-w-6xl mx-auto space-y-16" ref={targetRef}>
+        
+        {/* Page Header */}
+        <PageHeader
+          badge="About Me"
+          title="Background, Education"
+          highlight="& Career Timeline"
+          description="A detailed overview of my academic foundation, software engineering internships, career goals, and verified credentials."
+        />
+
+        {/* Hero Bio Card */}
+        <Card className="border-border/60 bg-card/60 backdrop-blur-md overflow-hidden shadow-xl p-6 sm:p-10">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+            <div className="relative shrink-0">
+              <img
+                src={avatarSrc}
+                alt="Profile"
+                loading="eager"
+                className="w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-2xl object-cover border-2 border-border/80 shadow-2xl relative z-10"
+              />
+              <div className="absolute inset-0 rounded-2xl bg-foreground/10 blur-xl -z-10 scale-105" />
+            </div>
+
+            <div className="flex-1 text-center lg:text-left space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/80 border border-border/60 text-xs font-semibold text-foreground">
+                <Sparkles className="w-3.5 h-3.5 text-foreground" />
+                <span>Lifelong Learner &amp; Developer</span>
+              </div>
+
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-foreground tracking-tight">
+                &ldquo;Using technology to predict and build the future.&rdquo;
+              </h2>
+
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed text-justify sm:text-left">
+                {bio}
+              </p>
+
+              <div className="flex flex-wrap gap-2.5 justify-center lg:justify-start pt-2">
+                <Badge variant="outline" className="text-xs sm:text-sm py-1 px-3 border-border/60 bg-secondary/40">
+                  <GraduationCap className="w-4 h-4 mr-1.5 text-foreground" /> IT Senior @ UTH
+                </Badge>
+                <Badge variant="outline" className="text-xs sm:text-sm py-1 px-3 border-border/60 bg-secondary/40">
+                  <Briefcase className="w-4 h-4 mr-1.5 text-foreground" /> Intern @ FPT Software
+                </Badge>
+                <Badge variant="outline" className="text-xs sm:text-sm py-1 px-3 border-border/60 bg-secondary/40">
+                  <MapPin className="w-4 h-4 mr-1.5 text-foreground" /> Ho Chi Minh City
+                </Badge>
+              </div>
+
+              <div className="pt-4 flex flex-wrap gap-3 justify-center lg:justify-start">
+                <Button asChild size="sm" className="rounded-full bg-foreground text-background font-semibold px-6">
+                  <Link href="/contact" className="flex items-center gap-1.5">
+                    <span>Contact Me</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="sm" className="rounded-full font-semibold px-6">
+                  <Link href="/projects" className="flex items-center gap-1.5">
+                    <span>View Projects</span>
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
+        </Card>
 
-        {/* Info Grid */}
+        {/* Info Grid (Bento Style) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <InfoCard>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-foreground font-bold">
-                <Calendar className="w-5 h-5" /> Personal Information
+          
+          {/* Card 1: Personal Info */}
+          <Card className="h-full border-border/60 bg-card/60 backdrop-blur-md shadow-md hover:border-foreground/40 transition-all flex flex-col">
+            <CardHeader className="pb-3 border-b border-border/40">
+              <CardTitle className="flex items-center gap-2 text-foreground font-bold text-lg">
+                <Calendar className="w-5 h-5" /> Personal Info
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
-              <InfoRow label="Full Name" value={personalInfo.fullname} />
-              <InfoRow label="Date of Birth" value={personalInfo.dateOfBirth} />
-              <InfoRow label="Gender" value={personalInfo.gender} />
-              <InfoRow label="Address" value={personalInfo.address} />
-              {personalInfo.phone && <InfoRow label="Phone" value={personalInfo.phone} />}
-              {personalInfo.email && <InfoRow label="Email" value={personalInfo.email} />}
+            <CardContent className="p-6 space-y-3.5 grow">
+              <InfoRow label="Full Name" value={personalInfo.fullname} icon={Sparkles} />
+              <InfoRow label="Date of Birth" value={personalInfo.dateOfBirth} icon={Calendar} />
+              <InfoRow label="Gender" value={personalInfo.gender} icon={CircleDot} />
+              <InfoRow label="Address" value={personalInfo.address} icon={MapPin} />
+              {personalInfo.phone && <InfoRow label="Phone" value={personalInfo.phone} icon={Phone} />}
+              {personalInfo.email && <InfoRow label="Email" value={personalInfo.email} icon={Mail} />}
             </CardContent>
-          </InfoCard>
+          </Card>
 
-          <InfoCard>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-foreground font-bold">
-                <Target className="w-5 h-5" /> Career Goals
+          {/* Card 2: Career Goals */}
+          <Card className="h-full border-border/60 bg-card/60 backdrop-blur-md shadow-md hover:border-foreground/40 transition-all flex flex-col">
+            <CardHeader className="pb-3 border-b border-border/40">
+              <CardTitle className="flex items-center gap-2 text-foreground font-bold text-lg">
+                <Target className="w-5 h-5" /> Career Objectives
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <ul className="space-y-3 text-muted-foreground">
-                <li className="flex flex-col gap-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-foreground font-bold">Short-term:</span>
-                  </div>
-                  <span className="text-sm font-medium text-foreground/80">
-                    {careerGoals?.shortTerm ||
-                      'Gain practical experience in full-stack development, contribute to real-world software projects, and learn from senior engineers to grow professionally as a Software Engineer.'}
-                  </span>
-                </li>
-                <li className="flex flex-col gap-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-foreground font-bold">Long-term:</span>
-                  </div>
-                  <span className="text-sm font-medium text-foreground/80">
-                    {careerGoals?.longTerm ||
-                      'Advance into a proficient Software Engineer / Technical Lead, master scalable cloud architecture, and obtain international English proficiency certificates (TOEIC/IELTS).'}
-                  </span>
-                </li>
-              </ul>
+            <CardContent className="p-6 space-y-4 grow text-muted-foreground text-sm">
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2 text-foreground font-bold text-xs uppercase tracking-wider">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  Short-Term Goal
+                </div>
+                <p className="leading-relaxed text-foreground/90 pl-4 border-l-2 border-emerald-500/40 text-xs sm:text-sm">
+                  {careerGoals?.shortTerm ||
+                    'Secure a Software Developer (Intern / Fresher / Junior) position to apply practical full-stack experience and contribute to production-grade applications.'}
+                </p>
+              </div>
+
+              <div className="space-y-1.5 pt-2">
+                <div className="flex items-center gap-2 text-foreground font-bold text-xs uppercase tracking-wider">
+                  <span className="w-2 h-2 rounded-full bg-blue-500" />
+                  Long-Term Goal
+                </div>
+                <p className="leading-relaxed text-foreground/90 pl-4 border-l-2 border-blue-500/40 text-xs sm:text-sm">
+                  {careerGoals?.longTerm ||
+                    'Advance into a Senior Full-Stack Engineer / Technical Lead, master scalable cloud architecture (AWS/Docker/CI/CD), and achieve international English credentials.'}
+                </p>
+              </div>
             </CardContent>
-          </InfoCard>
+          </Card>
 
-          <InfoCard>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-foreground font-bold">
-                <Gamepad2 className="w-5 h-5" /> Interests & Hobbies
+          {/* Card 3: Interests & Hobbies */}
+          <Card className="h-full border-border/60 bg-card/60 backdrop-blur-md shadow-md hover:border-foreground/40 transition-all flex flex-col md:col-span-2 lg:col-span-1">
+            <CardHeader className="pb-3 border-b border-border/40">
+              <CardTitle className="flex items-center gap-2 text-foreground font-bold text-lg">
+                <Gamepad2 className="w-5 h-5" /> Interests &amp; Passions
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-6 grow flex flex-col justify-between space-y-4">
+              <p className="text-xs text-muted-foreground">
+                Activities that recharge my creative energy and inspire problem-solving skills outside work.
+              </p>
               <div className="flex flex-wrap gap-2">
                 {hobbies.map((hobby, index) => {
                   const Icon = hobbyIcons[hobby.icon] || Code;
@@ -143,67 +195,76 @@ export default function AboutPage() {
                     <Badge
                       key={index}
                       variant="secondary"
-                      className="px-3.5 py-1.5 text-xs font-semibold bg-secondary/50 border border-border/40 text-foreground hover:bg-secondary transition-colors"
+                      className="px-3 py-1.5 text-xs font-semibold bg-secondary/80 border border-border/50 text-foreground hover:bg-foreground hover:text-background transition-all"
                     >
-                      <Icon className="w-4 h-4 mr-1" />
+                      <Icon className="w-3.5 h-3.5 mr-1.5" />
                       {hobby.title}
                     </Badge>
                   );
                 })}
               </div>
             </CardContent>
-          </InfoCard>
+          </Card>
+
         </div>
 
-        {/* Education, Career & Certificates */}
-        <div className="space-y-8">
-          {/* 1. Education (Full-width) */}
+        {/* Career & Education Timelines */}
+        <div className="space-y-12">
+          {/* Career Timeline */}
           <TimelineCard
-            title="Education"
-            icon={GraduationCap}
-            items={education}
-            colorClass="text-foreground"
-          />
-
-          {/* 2. Career Timeline (Full-width) */}
-          <TimelineCard
-            title="Career Timeline"
+            title="Professional Experience"
             icon={Briefcase}
             items={career}
             colorClass="text-foreground"
           />
 
-          {/* 3. Certificates (Full-width) */}
-          <Card className="border-border/60 bg-card/60 backdrop-blur-md">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-foreground font-bold">
-                <Award className="w-5 h-5" /> Certificates &amp; Credentials
+          {/* Education Timeline */}
+          <TimelineCard
+            title="Education &amp; Qualifications"
+            icon={GraduationCap}
+            items={education}
+            colorClass="text-foreground"
+          />
+
+          {/* Certificates & Credentials */}
+          <Card className="border-border/60 bg-card/60 backdrop-blur-md shadow-lg overflow-hidden">
+            <CardHeader className="border-b border-border/40 pb-4">
+              <CardTitle className="flex items-center justify-between gap-2 text-foreground font-bold text-xl">
+                <div className="flex items-center gap-2.5">
+                  <Award className="w-6 h-6" />
+                  <span>Certificates &amp; Credentials</span>
+                </div>
+                <span className="text-xs font-normal text-muted-foreground">
+                  Click to inspect full certificate
+                </span>
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {certificates.map((cert, index) => {
                   const certImgSrc = getImageSrc(cert.image);
-
                   return (
                     <div
                       key={index}
-                      className="flex items-center gap-4 p-4 rounded-xl bg-secondary/40 border border-border/40 hover:bg-secondary/70 transition-all cursor-pointer group/cert"
+                      className="flex items-center gap-4 p-4 rounded-xl bg-secondary/40 border border-border/40 hover:bg-secondary/80 hover:border-foreground/30 transition-all cursor-pointer group/cert shadow-xs"
                       onClick={() => setSelectedCert(cert)}
                     >
-                      <div className="w-20 h-14 rounded-lg overflow-hidden bg-background/80 border border-border/40 group-hover/cert:border-foreground/40 transition-colors shrink-0">
+                      <div className="w-20 h-16 rounded-lg overflow-hidden bg-background/80 border border-border/40 group-hover/cert:border-foreground/50 transition-colors shrink-0 flex items-center justify-center p-1">
                         <img
                           src={certImgSrc}
                           alt={cert.title}
                           loading="lazy"
-                          decoding="async"
-                          className="w-full h-full object-contain"
+                          className="w-full h-full object-contain group-hover/cert:scale-105 transition-transform"
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-foreground group-hover/cert:underline transition-colors text-sm line-clamp-2">
+                        <h3 className="font-semibold text-foreground group-hover/cert:underline transition-colors text-sm line-clamp-2">
                           {cert.title}
-                        </h4>
+                        </h3>
+                        <p className="text-[11px] text-muted-foreground mt-1 flex items-center gap-1">
+                          <span>Verified</span>
+                          <ExternalLink className="w-3 h-3 opacity-60" />
+                        </p>
                       </div>
                     </div>
                   );
@@ -212,9 +273,10 @@ export default function AboutPage() {
             </CardContent>
           </Card>
         </div>
+
       </div>
 
-      {/* Certificate Modal */}
+      {/* Certificate Preview Modal */}
       <CertModal
         selectedCert={selectedCert}
         onClose={() => setSelectedCert(null)}
@@ -223,26 +285,26 @@ export default function AboutPage() {
   );
 }
 
-// Inner components
-function InfoCard({
-  children,
-}: {
-  children: React.ReactNode;
+function InfoRow({ 
+  label, 
+  value, 
+  icon: Icon 
+}: { 
+  label: string; 
+  value: string; 
+  icon?: React.ElementType; 
 }) {
   return (
-    <div>
-      <Card className="h-full border-border/60 bg-card/60 backdrop-blur-md transition-all hover:border-foreground/40">
-        {children}
-      </Card>
-    </div>
-  );
-}
-
-function InfoRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <span className="text-muted-foreground text-sm">{label}</span>
-      <p className="font-medium text-foreground">{value}</p>
+    <div className="flex items-start gap-3">
+      {Icon && <Icon className="w-4 h-4 text-muted-foreground mt-0.5 shrink-0" />}
+      <div className="min-w-0 flex-1">
+        <span className="text-[11px] uppercase tracking-wider text-muted-foreground font-semibold block">
+          {label}
+        </span>
+        <p className="font-semibold text-sm text-foreground truncate">
+          {value}
+        </p>
+      </div>
     </div>
   );
 }
