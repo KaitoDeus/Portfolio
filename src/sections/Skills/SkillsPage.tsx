@@ -55,31 +55,6 @@ const SkillIcon = ({ skill }: { skill: ISkill }) => {
   );
 };
 
-const TechMarquee = ({ skills }: { skills: ISkill[] }) => {
-  const marqueeItems = [...skills, ...skills];
-
-  return (
-    <div className="w-full overflow-hidden relative py-6 mask-[linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)]">
-      <div className="animate-marquee gap-5 items-center">
-        {marqueeItems.map((skill, index) => (
-          <div
-            key={`${skill.name}-${index}`}
-            className="relative group cursor-pointer shrink-0"
-            title={skill.name}
-          >
-            <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-card border border-border/70 hover:border-foreground/50 transition-all shadow-xs group-hover:scale-105">
-              <SkillIcon skill={skill} />
-              <span className="text-sm font-bold text-foreground whitespace-nowrap">
-                {skill.name}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
 const TerminalContent = () => {
   const [typedLength, setTypedLength] = useState(0);
   const [showOutput, setShowOutput] = useState(false);
@@ -361,16 +336,6 @@ export default function SkillsPage() {
               ))}
             </div>
           )}
-        </div>
-
-        {/* Marquee Ribbon Banner at bottom */}
-        <div className="space-y-4 pt-8 border-t border-border/40">
-          <div className="text-center">
-            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-              Always expanding my repertoire
-            </p>
-          </div>
-          <TechMarquee skills={allSkills} />
         </div>
 
       </div>
