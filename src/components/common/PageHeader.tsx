@@ -17,7 +17,13 @@ export default function PageHeader({
   return (
     <div className={cn("text-center max-w-3xl mx-auto mb-8 sm:mb-12", className)}>
       <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground">
-        {title} {highlight && <span className="text-muted-foreground font-light">{highlight}</span>}
+        {title}
+        {highlight && (
+          <>
+            {' '}
+            <span className="text-muted-foreground font-light">{highlight}</span>
+          </>
+        )}
       </h1>
     </div>
   );

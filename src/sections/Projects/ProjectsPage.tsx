@@ -71,10 +71,7 @@ export default function ProjectsPage() {
       <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Page Header */}
-        <PageHeader
-          title="Software &amp; Game"
-          highlight="Projects Showcase"
-        />
+        <PageHeader title="Projects" />
 
         {/* Filter, Search & Sort Toolbar */}
         <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-2xl bg-card/60 border border-border/60 backdrop-blur-md shadow-xs">

@@ -160,10 +160,7 @@ export default function SkillsPage() {
       <div className="max-w-7xl mx-auto space-y-16">
         
         {/* Page Header */}
-        <PageHeader
-          title="Technology Stack"
-          highlight="& Architecture Arsenal"
-        />
+        <PageHeader title="Skills" />
 
         {/* Top Section: Terminal & Core Pillars */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">

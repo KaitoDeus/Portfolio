@@ -144,10 +144,7 @@ export default function ContactPage() {
       <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Page Header */}
-        <PageHeader
-          title="Let's Start a"
-          highlight="Conversation"
-        />
+        <PageHeader title="Contact" />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           

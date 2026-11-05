@@ -60,10 +60,7 @@ export default function AboutPage() {
       <div className="max-w-6xl mx-auto space-y-16" ref={targetRef}>
         
         {/* Page Header */}
-        <PageHeader
-          title="Background, Education"
-          highlight="& Career Timeline"
-        />
+        <PageHeader title="About" />
 
         {/* Hero Bio Card */}
         <Card className="border-border/60 bg-card/60 backdrop-blur-md overflow-hidden shadow-xl p-6 sm:p-10">
