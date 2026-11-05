@@ -186,10 +186,8 @@ export default function SkillsPage() {
         
         {/* Page Header */}
         <PageHeader
-          badge="Technical Skills"
           title="Technology Stack"
           highlight="& Architecture Arsenal"
-          description="A comprehensive inventory of frameworks, programming languages, databases, simulation physics, and cloud-ready tools I use in my work."
         />
 
         {/* Top Section: Terminal & Core Pillars */}

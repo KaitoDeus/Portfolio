@@ -63,10 +63,8 @@ export default function AboutPage() {
         
         {/* Page Header */}
         <PageHeader
-          badge="About Me"
           title="Background, Education"
           highlight="& Career Timeline"
-          description="A detailed overview of my academic foundation, software engineering internships, career goals, and verified credentials."
         />
 
         {/* Hero Bio Card */}

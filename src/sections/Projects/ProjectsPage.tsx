@@ -72,10 +72,8 @@ export default function ProjectsPage() {
         
         {/* Page Header */}
         <PageHeader
-          badge="Featured Works"
           title="Software &amp; Game"
           highlight="Projects Showcase"
-          description="A curated gallery of real-world applications, 3D simulation engines, full-stack ecommerce systems, and native mobile software."
         />
 
         {/* Filter, Search & Sort Toolbar */}

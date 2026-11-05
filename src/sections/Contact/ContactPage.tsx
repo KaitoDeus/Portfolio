@@ -146,10 +146,8 @@ export default function ContactPage() {
         
         {/* Page Header */}
         <PageHeader
-          badge="Contact & Inquiry"
           title="Let's Start a"
           highlight="Conversation"
-          description="Have a software project, internship opportunity, or question about my stack? Reach out directly or talk with my Gemini AI Assistant below."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">

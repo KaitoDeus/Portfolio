@@ -47,7 +47,7 @@ const SkillMiniIcon = ({ skill }: { skill: ISkill }) => {
 
 export default function HomePage() {
   const data = portfolioService.getRawData();
-  const { name, bio, avatars, skills, projects } = data;
+  const { name, avatars, skills, projects } = data;
   const avatarSrc = getImageSrc(avatars.hero);
   const featuredProjects = projects.slice(0, 3);
   const marqueeSkills = [...skills, ...skills];
@@ -80,11 +80,6 @@ export default function HomePage() {
           {/* Tagline / Role */}
           <p className="text-xl sm:text-2xl lg:text-3xl text-muted-foreground font-medium mb-3">
             I&apos;m a <span className="text-foreground font-bold">Software Developer</span>
-          </p>
-
-          {/* Short Bio summary */}
-          <p className="mt-2 text-muted-foreground text-base sm:text-lg lg:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
-            {bio}
           </p>
 
           {/* Action CTAs */}
