@@ -515,11 +515,15 @@ export default function AdminPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {data.projects.map((project, idx) => (
                 <Card key={project.id || idx} className="border-border/60 bg-card/60 overflow-hidden flex flex-col justify-between group">
-                  <div className="h-36 bg-secondary/30 border-b border-border/40 overflow-hidden flex items-center justify-center relative">
+                  <div className={`h-36 bg-secondary/30 border-b border-border/40 overflow-hidden flex items-center justify-center relative ${project.id === 'habitflow' ? 'p-1.5' : ''}`}>
                     <img
                       src={getImageSrc(project.image)}
                       alt={project.title}
-                      className="w-full h-full object-fill group-hover:scale-105 transition-transform duration-300"
+                      className={
+                        project.id === 'habitflow'
+                          ? "h-full w-auto max-w-full object-contain mx-auto drop-shadow-sm rounded group-hover:scale-105 transition-transform duration-300"
+                          : "w-full h-full object-fill group-hover:scale-105 transition-transform duration-300"
+                      }
                     />
                   </div>
                   <CardHeader className="p-4 pb-2">

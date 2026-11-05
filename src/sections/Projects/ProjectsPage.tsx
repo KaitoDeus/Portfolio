@@ -160,19 +160,25 @@ export default function ProjectsPage() {
               );
               const hasLiveDemo = Boolean(project.link && !isGithubFallback) || isSimulator;
 
+              const isHabitFlow = project.id === 'habitflow';
+
               return (
                 <Card
                   key={project.id}
                   className="p-0 gap-0 overflow-hidden border-border/60 bg-card/60 backdrop-blur-md text-card-foreground transition-all duration-300 hover:border-foreground/50 hover:shadow-2xl flex flex-col group h-full rounded-2xl"
                 >
                   {/* Thumbnail */}
-                  <div className="overflow-hidden bg-secondary/30 relative h-52 shrink-0 border-b border-border/40">
+                  <div className={`overflow-hidden bg-secondary/30 relative h-52 shrink-0 border-b border-border/40 flex items-center justify-center ${isHabitFlow ? 'p-2' : ''}`}>
                     <img
                       src={projectImgSrc}
                       alt={project.title}
                       loading="lazy"
                       decoding="async"
-                      className="w-full h-full object-fill group-hover:scale-105 transition-transform duration-500"
+                      className={
+                        isHabitFlow
+                          ? "h-full w-auto max-w-full object-contain mx-auto drop-shadow-md rounded-lg group-hover:scale-105 transition-transform duration-500"
+                          : "w-full h-full object-fill group-hover:scale-105 transition-transform duration-500"
+                      }
                     />
                   </div>
 
