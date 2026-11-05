@@ -31,7 +31,7 @@ export default function ViewCounter() {
 
   return (
     <div
-      title="Số lượng người truy cập duy nhất được xác thực qua IP (chống spam F5)"
+      title="Unique visitors verified by IP (anti-spam)"
       className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/60 border border-border/50 backdrop-blur-md text-xs shadow-sm hover:border-foreground/30 hover:bg-card/80 transition-all select-none"
     >
       {/* Eye Icon */}

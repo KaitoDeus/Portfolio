@@ -79,7 +79,7 @@ function AdminLoginForm() {
       if (res.ok && data.success) {
         router.replace(redirectPath);
       } else {
-        setErrorMessage(data.error || 'Mật khẩu quản trị viên không chính xác.');
+        setErrorMessage(data.error || 'Incorrect administrator password.');
 
         if (data.attemptsLeft !== undefined) {
           setAttemptsLeft(data.attemptsLeft);
@@ -90,7 +90,7 @@ function AdminLoginForm() {
         }
       }
     } catch {
-      setErrorMessage('Không thể kết nối đến máy chủ. Vui lòng thử lại sau.');
+      setErrorMessage('Unable to connect to server. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -117,23 +117,13 @@ function AdminLoginForm() {
           <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-foreground">
             <Link href="/">
               <ArrowLeft className="w-4 h-4" />
-              <span>Quay lại trang chủ</span>
+              <span>Back to Home</span>
             </Link>
           </Button>
         </div>
 
         {/* Security Gate Card */}
         <Card className="border-border/80 bg-card/70 backdrop-blur-xl shadow-2xl overflow-hidden rounded-2xl">
-          
-          {/* Top Security Banner */}
-          <div className="bg-red-500/10 dark:bg-red-950/40 border-b border-red-500/20 px-6 py-3 flex items-center justify-between text-xs">
-            <div className="flex items-center gap-2 text-red-600 dark:text-red-400 font-bold uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-              <span>Restricted System Area</span>
-            </div>
-            <span className="text-[10px] text-muted-foreground font-mono">AUTH_GATE_v2</span>
-          </div>
-
           <CardHeader className="text-center pt-8 pb-4">
             <div className="mx-auto w-16 h-16 rounded-2xl bg-secondary/80 border border-border/80 flex items-center justify-center mb-3 shadow-inner relative group">
               <ShieldAlert className="w-8 h-8 text-red-500" />
@@ -141,10 +131,10 @@ function AdminLoginForm() {
             </div>
 
             <CardTitle className="text-2xl font-extrabold tracking-tight">
-              Xác thực Quản trị viên
+              Admin Authentication
             </CardTitle>
             <CardDescription className="text-xs text-muted-foreground pt-1.5 max-w-xs mx-auto">
-              Khu vực nhạy cảm được bảo vệ bởi tường lửa &amp; giám sát bảo mật. Vui lòng nhập mật mã quản trị để tiếp tục.
+              Please enter your administrator password to proceed.
             </CardDescription>
           </CardHeader>
 
@@ -168,12 +158,12 @@ function AdminLoginForm() {
                   <p className="font-semibold leading-relaxed">{errorMessage}</p>
                   {lockCountdown !== null && (
                     <p className="font-mono font-bold text-sm">
-                      Mở khóa sau: {formatCountdown(lockCountdown)}
+                      Unlock in: {formatCountdown(lockCountdown)}
                     </p>
                   )}
                   {attemptsLeft !== null && attemptsLeft > 0 && lockCountdown === null && (
                     <p className="text-[11px] opacity-80">
-                      Cảnh báo: Sai {5 - attemptsLeft}/5 lần. Quá số lần cho phép sẽ tạm khóa IP.
+                      Warning: {5 - attemptsLeft}/5 failed attempts. Exceeding limits will temporarily lock your IP.
                     </p>
                   )}
                 </div>
@@ -187,7 +177,7 @@ function AdminLoginForm() {
                   htmlFor="admin-password" 
                   className="text-xs font-semibold text-foreground flex items-center justify-between"
                 >
-                  <span>Mật mã truy cập</span>
+                  <span>Access Password</span>
                   <span className="text-[10px] text-muted-foreground font-mono">Master Key</span>
                 </label>
 
@@ -199,7 +189,7 @@ function AdminLoginForm() {
                   <Input
                     id="admin-password"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="Nhập mật khẩu quản trị..."
+                    placeholder="Enter admin password..."
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={loading || lockCountdown !== null}
@@ -228,27 +218,16 @@ function AdminLoginForm() {
                 {loading ? (
                   <span className="flex items-center gap-2">
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Đang thẩm tra danh tính...</span>
+                    <span>Verifying credentials...</span>
                   </span>
                 ) : (
                   <span className="flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                    <span>Xác thực &amp; Mở khóa Admin</span>
+                    <span>Authenticate &amp; Unlock</span>
                   </span>
                 )}
               </Button>
             </form>
-
-            {/* Security Notice Footer */}
-            <div className="pt-2 border-t border-border/40 text-center space-y-1 text-[11px] text-muted-foreground">
-              <p className="flex items-center justify-center gap-1.5 font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                <span>HMAC-SHA256 Encrypted Session Cookie</span>
-              </p>
-              <p className="text-[10px] opacity-70">
-                Mọi hành vi xâm nhập trái phép đều được ghi nhận địa chỉ IP và mã thiết bị.
-              </p>
-            </div>
 
           </CardContent>
         </Card>
@@ -264,7 +243,7 @@ export default function AdminLoginPage() {
       fallback={
         <div className="min-h-screen w-full flex items-center justify-center bg-background text-muted-foreground text-xs font-mono">
           <Loader2 className="w-5 h-5 animate-spin mr-2 text-foreground" />
-          <span>Khởi tạo cổng bảo mật...</span>
+          <span>Initializing security gate...</span>
         </div>
       }
     >

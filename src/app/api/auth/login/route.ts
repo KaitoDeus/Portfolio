@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     if (!rateStatus.allowed) {
       return NextResponse.json(
         {
-          error: `Tài khoản tạm thời bị khóa do nhập sai nhiều lần. Vui lòng thử lại sau ${rateStatus.retryAfterSeconds} giây.`,
+          error: `Account temporarily locked due to multiple failed attempts. Please retry in ${rateStatus.retryAfterSeconds} seconds.`,
           locked: true,
           retryAfterSeconds: rateStatus.retryAfterSeconds,
         },
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     const { password } = body;
 
     if (!password || typeof password !== 'string') {
-      return NextResponse.json({ error: 'Vui lòng nhập mật khẩu quản trị viên.' }, { status: 400 });
+      return NextResponse.json({ error: 'Please enter administrator password.' }, { status: 400 });
     }
 
     const expectedPassword = getAdminPassword();
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
       if (failStatus.locked) {
         return NextResponse.json(
           {
-            error: `Bạn đã nhập sai 5 lần liên tiếp. Hệ thống đã khóa truy cập IP này trong ${Math.ceil(failStatus.retryAfterSeconds / 60)} phút để bảo mật.`,
+            error: `5 consecutive failed attempts. Access from this IP is temporarily locked for ${Math.ceil(failStatus.retryAfterSeconds / 60)} minutes.`,
             locked: true,
             retryAfterSeconds: failStatus.retryAfterSeconds,
           },
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
 
       return NextResponse.json(
         {
-          error: `Mật khẩu không chính xác. Bạn còn ${failStatus.attemptsLeft} lần thử trước khi bị khóa tạm thời.`,
+          error: `Incorrect password. You have ${failStatus.attemptsLeft} attempt(s) remaining.`,
           attemptsLeft: failStatus.attemptsLeft,
         },
         { status: 401 }
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
 
     const response = NextResponse.json({
       success: true,
-      message: 'Xác thực quản trị viên thành công.',
+      message: 'Administrator authenticated successfully.',
     });
 
     response.cookies.set({
@@ -93,6 +93,6 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error);
     console.error('Error in POST /api/auth/login:', msg);
-    return NextResponse.json({ error: 'Đã có lỗi xảy ra trong quá trình xác thực.' }, { status: 500 });
+    return NextResponse.json({ error: 'An error occurred during authentication.' }, { status: 500 });
   }
 }
