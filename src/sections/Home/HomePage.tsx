@@ -204,9 +204,9 @@ export default function HomePage() {
             return (
               <Card
                 key={project.id}
-                className="overflow-hidden border-border/60 bg-card/60 backdrop-blur-md hover:border-foreground/40 hover:shadow-xl transition-all duration-300 flex flex-col group h-full"
+                className="p-0 gap-0 overflow-hidden border-border/60 bg-card/60 backdrop-blur-md hover:border-foreground/40 hover:shadow-xl transition-all duration-300 flex flex-col group h-full rounded-2xl"
               >
-                <div className="h-48 overflow-hidden bg-secondary/30 relative">
+                <div className="h-48 overflow-hidden bg-secondary/30 relative border-b border-border/40">
                   <img
                     src={imgSrc}
                     alt={project.title}

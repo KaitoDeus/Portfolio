@@ -157,10 +157,10 @@ export default function ProjectsPage() {
               return (
                 <Card
                   key={project.id}
-                  className="overflow-hidden border-border/60 bg-card/60 backdrop-blur-md text-card-foreground transition-all duration-300 hover:border-foreground/50 hover:shadow-2xl flex flex-col group h-full rounded-2xl"
+                  className="p-0 gap-0 overflow-hidden border-border/60 bg-card/60 backdrop-blur-md text-card-foreground transition-all duration-300 hover:border-foreground/50 hover:shadow-2xl flex flex-col group h-full rounded-2xl"
                 >
                   {/* Thumbnail */}
-                  <div className="overflow-hidden bg-secondary/30 relative h-52 shrink-0">
+                  <div className="overflow-hidden bg-secondary/30 relative h-52 shrink-0 border-b border-border/40">
                     <img
                       src={projectImgSrc}
                       alt={project.title}
