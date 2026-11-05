@@ -56,11 +56,11 @@ export default function ProjectsPage() {
       );
     }
 
-    // Sort by date
+    // Sort by date with fast timestamp parsing
     result.sort((a, b) => {
-      const dateA = new Date(a.startDate || 0).getTime();
-      const dateB = new Date(b.startDate || 0).getTime();
-      return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
+      const timeA = a.startDate ? Date.parse(a.startDate) : 0;
+      const timeB = b.startDate ? Date.parse(b.startDate) : 0;
+      return sortOrder === 'newest' ? timeB - timeA : timeA - timeB;
     });
 
     return result;

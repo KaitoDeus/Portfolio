@@ -211,13 +211,16 @@ export default function SkillsPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   const filteredSkills = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
     return allSkills.filter((skill) => {
-      const matchCategory =
-        selectedCategory === 'all' || skill.category === selectedCategory;
-      const matchSearch =
-        skill.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        skill.category.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchCategory && matchSearch;
+      if (selectedCategory !== 'all' && skill.category !== selectedCategory) {
+        return false;
+      }
+      if (!q) return true;
+      return (
+        skill.name.toLowerCase().includes(q) ||
+        skill.category.toLowerCase().includes(q)
+      );
     });
   }, [allSkills, selectedCategory, searchQuery]);
 

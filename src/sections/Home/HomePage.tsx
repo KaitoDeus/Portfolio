@@ -92,7 +92,7 @@ export default function HomePage() {
               size="lg"
               className="bg-foreground text-background hover:bg-foreground/80 font-bold text-base py-6 px-8 rounded-full shadow-xl hover:scale-105 transition-all"
             >
-              <Link href="/projects" className="flex items-center gap-2">
+              <Link href="/projects" prefetch={true} className="flex items-center gap-2">
                 <FolderKanban className="w-5 h-5" />
                 <span>Explore Projects</span>
                 <ArrowRight className="w-4 h-4" />
@@ -105,7 +105,7 @@ export default function HomePage() {
               size="lg"
               className="font-bold text-base py-6 px-8 rounded-full border-border/70 hover:bg-foreground/5 hover:border-foreground/40 transition-all"
             >
-              <Link href="/about" className="flex items-center gap-2">
+              <Link href="/about" prefetch={true} className="flex items-center gap-2">
                 <User className="w-5 h-5" />
                 <span>About Me</span>
               </Link>
@@ -117,7 +117,7 @@ export default function HomePage() {
               size="lg"
               className="font-bold text-base py-6 px-8 rounded-full bg-secondary/80 hover:bg-secondary transition-all"
             >
-              <Link href="/contact" className="flex items-center gap-2">
+              <Link href="/contact" prefetch={true} className="flex items-center gap-2">
                 <Mail className="w-5 h-5" />
                 <span>Get in Touch</span>
               </Link>
@@ -194,7 +194,7 @@ export default function HomePage() {
             variant="ghost"
             className="text-foreground hover:bg-secondary font-semibold shrink-0 group self-start sm:self-auto"
           >
-            <Link href="/projects" className="flex items-center gap-1.5">
+            <Link href="/projects" prefetch={true} className="flex items-center gap-1.5">
               <span>View All Projects</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -282,7 +282,7 @@ export default function HomePage() {
             variant="ghost"
             className="text-foreground hover:bg-secondary font-semibold shrink-0 group self-start sm:self-auto"
           >
-            <Link href="/skills" className="flex items-center gap-1.5">
+            <Link href="/skills" prefetch={true} className="flex items-center gap-1.5">
               <span>Explore All Skills &amp; Specs</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -323,7 +323,7 @@ export default function HomePage() {
                 size="lg"
                 className="bg-foreground text-background hover:bg-foreground/80 font-bold px-8 py-6 rounded-full shadow-xl hover:scale-105 transition-all"
               >
-                <Link href="/contact" className="flex items-center gap-2">
+                <Link href="/contact" prefetch={true} className="flex items-center gap-2">
                   <Mail className="w-5 h-5" />
                   <span>Reach Out &amp; Chat AI</span>
                   <ArrowRight className="w-4 h-4" />
@@ -335,7 +335,7 @@ export default function HomePage() {
                 size="lg"
                 className="font-bold px-8 py-6 rounded-full border-border/80 hover:bg-foreground/5 transition-all"
               >
-                <Link href="/about">Learn More About Me</Link>
+                <Link href="/about" prefetch={true}>Learn More About Me</Link>
               </Button>
             </div>
           </div>

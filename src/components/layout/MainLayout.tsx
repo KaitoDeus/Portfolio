@@ -23,7 +23,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
       <InteractiveParticles />
       <Header />
       <main className="grow relative z-10 pt-20 lg:pt-28 pb-24 lg:pb-16">
-        {children}
+        <div key={pathname} className="animate-page-enter">
+          {children}
+        </div>
       </main>
       <Footer />
     </div>

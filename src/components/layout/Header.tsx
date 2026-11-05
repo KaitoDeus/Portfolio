@@ -1,8 +1,8 @@
 'use client';
 
-import { useSyncExternalStore } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Home, User, Lightbulb, FolderKanban, Mail, Sun, Moon } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 
@@ -34,8 +34,35 @@ const getMountedServerSnapshot = () => false;
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const mounted = useSyncExternalStore(subscribeMounted, getMountedSnapshot, getMountedServerSnapshot);
   const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, getThemeServerSnapshot);
+
+  // Eagerly prefetch all routes in background when browser is idle
+  useEffect(() => {
+    const prefetchRoutes = () => {
+      navItems.forEach((item) => {
+        if (item.href !== pathname) {
+          router.prefetch(item.href);
+        }
+      });
+    };
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      const handle = (window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(
+        prefetchRoutes,
+        { timeout: 1200 }
+      );
+      return () => {
+        if ('cancelIdleCallback' in window) {
+          (window as Window & { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(handle);
+        }
+      };
+    } else {
+      const timer = setTimeout(prefetchRoutes, 250);
+      return () => clearTimeout(timer);
+    }
+  }, [pathname, router]);
 
   // Do not render portfolio header on admin page
   if (pathname?.startsWith('/admin')) {
@@ -72,6 +99,9 @@ export default function Header() {
                 <Link
                   key={item.id}
                   href={item.href}
+                  prefetch={true}
+                  onMouseEnter={() => router.prefetch(item.href)}
+                  onTouchStart={() => router.prefetch(item.href)}
                   aria-label={item.label}
                   aria-current={active ? 'page' : undefined}
                   className={cn(
@@ -115,6 +145,9 @@ export default function Header() {
               <Link
                 key={item.id}
                 href={item.href}
+                prefetch={true}
+                onMouseEnter={() => router.prefetch(item.href)}
+                onTouchStart={() => router.prefetch(item.href)}
                 aria-label={item.label}
                 aria-current={active ? 'page' : undefined}
                 className={cn(
