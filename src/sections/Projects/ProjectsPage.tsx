@@ -172,7 +172,7 @@ export default function ProjectsPage() {
                       alt={project.title}
                       loading="lazy"
                       decoding="async"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-fill group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
 

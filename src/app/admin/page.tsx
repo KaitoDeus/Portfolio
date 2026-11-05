@@ -519,7 +519,7 @@ export default function AdminPage() {
                     <img
                       src={getImageSrc(project.image)}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-fill group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                   <CardHeader className="p-4 pb-2">
@@ -1022,7 +1022,7 @@ export default function AdminPage() {
                     <img
                       src={getImageSrc(editingProject.item.image)}
                       alt="Project Preview"
-                      className="max-h-full max-w-full object-contain"
+                      className="w-full h-full object-fill rounded-lg"
                     />
                   </div>
                 </div>
