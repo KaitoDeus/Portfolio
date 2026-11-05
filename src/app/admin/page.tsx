@@ -28,6 +28,10 @@ import {
   Layers,
   ChevronLeft,
   ChevronRight,
+  LogOut,
+  ShieldCheck,
+  ShieldAlert,
+  X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -62,6 +66,41 @@ export default function AdminPage() {
   const [editingSkill, setEditingSkill] = useState<{ index: number; item: ISkill } | null>(null);
   const [editingTimeline, setEditingTimeline] = useState<{ type: 'education' | 'career'; index: number; item: ITimelineItem } | null>(null);
   const [editingCert, setEditingCert] = useState<{ index: number; item: ICertificate } | null>(null);
+
+  // Security Modal state & Logout
+  const [showSecurityLogs, setShowSecurityLogs] = useState(false);
+  const [securityLogs, setSecurityLogs] = useState<Array<{
+    id: string;
+    timestamp: string;
+    type: 'LOGIN_SUCCESS' | 'LOGIN_FAILED' | 'RATE_LIMITED' | 'LOGOUT';
+    ip: string;
+    userAgent?: string;
+    details?: string;
+  }>>([]);
+  const [loadingLogs, setLoadingLogs] = useState(false);
+
+  const fetchSecurityLogs = async () => {
+    setLoadingLogs(true);
+    try {
+      const res = await fetch('/api/auth/logs');
+      const json = await res.json();
+      if (json.logs) {
+        setSecurityLogs(json.logs);
+      }
+    } catch (e) {
+      console.error('Failed to fetch security logs:', e);
+    } finally {
+      setLoadingLogs(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } finally {
+      window.location.href = '/admin/login';
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -373,15 +412,41 @@ export default function AdminPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto flex-wrap sm:flex-nowrap justify-end">
             <Link href="/" target="_blank" className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <span>View Site</span>
               <ExternalLink size={12} />
             </Link>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                fetchSecurityLogs();
+                setShowSecurityLogs(true);
+              }}
+              className="border-border/70 text-xs gap-1.5 h-9"
+              title="Xem nhật ký giám sát an ninh và các lần truy cập"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+              <span className="hidden sm:inline">Nhật ký an ninh</span>
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleLogout}
+              className="text-xs text-muted-foreground hover:text-red-500 hover:bg-red-500/10 gap-1.5 h-9"
+              title="Đăng xuất khỏi hệ thống quản trị"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Đăng xuất</span>
+            </Button>
+
             <Button
               onClick={handleSaveToFile}
               disabled={saving}
-              className="bg-foreground text-background hover:bg-foreground/90 font-bold px-6 shadow-lg ml-auto sm:ml-0"
+              className="bg-foreground text-background hover:bg-foreground/90 font-bold px-5 shadow-lg h-9"
             >
               {saving ? (
                 <>
@@ -1640,6 +1705,116 @@ export default function AdminPage() {
                 </Button>
               </div>
             </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Security Audit Logs Modal */}
+      {showSecurityLogs && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md animate-in fade-in-50 duration-200">
+          <Card className="w-full max-w-2xl max-h-[85vh] flex flex-col border-border/80 bg-card shadow-2xl rounded-2xl overflow-hidden">
+            <CardHeader className="border-b border-border/40 pb-4 shrink-0 flex flex-row items-center justify-between">
+              <div className="space-y-1">
+                <CardTitle className="text-lg font-bold flex items-center gap-2 text-foreground">
+                  <ShieldAlert className="w-5 h-5 text-red-500" />
+                  <span>Nhật ký Giám sát &amp; An ninh Hệ thống</span>
+                </CardTitle>
+                <CardDescription className="text-xs text-muted-foreground">
+                  Ghi nhận mọi hành vi đăng nhập, truy cập trái phép và các lượt khóa IP vi phạm.
+                </CardDescription>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowSecurityLogs(false)}
+                className="h-8 w-8 p-0 rounded-full"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </CardHeader>
+
+            <div className="p-4 bg-secondary/30 border-b border-border/40 flex items-center justify-between text-xs">
+              <div className="flex items-center gap-3">
+                <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  Middleware Firewall Active
+                </span>
+                <span className="text-muted-foreground">|</span>
+                <span className="text-muted-foreground font-mono">Max 5 Attempts &bull; 15m Lockout</span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={fetchSecurityLogs}
+                disabled={loadingLogs}
+                className="h-7 text-xs gap-1"
+              >
+                <RefreshCw className={`w-3 h-3 ${loadingLogs ? 'animate-spin' : ''}`} />
+                <span>Làm mới</span>
+              </Button>
+            </div>
+
+            <CardContent className="p-6 overflow-y-auto space-y-3 grow">
+              {securityLogs.length === 0 ? (
+                <div className="text-center py-12 space-y-2">
+                  <ShieldCheck className="w-12 h-12 text-emerald-500/60 mx-auto" />
+                  <p className="font-semibold text-sm">Chưa có sự cố bảo mật bất thường nào</p>
+                  <p className="text-xs text-muted-foreground max-w-sm mx-auto">
+                    Mọi hành vi xâm nhập hoặc nhập sai mật khẩu sẽ lập tức được hệ thống ghi vết tại đây.
+                  </p>
+                </div>
+              ) : (
+                securityLogs.map((log) => {
+                  const date = new Date(log.timestamp).toLocaleString('vi-VN');
+                  const isSuccess = log.type === 'LOGIN_SUCCESS';
+                  const isRateLimited = log.type === 'RATE_LIMITED';
+                  const isFailed = log.type === 'LOGIN_FAILED';
+
+                  return (
+                    <div
+                      key={log.id}
+                      className={`p-3.5 rounded-xl border text-xs space-y-2 ${
+                        isSuccess
+                          ? 'bg-emerald-500/10 border-emerald-500/30'
+                          : isRateLimited
+                          ? 'bg-red-500/15 border-red-500/40 text-red-600 dark:text-red-400'
+                          : isFailed
+                          ? 'bg-amber-500/10 border-amber-500/30'
+                          : 'bg-secondary/40 border-border/40'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-2 font-mono">
+                        <Badge
+                          variant={isSuccess ? 'default' : isRateLimited || isFailed ? 'destructive' : 'secondary'}
+                          className="text-[10px] uppercase font-bold"
+                        >
+                          {log.type}
+                        </Badge>
+                        <span className="text-muted-foreground text-[11px]">{date}</span>
+                      </div>
+
+                      <div className="space-y-1">
+                        <p className="font-semibold text-foreground">{log.details || 'Không có mô tả chi tiết'}</p>
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-muted-foreground font-mono">
+                          <span>IP: <strong className="text-foreground">{log.ip}</strong></span>
+                          {log.userAgent && (
+                            <span className="truncate max-w-xs" title={log.userAgent}>
+                              Agent: {log.userAgent}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </CardContent>
+
+            <div className="p-4 border-t border-border/40 flex justify-end shrink-0 bg-card">
+              <Button onClick={() => setShowSecurityLogs(false)} className="font-semibold text-xs">
+                Đóng
+              </Button>
+            </div>
           </Card>
         </div>
       )}
