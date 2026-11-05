@@ -105,7 +105,7 @@ export default function ContactPage() {
       Contact & Links:
       - LinkedIn: ${socialLinks.find((l) => l.platform === 'linkedin')?.url || 'https://www.linkedin.com/in/kaitodeus'}
       - GitHub: ${socialLinks.find((l) => l.platform === 'github')?.url || 'https://github.com/KaitoDeus'}
-      - Email: ${personalInfo.email || 'kenkaneki395@gmail.com'}
+      - Email: ${personalInfo.email || 'khaivo300605@gmail.com'}
       - Phone: ${personalInfo.phone || '0902316248'}
 
       Guidelines:
@@ -137,7 +137,7 @@ export default function ContactPage() {
     sendMessage(inputValue);
   };
 
-  const email = personalInfo.email || 'kenkaneki395@gmail.com';
+  const email = personalInfo.email || 'khaivo300605@gmail.com';
   const phone = personalInfo.phone || '0902316248';
 
   return (

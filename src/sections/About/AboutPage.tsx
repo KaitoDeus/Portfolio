@@ -15,8 +15,6 @@ import {
   Music,
   BookOpen,
   CircleDot,
-  Mail,
-  Phone,
   ArrowRight,
   ExternalLink,
   Sparkles
@@ -89,18 +87,6 @@ export default function AboutPage() {
                 {bio}
               </p>
 
-              <div className="flex flex-wrap gap-2.5 justify-center lg:justify-start pt-2">
-                <Badge variant="outline" className="text-xs sm:text-sm py-1 px-3 border-border/60 bg-secondary/40">
-                  <GraduationCap className="w-4 h-4 mr-1.5 text-foreground" /> IT Senior @ UTH
-                </Badge>
-                <Badge variant="outline" className="text-xs sm:text-sm py-1 px-3 border-border/60 bg-secondary/40">
-                  <Briefcase className="w-4 h-4 mr-1.5 text-foreground" /> Intern @ FPT Software
-                </Badge>
-                <Badge variant="outline" className="text-xs sm:text-sm py-1 px-3 border-border/60 bg-secondary/40">
-                  <MapPin className="w-4 h-4 mr-1.5 text-foreground" /> Ho Chi Minh City
-                </Badge>
-              </div>
-
               <div className="pt-4 flex flex-wrap gap-3 justify-center lg:justify-start">
                 <Button asChild size="sm" className="rounded-full bg-foreground text-background font-semibold px-6">
                   <Link href="/contact" className="flex items-center gap-1.5">
@@ -133,8 +119,6 @@ export default function AboutPage() {
               <InfoRow label="Date of Birth" value={personalInfo.dateOfBirth} icon={Calendar} />
               <InfoRow label="Gender" value={personalInfo.gender} icon={CircleDot} />
               <InfoRow label="Address" value={personalInfo.address} icon={MapPin} />
-              {personalInfo.phone && <InfoRow label="Phone" value={personalInfo.phone} icon={Phone} />}
-              {personalInfo.email && <InfoRow label="Email" value={personalInfo.email} icon={Mail} />}
             </CardContent>
           </Card>
 
