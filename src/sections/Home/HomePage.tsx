@@ -59,8 +59,8 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto flex flex-col items-center relative z-10">
           
           {/* Profile Avatar with subtle glow */}
-          <div className="relative mb-6">
-            <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-2 border-border/80 shadow-2xl relative z-10">
+          <div className="relative mb-8 sm:mb-10">
+            <div className="w-40 h-40 sm:w-52 sm:h-52 lg:w-64 lg:h-64 rounded-full overflow-hidden border-2 sm:border-4 border-border/80 shadow-2xl relative z-10 transition-transform duration-300 hover:scale-105">
               <img
                 src={avatarSrc}
                 alt={name}
@@ -68,7 +68,7 @@ export default function HomePage() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute inset-0 rounded-full bg-foreground/10 blur-xl -z-10 scale-110" />
+            <div className="absolute inset-0 rounded-full bg-foreground/10 blur-2xl -z-10 scale-110" />
           </div>
 
           {/* Headline */}
