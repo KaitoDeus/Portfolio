@@ -153,6 +153,12 @@ export default function ProjectsPage() {
             {filteredProjects.map((project: IProject) => {
               const projectImgSrc = getImageSrc(project.image);
               const isSimulator = project.id === 'vietnam-b2-driving-simulator';
+              const isGithubFallback = Boolean(
+                project.link && 
+                project.githubLink && 
+                project.link.trim().toLowerCase() === project.githubLink.trim().toLowerCase()
+              );
+              const hasLiveDemo = Boolean(project.link && !isGithubFallback) || isSimulator;
 
               return (
                 <Card
@@ -219,7 +225,7 @@ export default function ProjectsPage() {
                         </div>
                       )}
 
-                      {project.link ? (
+                      {hasLiveDemo ? (
                         <a
                           href={project.link}
                           target="_blank"
@@ -239,9 +245,13 @@ export default function ProjectsPage() {
                           )}
                         </a>
                       ) : (
-                        <div className="flex items-center justify-center gap-1.5 bg-muted text-muted-foreground py-2 px-3 rounded-xl text-xs font-semibold cursor-not-allowed border border-border/30">
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          <span>No Demo</span>
+                        <div
+                          aria-disabled="true"
+                          className="flex items-center justify-center gap-1.5 bg-secondary/50 text-muted-foreground/50 py-2 px-3 rounded-xl text-xs font-semibold cursor-not-allowed border border-border/40 select-none opacity-60"
+                          title="No live demo available for this project"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5 opacity-40" />
+                          <span>Live Demo</span>
                         </div>
                       )}
                     </div>
