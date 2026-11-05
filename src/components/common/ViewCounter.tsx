@@ -42,7 +42,9 @@ export default function ViewCounter() {
         {loading ? (
           <span className="inline-block w-7 h-3.5 bg-muted rounded animate-pulse" />
         ) : (
-          <span className="font-bold text-foreground">{views?.toLocaleString() || '128'}</span>
+          <span className="font-bold text-foreground">
+            {views !== null && views !== undefined ? views.toLocaleString() : '0'}
+          </span>
         )}
         <span className="text-muted-foreground font-medium">views</span>
       </span>

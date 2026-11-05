@@ -22,8 +22,8 @@ export async function recordVisit(ip: string): Promise<{ uniqueVisitors: number;
   const now = Date.now();
 
   let data: IAnalyticsData = {
-    uniqueVisitors: 128,
-    totalPageViews: 312,
+    uniqueVisitors: 0,
+    totalPageViews: 0,
     visitors: {},
   };
 
@@ -83,10 +83,10 @@ export async function getAnalytics(): Promise<{ uniqueVisitors: number; totalPag
     const raw = await fs.readFile(ANALYTICS_PATH, 'utf-8');
     const data: IAnalyticsData = JSON.parse(raw);
     return {
-      uniqueVisitors: data.uniqueVisitors || 128,
-      totalPageViews: data.totalPageViews || 312,
+      uniqueVisitors: data.uniqueVisitors || 0,
+      totalPageViews: data.totalPageViews || 0,
     };
   } catch {
-    return { uniqueVisitors: 128, totalPageViews: 312 };
+    return { uniqueVisitors: 0, totalPageViews: 0 };
   }
 }

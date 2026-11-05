@@ -34,6 +34,6 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error);
     console.error('Error in /api/analytics/views:', msg);
-    return NextResponse.json({ uniqueVisitors: 128 }, { status: 500 });
+    return NextResponse.json({ uniqueVisitors: 0 }, { status: 500 });
   }
 }

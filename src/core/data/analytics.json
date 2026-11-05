@@ -1,14 +1,5 @@
 {
-  "uniqueVisitors": 130,
-  "totalPageViews": 327,
-  "visitors": {
-    "eff8e7ca506627fe": {
-      "lastVisit": 1793918818367,
-      "visitCount": 13
-    },
-    "1f424746fc5484a5": {
-      "lastVisit": 1793918890711,
-      "visitCount": 2
-    }
-  }
+  "uniqueVisitors": 0,
+  "totalPageViews": 0,
+  "visitors": {}
 }
