@@ -11,12 +11,13 @@ function bufferToHex(buffer: ArrayBuffer): string {
     .join('');
 }
 
-function hexToBuffer(hex: string): Uint8Array {
-  const bytes = new Uint8Array(hex.length / 2);
+function hexToBuffer(hex: string): ArrayBuffer {
+  const buf = new ArrayBuffer(hex.length / 2);
+  const bytes = new Uint8Array(buf);
   for (let i = 0; i < hex.length; i += 2) {
     bytes[i / 2] = parseInt(hex.substring(i, i + 2), 16);
   }
-  return bytes;
+  return buf;
 }
 
 async function getHmacKey(secret: string): Promise<CryptoKey> {

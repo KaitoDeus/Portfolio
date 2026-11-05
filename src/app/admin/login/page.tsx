@@ -18,7 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-export default function AdminLoginPage() {
+function AdminLoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectPath = searchParams.get('redirect') || '/admin';
@@ -255,5 +255,20 @@ export default function AdminLoginPage() {
 
       </div>
     </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="min-h-screen w-full flex items-center justify-center bg-background text-muted-foreground text-xs font-mono">
+          <Loader2 className="w-5 h-5 animate-spin mr-2 text-foreground" />
+          <span>Khởi tạo cổng bảo mật...</span>
+        </div>
+      }
+    >
+      <AdminLoginForm />
+    </React.Suspense>
   );
 }
