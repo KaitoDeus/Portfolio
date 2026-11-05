@@ -88,18 +88,12 @@ const TerminalContent = () => {
 
       {/* Clean, minimalist output */}
       {showOutput && (
-        <div className="space-y-3.5 pt-3 border-t border-border/40 animate-in fade-in-50 duration-300">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-8">
-            <div>
-              <span className="text-muted-foreground font-medium">Specialization:</span>{' '}
-              <span className="text-foreground font-bold">Software &amp; Game Development</span>
-            </div>
-            <div>
-              <span className="text-muted-foreground font-medium">Architecture:</span>{' '}
-              <span className="text-foreground font-bold">Clean Architecture &amp; Production Standards</span>
-            </div>
+        <div className="space-y-3 pt-3 border-t border-border/40 animate-in fade-in-50 duration-300">
+          <div>
+            <span className="text-muted-foreground font-medium">Specialization:</span>{' '}
+            <span className="text-foreground font-bold">Software &amp; Game Development</span>
           </div>
-          <div className="flex items-center gap-2 text-emerald-500 font-medium pt-1 text-xs sm:text-sm">
+          <div className="flex items-center gap-2 text-emerald-500 font-medium pt-0.5 text-xs sm:text-sm">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
             <span>Environment operational • Ready for production projects</span>
           </div>
