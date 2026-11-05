@@ -64,7 +64,7 @@ The project strictly follows the **Single Source of Truth** and **Clean Architec
 ### 2.6 Contact & AI Chatbot Section (`src/sections/Contact/ContactPage.tsx`)
 - Social media profile links (LinkedIn, GitHub, Email).
 - **AI Chat Assistant**:
-  - Powered by Google Gemini 2.5 Flash via Next.js Server Route Handler (`/api/chat`).
+  - Powered by Google Gemini 3.8 Flash via Next.js Server Route Handler (`/api/chat`).
   - Pre-prompted with structured contextual information from `portfolioData.ts`.
   - Quick question pills ('Work', 'About me', 'Projects', 'Contact').
   - Real-time chat stream parser automatically formatting URLs, GitHub/LinkedIn links, and mailto links.

@@ -43,7 +43,7 @@ The AI integration follows a **Secure Proxy / Backend-for-Frontend (BFF)** patte
 |                      EXTERNAL AI PROVIDER (Google Gemini)                      |
 |                                                                                |
 |   +------------------------------------------------------------------------+   |
-|   |  Model: gemini-2.5-flash                                               |   |
+|   |  Model: gemini-3.8-flash                                               |   |
 |   |  - Context window processing                                           |   |
 |   |  - Grounded output generation based on portfolio context               |   |
 |   +------------------------------------------------------------------------+   |
@@ -93,7 +93,7 @@ Defined in `src/core/config/aiConfig.ts`:
 
 ```typescript
 export const AI_CONFIG = {
-  MODEL: 'gemini-2.5-flash',
+  MODEL: 'gemini-3.8-flash',
   BASE_URL: 'https://generativelanguage.googleapis.com/v1beta/models',
   GENERATION_CONFIG: {
     temperature: 0.7,        // Balances creativity and factual accuracy

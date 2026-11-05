@@ -12,7 +12,7 @@ This file provides architectural context, coding standards, commands, security r
 - **UI Components**: Radix UI primitives, Lucide React, React Icons (Si, Di, Fa)
 - **Animations**: Framer Motion 12, HTML5 Canvas 2D Particle System, CSS Marquee
 - **Database & Cache**: Upstash Redis (`@upstash/redis`) with local JSON fallback
-- **AI Integration**: Google Gemini 2.5 Flash via Server Route Handler (`/api/chat`)
+- **AI Integration**: Google Gemini 3.8 Flash via Server Route Handler (`/api/chat`)
 - **Security**: HMAC-SHA256 session cookie tokens, Next.js Edge Middleware, IP Rate-limiting
 - **Architecture**: Clean Architecture (Core / Shared / Components / Sections / App)
 
