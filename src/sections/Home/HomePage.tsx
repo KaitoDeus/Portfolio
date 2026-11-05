@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { portfolioService } from '@/core/services/PortfolioService';
 import { Button } from '@/components/ui/button';
+import ViewCounter from '@/components/common/ViewCounter';
 
 export default function HomePage() {
   const data = portfolioService.getRawData();
@@ -71,6 +72,11 @@ export default function HomePage() {
               <span>Get in Touch</span>
             </Link>
           </Button>
+        </div>
+
+        {/* Unique Visitor View Counter */}
+        <div className="pt-2 sm:pt-3 flex justify-center">
+          <ViewCounter />
         </div>
 
       </div>
