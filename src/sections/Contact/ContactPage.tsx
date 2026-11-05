@@ -279,9 +279,6 @@ export default function ContactPage() {
                       <span>Kaito AI Assistant</span>
                       <Sparkles className="w-3.5 h-3.5 text-foreground" />
                     </h3>
-                    <p className="text-[11px] text-muted-foreground">
-                      Powered by Google Gemini 3.8 Flash
-                    </p>
                   </div>
                 </div>
 
@@ -338,7 +335,7 @@ export default function ContactPage() {
                           <span className="w-1.5 h-1.5 rounded-full bg-foreground animate-bounce [animation-delay:0.2s]" />
                           <span className="w-1.5 h-1.5 rounded-full bg-foreground animate-bounce [animation-delay:0.4s]" />
                         </div>
-                        <span>Gemini is thinking...</span>
+                        <span>Thinking...</span>
                       </div>
                     )}
                     <div ref={chatEndRef} />
