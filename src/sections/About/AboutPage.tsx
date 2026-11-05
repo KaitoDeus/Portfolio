@@ -200,14 +200,9 @@ export default function AboutPage() {
           {/* Certificates & Credentials */}
           <Card className="border-border/60 bg-card/60 backdrop-blur-md shadow-lg overflow-hidden">
             <CardHeader className="border-b border-border/40 pb-4">
-              <CardTitle className="flex items-center justify-between gap-2 text-foreground font-bold text-xl">
-                <div className="flex items-center gap-2.5">
-                  <Award className="w-6 h-6" />
-                  <span>Certificates &amp; Credentials</span>
-                </div>
-                <span className="text-xs font-normal text-muted-foreground">
-                  Click to inspect full certificate
-                </span>
+              <CardTitle className="flex items-center gap-2.5 text-foreground font-bold text-xl">
+                <Award className="w-6 h-6" />
+                <span>Certificates &amp; Credentials</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6">

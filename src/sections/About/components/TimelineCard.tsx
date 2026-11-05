@@ -70,8 +70,9 @@ export function TimelineCard({
     <div>
       <Card className="h-full border-border/60 bg-card/60 backdrop-blur-md">
         <CardHeader>
-          <CardTitle className={`flex items-center gap-2 font-bold ${colorClass}`}>
-            <Icon className="w-6 h-6" /> {title}
+          <CardTitle className={`flex items-center gap-2.5 font-bold text-xl ${colorClass}`}>
+            <Icon className="w-6 h-6" />
+            <span>{title}</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-8">
