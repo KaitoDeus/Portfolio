@@ -22,9 +22,21 @@ export default function CosmicBackground() {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 w-full h-full pointer-events-none -z-50 overflow-hidden select-none"
+      className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden select-none"
     >
-      {/* 1. Looping HTML5 Background Video */}
+      {/* 1. Looping Animated GIF/WebP Background Layer (Immediate, universal playback) */}
+      <picture className="absolute inset-0 w-full h-full">
+        <source srcSet="/assets/video/background.webp" type="image/webp" />
+        <img
+          src="/assets/video/background.gif"
+          alt=""
+          loading="eager"
+          decoding="async"
+          className="w-full h-full object-cover object-center opacity-85 dark:opacity-55"
+        />
+      </picture>
+
+      {/* 2. Looping 4K HTML5 Video Layer */}
       <video
         ref={videoRef}
         autoPlay
@@ -32,15 +44,14 @@ export default function CosmicBackground() {
         muted
         playsInline
         preload="auto"
-        poster="/assets/img/background/cosmic_pixel_night_sky.webp"
-        className="absolute inset-0 w-full h-full object-cover object-center opacity-40 dark:opacity-85 transition-opacity duration-700"
+        className="absolute inset-0 w-full h-full object-cover object-center opacity-85 dark:opacity-55 transition-opacity duration-700"
       >
         <source src="/assets/video/background.mp4" type="video/mp4" />
       </video>
 
-      {/* 2. Soft Gradient & Vignette Overlay to ensure text readability */}
-      <div className="absolute inset-0 bg-background/50 dark:bg-background/40 transition-colors duration-300" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/60" />
+      {/* 3. Subtle overlay to maintain text readability without washing out colors */}
+      <div className="absolute inset-0 bg-background/25 dark:bg-black/40 transition-colors duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/50" />
       <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/80" />
     </div>
   );
