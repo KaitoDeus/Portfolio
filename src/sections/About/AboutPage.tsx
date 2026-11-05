@@ -161,11 +161,8 @@ export default function AboutPage() {
                 <Gamepad2 className="w-5 h-5" /> Interests &amp; Passions
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-6 grow flex flex-col justify-between space-y-4">
-              <p className="text-xs text-muted-foreground">
-                Activities that recharge my creative energy and inspire problem-solving skills outside work.
-              </p>
-              <div className="flex flex-wrap gap-2">
+            <CardContent className="p-6 grow">
+              <div className="flex flex-wrap gap-2.5">
                 {hobbies.map((hobby, index) => {
                   const Icon = hobbyIcons[hobby.icon] || Code;
                   return (
