@@ -155,16 +155,6 @@ export default function ContactPage() {
           {/* Left Column: Direct Info & Social Cards (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
             
-            {/* Status Card */}
-            <Card className="border-border/60 bg-card/60 backdrop-blur-md p-6 shadow-md space-y-2">
-              <h3 className="text-xl font-bold text-foreground">
-                Open for Software Developer Roles
-              </h3>
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                Seeking a Software Developer (Intern / Fresher / Junior) position to apply practical full-stack and game development skills in an engineering environment.
-              </p>
-            </Card>
-
             {/* Direct Channels */}
             <div className="space-y-3">
               
