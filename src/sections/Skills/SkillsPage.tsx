@@ -3,8 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { 
   Search, 
-  Gamepad2, 
-  CheckCircle2
+  Terminal
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -54,7 +53,7 @@ const SkillIcon = ({ skill }: { skill: ISkill }) => {
 const TerminalContent = () => {
   const [typedLength, setTypedLength] = useState(0);
   const [showOutput, setShowOutput] = useState(false);
-  const command = 'status --profile kaitodeus --mode arcade';
+  const command = 'status --profile kaito';
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -67,7 +66,7 @@ const TerminalContent = () => {
           return prev;
         }
       });
-    }, 35);
+    }, 40);
 
     return () => clearInterval(interval);
   }, []);
@@ -75,96 +74,35 @@ const TerminalContent = () => {
   const typedText = command.slice(0, typedLength);
 
   return (
-    <div className="relative p-6 sm:p-8 font-mono space-y-6 min-h-[260px] bg-black/85 dark:bg-black/95 select-none overflow-hidden text-emerald-400">
-      {/* Subtle CRT retro scanline overlay */}
-      <div 
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.35)_50%)] bg-[length:100%_4px] opacity-35 z-10" 
-      />
-
+    <div className="p-6 sm:p-8 font-mono text-xs sm:text-sm text-foreground/90 space-y-4">
       {/* Terminal prompt command line */}
-      <div className="relative z-20 flex flex-wrap items-center gap-2 text-sm sm:text-base md:text-lg">
-        <span className="text-emerald-500 font-extrabold select-none">
-          KAITO@ARCADE-ENGINE:~$
-        </span>
-        <span className="font-bold text-white tracking-wide">
+      <div className="flex items-center gap-2">
+        <span className="text-emerald-500 font-bold text-sm sm:text-base">$</span>
+        <span className="font-semibold text-foreground text-sm sm:text-base">
           {typedText}
           {!showOutput && (
-            <span className="inline-block w-2.5 h-5 bg-emerald-400 ml-1.5 align-middle animate-pulse shadow-[0_0_10px_#10b981]" />
+            <span className="inline-block w-2 h-4.5 bg-foreground ml-1 align-middle animate-pulse" />
           )}
         </span>
       </div>
 
-      {/* Retro Pixel Gaming Stats Output */}
+      {/* Clean, minimalist output */}
       {showOutput && (
-        <div className="relative z-20 space-y-5 pt-4 border-t-2 border-dashed border-emerald-500/30 text-xs sm:text-sm animate-in fade-in-50 duration-500">
-          
-          {/* Top Arcade Player Status Banner */}
-          <div className="flex flex-wrap items-center justify-between gap-3 bg-emerald-950/40 border border-emerald-500/40 px-4 py-2.5 rounded-lg text-emerald-300">
-            <div className="flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm">
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span>[PLAYER 1: READY]</span>
+        <div className="space-y-3.5 pt-3 border-t border-border/40 animate-in fade-in-50 duration-300">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-8">
+            <div>
+              <span className="text-muted-foreground font-medium">Specialization:</span>{' '}
+              <span className="text-foreground font-bold">Software &amp; Game Development</span>
             </div>
-            <div className="flex items-center gap-4 text-xs font-semibold">
-              <span className="text-amber-400 font-bold">★ LVL: 99</span>
-              <span className="text-cyan-400 font-bold">♥ HP: 100%</span>
-              <span className="text-purple-400 font-bold">✦ MANA: FULL</span>
+            <div>
+              <span className="text-muted-foreground font-medium">Architecture:</span>{' '}
+              <span className="text-foreground font-bold">Clean Architecture &amp; Production Standards</span>
             </div>
           </div>
-
-          {/* Core System Specs Grid (Removed education, role, primary) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            
-            <div className="space-y-1.5 bg-secondary/10 p-3.5 rounded-lg border border-emerald-500/20">
-              <div className="text-[11px] uppercase tracking-widest text-emerald-500/70 font-bold flex items-center gap-1.5">
-                <span>▸</span> SPECIALIZATION
-              </div>
-              <div className="text-white font-bold text-sm sm:text-base">
-                Software &amp; Game Developer
-              </div>
-            </div>
-
-            <div className="space-y-1.5 bg-secondary/10 p-3.5 rounded-lg border border-emerald-500/20">
-              <div className="text-[11px] uppercase tracking-widest text-emerald-500/70 font-bold flex items-center gap-1.5">
-                <span>▸</span> SYSTEM ARCHITECTURE
-              </div>
-              <div className="text-cyan-300 font-bold text-sm sm:text-base">
-                Clean Architecture &amp; Production Standards
-              </div>
-            </div>
-
-            <div className="space-y-1.5 bg-secondary/10 p-3.5 rounded-lg border border-emerald-500/20">
-              <div className="text-[11px] uppercase tracking-widest text-emerald-500/70 font-bold flex items-center gap-1.5">
-                <span>▸</span> SYSTEM INTEGRITY
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="text-emerald-400 font-bold text-xs sm:text-sm tracking-widest">
-                  [████████████████████]
-                </div>
-                <span className="text-white font-bold text-xs">100%</span>
-              </div>
-            </div>
-
-            <div className="space-y-1.5 bg-secondary/10 p-3.5 rounded-lg border border-emerald-500/20">
-              <div className="text-[11px] uppercase tracking-widest text-emerald-500/70 font-bold flex items-center gap-1.5">
-                <span>▸</span> QUEST STATUS
-              </div>
-              <div className="text-amber-300 font-bold text-sm sm:text-base flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Ready for High-Impact Projects</span>
-              </div>
-            </div>
-
+          <div className="flex items-center gap-2 text-emerald-500 font-medium pt-1 text-xs sm:text-sm">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <span>Environment operational • Ready for production projects</span>
           </div>
-
-          {/* Footer Terminal Bar */}
-          <div className="flex flex-wrap items-center justify-between text-[11px] text-emerald-400/80 pt-2 border-t border-emerald-500/20">
-            <span>&gt;&gt; PIXEL ENGINE LOADED // ALL MODULES OPERATIONAL</span>
-            <span className="text-muted-foreground hidden sm:inline animate-pulse">
-              EXPLORE TECH STACK BELOW ↓
-            </span>
-          </div>
-
         </div>
       )}
     </div>
@@ -215,28 +153,25 @@ export default function SkillsPage() {
         {/* Page Header */}
         <PageHeader title="Skills" />
 
-        {/* Top Section: Full-Width Retro Game Pixel Terminal Console */}
+        {/* Top Section: Full-Width Clean Glassmorphism Terminal */}
         <div className="w-full">
-          <Card className="bg-black/90 border-2 border-emerald-500/40 shadow-[0_0_35px_rgba(16,185,129,0.15)] overflow-hidden font-mono backdrop-blur-md rounded-2xl">
-            {/* Retro Arcade Terminal Header */}
-            <div className="flex items-center justify-between px-5 py-3.5 bg-emerald-950/70 border-b-2 border-emerald-500/30 text-xs sm:text-sm">
+          <Card className="border-border/60 bg-card/60 backdrop-blur-md shadow-xl overflow-hidden font-mono rounded-2xl">
+            {/* Terminal Window Header */}
+            <div className="flex items-center justify-between px-5 py-3.5 bg-secondary/50 border-b border-border/60 text-xs">
               <div className="flex items-center gap-3">
                 <div className="flex gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_6px_#ef4444]" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500 shadow-[0_0_6px_#eab308]" />
-                  <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_6px_#22c55e]" />
+                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
                 </div>
-                <span className="text-emerald-400 font-bold tracking-wider flex items-center gap-2">
-                  <Gamepad2 className="w-4 h-4 text-emerald-400" />
-                  <span>ARCADE://SYSTEM-SPEC.DAT</span>
+                <span className="text-muted-foreground font-mono flex items-center gap-1.5 font-medium">
+                  <Terminal className="w-3.5 h-3.5 text-foreground" />
+                  <span>~/kaito/specs</span>
                 </span>
               </div>
-              <div className="flex items-center gap-4 text-xs font-semibold text-emerald-400/80">
-                <span className="hidden sm:inline px-2 py-0.5 rounded bg-emerald-900/60 border border-emerald-500/40 text-emerald-300">
-                  60 FPS
-                </span>
-                <span className="text-emerald-400 font-bold">PIXEL-OS v2.6</span>
-              </div>
+              <span className="text-muted-foreground/60 text-[11px] font-mono hidden sm:inline">
+                bash
+              </span>
             </div>
             
             {/* Terminal Screen Body */}
