@@ -83,6 +83,8 @@ const SkillIcon = ({ skill }: { skill: ISkill }) => {
       <img
         src={deviconUrl}
         alt={skill.name}
+        loading="lazy"
+        decoding="async"
         className="w-9 h-9 sm:w-10 sm:h-10 object-contain transition-transform duration-300 group-hover:scale-110 shrink-0"
         onError={() => setHasError(true)}
       />

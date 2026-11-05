@@ -30,6 +30,8 @@ const SkillMiniIcon = ({ skill }: { skill: ISkill }) => {
       <img
         src={deviconUrl}
         alt={skill.name}
+        loading="lazy"
+        decoding="async"
         className="w-7 h-7 sm:w-8 sm:h-8 object-contain transition-transform duration-300 group-hover:scale-110"
         onError={() => setHasError(true)}
       />
