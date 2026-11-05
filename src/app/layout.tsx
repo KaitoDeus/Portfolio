@@ -9,30 +9,81 @@ const montserrat = Montserrat({
   variable: '--font-montserrat',
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://kaitodeus-portfolio.vercel.app';
+
 export const viewport: Viewport = {
-  themeColor: '#ffffff',
+  themeColor: '#000000',
   width: 'device-width',
   initialScale: 1,
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://kaitodeus-portfolio.vercel.app'),
-  title: 'Portfolio | Võ Anh Khải',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Võ Anh Khải (Kaito) | Software & Game Developer',
+    template: '%s | Võ Anh Khải (Kaito)',
+  },
   description:
-    'Võ Anh Khải - Software Engineering Student from Vietnam. Passionate about Game Development, Full Stack Development, and UI/UX Design.',
-  keywords: ['Võ Anh Khải', 'Portfolio', 'Software Engineer', 'Game Developer', 'Vietnam', 'UTH'],
-  authors: [{ name: 'Võ Anh Khải' }],
-  robots: { index: true, follow: true },
+    'Portfolio of Võ Anh Khải (Kaito) - Software & Game Developer specializing in Full-Stack Web Development, 3D Games (Unity), and Mobile Applications (Android/Kotlin).',
+  keywords: [
+    'Võ Anh Khải',
+    'Kaito',
+    'KaitoDeus',
+    'Software Developer',
+    'Game Developer',
+    'Full Stack Developer',
+    'React',
+    'Next.js',
+    'Unity 3D',
+    'C#',
+    'TypeScript',
+    'Spring Boot',
+    'Kotlin',
+    'Android Development',
+    'Portfolio',
+    'Vietnam Developer',
+  ],
+  authors: [{ name: 'Võ Anh Khải', url: SITE_URL }],
+  creator: 'Võ Anh Khải (Kaito)',
+  publisher: 'Võ Anh Khải',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     type: 'website',
-    title: 'Võ Anh Khải | Software Engineering',
-    description: 'Portfolio of Võ Anh Khải - Software Engineering Student from Vietnam',
-    images: ['/android-chrome-512x512.png'],
+    locale: 'vi_VN',
+    alternateLocale: 'en_US',
+    url: SITE_URL,
+    siteName: 'Võ Anh Khải Portfolio',
+    title: 'Võ Anh Khải (Kaito) | Software & Game Developer',
+    description:
+      'Portfolio of Võ Anh Khải (Kaito) - Software & Game Developer specializing in Full-Stack Web Development, 3D Games (Unity), and Mobile Applications.',
+    images: [
+      {
+        url: '/android-chrome-512x512.png',
+        width: 512,
+        height: 512,
+        alt: 'Võ Anh Khải (Kaito) - Software & Game Developer Portfolio',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Võ Anh Khải | Software Engineering',
-    description: 'Portfolio of Võ Anh Khải - Software Engineering Student from Vietnam',
+    title: 'Võ Anh Khải (Kaito) | Software & Game Developer',
+    description:
+      'Portfolio of Võ Anh Khải (Kaito) - Software & Game Developer specializing in Full-Stack Web Development, 3D Games, and Mobile Applications.',
+    images: ['/android-chrome-512x512.png'],
   },
   icons: {
     icon: [
@@ -42,6 +93,51 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
   },
+  manifest: '/manifest.webmanifest',
+};
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${SITE_URL}/#person`,
+      name: 'Võ Anh Khải',
+      alternateName: ['Kaito', 'KaitoDeus'],
+      jobTitle: 'Software & Game Developer',
+      url: SITE_URL,
+      image: `${SITE_URL}/android-chrome-512x512.png`,
+      email: 'mailto:khaivo300605@gmail.com',
+      sameAs: [
+        'https://github.com/KaitoDeus',
+        'https://www.linkedin.com/in/kaitodeus',
+      ],
+      knowsAbout: [
+        'Software Engineering',
+        'Game Development',
+        'Unity 3D',
+        'C#',
+        'React',
+        'Next.js',
+        'TypeScript',
+        'Spring Boot',
+        'Java',
+        'Kotlin',
+        'Android Development',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: 'Võ Anh Khải (Kaito) Portfolio',
+      description: 'Official portfolio website of Võ Anh Khải (Kaito) - Software & Game Developer',
+      publisher: {
+        '@id': `${SITE_URL}/#person`,
+      },
+      inLanguage: ['vi-VN', 'en-US'],
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -50,8 +146,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={montserrat.variable}>
+    <html lang="vi" suppressHydrationWarning className={montserrat.variable}>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
