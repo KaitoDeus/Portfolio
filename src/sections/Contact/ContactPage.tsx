@@ -10,8 +10,7 @@ import {
   MapPin, 
   Copy, 
   Check, 
-  Bot, 
-  Sparkles
+  Bot
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -262,32 +261,6 @@ export default function ContactPage() {
           {/* Right Column: AI Chat Assistant (7 cols) */}
           <div className="lg:col-span-7">
             <Card className="border-border/60 bg-card/70 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden flex flex-col h-[580px]">
-              
-              {/* Chat Header */}
-              <div className="p-4 sm:p-5 border-b border-border/60 bg-secondary/40 flex items-center justify-between shrink-0">
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    <img
-                      src={modelAvatarSrc}
-                      alt="AI Assistant"
-                      className="w-10 h-10 rounded-full object-cover border-2 border-border/80"
-                    />
-                    <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-card" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-sm text-foreground flex items-center gap-1.5">
-                      <span>Kaito AI Assistant</span>
-                      <Sparkles className="w-3.5 h-3.5 text-foreground" />
-                    </h3>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                  <span>Online</span>
-                </div>
-              </div>
-
               {/* Chat Messages Body */}
               <div className="p-4 sm:p-6 overflow-y-auto grow space-y-4">
                 {messages.length === 0 ? (
