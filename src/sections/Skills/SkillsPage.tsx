@@ -10,18 +10,6 @@ import {
   Smartphone,
   CheckCircle2
 } from 'lucide-react';
-import { 
-  SiCplusplus, SiHtml5, SiCss3, SiJavascript, 
-  SiSpringboot, SiPython, SiUnity,
-  SiReact, SiTypescript, SiGit,
-  SiMysql, SiMongodb, SiDocker,
-  SiVercel, SiRender, SiMarkdown,
-  SiDotnet, SiSharp, SiThreedotjs, SiFastapi, SiGooglegemini, SiWix,
-  SiPostgresql, SiTailwindcss, SiVite,
-  SiNodedotjs, SiExpress, SiKotlin
-} from 'react-icons/si';
-import { DiMsqlServer } from "react-icons/di";
-import { FaJava } from 'react-icons/fa';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import Section from '@/components/common/Section';
@@ -29,39 +17,6 @@ import PageHeader from '@/components/common/PageHeader';
 import { portfolioService } from '@/core/services/PortfolioService';
 import { ISkill } from '@/core/models/PortfolioModels';
 import { getDeviconSvgUrl } from '@/shared/lib/devicon';
-
-const iconMap: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
-  java: FaJava,
-  spring: SiSpringboot,
-  react: SiReact,
-  mysql: SiMysql,
-  typescript: SiTypescript,
-  javascript: SiJavascript,
-  html5: SiHtml5,
-  css3: SiCss3,
-  docker: SiDocker,
-  sql: DiMsqlServer,
-  mongodb: SiMongodb,
-  git: SiGit,
-  vercel: SiVercel,
-  render: SiRender,
-  cpp: SiCplusplus,
-  python: SiPython,
-  unity: SiUnity,
-  markdown: SiMarkdown,
-  csharp: SiSharp,
-  dotnet: SiDotnet,
-  threejs: SiThreedotjs,
-  fastapi: SiFastapi,
-  mediapipe: SiGooglegemini,
-  wix: SiWix,
-  postgresql: SiPostgresql,
-  tailwindcss: SiTailwindcss,
-  vite: SiVite,
-  nodejs: SiNodedotjs, 
-  express: SiExpress,
-  kotlin: SiKotlin
-};
 
 const getIconColor = (color: string) => {
   if (!color) return 'currentColor';
@@ -74,7 +29,6 @@ const getIconColor = (color: string) => {
 
 const SkillIcon = ({ skill }: { skill: ISkill }) => {
   const [hasError, setHasError] = useState(false);
-  const Icon = iconMap[skill.icon];
   const color = getIconColor(skill.color);
   const deviconUrl = getDeviconSvgUrl(skill.icon || skill.name);
 
@@ -91,18 +45,10 @@ const SkillIcon = ({ skill }: { skill: ISkill }) => {
     );
   }
 
-  if (Icon) {
-    return (
-      <Icon
-        className="w-9 h-9 sm:w-10 sm:h-10 transition-transform duration-300 group-hover:scale-110 shrink-0"
-        style={{ color }}
-      />
-    );
-  }
-
   return (
     <div
       className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs bg-secondary text-foreground shrink-0"
+      style={{ color }}
     >
       {skill.name.slice(0, 2).toUpperCase()}
     </div>
