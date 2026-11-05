@@ -47,43 +47,34 @@ const SkillMiniIcon = ({ skill }: { skill: ISkill }) => {
 
 export default function HomePage() {
   const data = portfolioService.getRawData();
-  const { name, avatars, skills, projects } = data;
-  const avatarSrc = getImageSrc(avatars.hero);
+  const { name, skills, projects } = data;
   const featuredProjects = projects.slice(0, 3);
   const marqueeSkills = [...skills, ...skills];
 
   return (
-    <div className="flex flex-col w-full space-y-24 sm:space-y-32">
+    <div className="flex flex-col w-full space-y-20 sm:space-y-28">
       {/* 1. HERO SECTION */}
-      <section className="min-h-[75vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 relative">
-        <div className="max-w-4xl mx-auto flex flex-col items-center relative z-10">
+      <section className="min-h-[65vh] sm:min-h-[72vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 relative">
+        {/* Subtle Ambient Radial Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[580px] h-[320px] sm:h-[420px] bg-foreground/[0.03] dark:bg-foreground/[0.04] rounded-full blur-3xl pointer-events-none -z-10" />
+
+        <div className="max-w-4xl mx-auto flex flex-col items-center relative z-10 space-y-6 sm:space-y-8">
           
-          {/* Profile Avatar with subtle glow */}
-          <div className="relative mb-8 sm:mb-10">
-            <div className="w-40 h-40 sm:w-52 sm:h-52 lg:w-64 lg:h-64 rounded-full overflow-hidden border-2 sm:border-4 border-border/80 shadow-2xl relative z-10 transition-transform duration-300 hover:scale-105">
-              <img
-                src={avatarSrc}
-                alt={name}
-                loading="eager"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="absolute inset-0 rounded-full bg-foreground/10 blur-2xl -z-10 scale-110" />
+          {/* Main Typography Headline */}
+          <div className="space-y-3 sm:space-y-4">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-tight sm:leading-none">
+              <span className="text-muted-foreground font-light">Hi, I am </span>
+              <span className="text-foreground">{name}</span>
+            </h1>
+
+            {/* Tagline / Role */}
+            <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-medium tracking-tight">
+              I&apos;m a <span className="text-foreground font-bold">Software Developer</span>
+            </p>
           </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-3">
-            <span className="text-muted-foreground font-normal">Hi, I am </span>
-            <span className="text-foreground">{name}</span>
-          </h1>
-
-          {/* Tagline / Role */}
-          <p className="text-xl sm:text-2xl lg:text-3xl text-muted-foreground font-medium mb-3">
-            I&apos;m a <span className="text-foreground font-bold">Software Developer</span>
-          </p>
-
           {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-10 justify-center w-full px-4 sm:px-0">
+          <div className="flex flex-col sm:flex-row gap-3.5 sm:gap-4 justify-center w-full max-w-xs sm:max-w-none pt-2 sm:pt-4">
             <Button
               asChild
               size="lg"
