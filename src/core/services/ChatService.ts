@@ -18,7 +18,15 @@ export const chatService = {
         }),
       });
 
-      const data = await response.json();
+      const rawText = await response.text();
+      let data: { text?: string; error?: string } = {};
+
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        data = { error: rawText.slice(0, 150) || `HTTP ${response.status}` };
+      }
+
       if (!response.ok) {
         throw new Error(data.error || `HTTP error! status: ${response.status}`);
       }

@@ -31,42 +31,63 @@ export async function POST(req: Request) {
       parts: [{ text: message }],
     });
 
-    const response = await fetch(
-      `${AI_CONFIG.BASE_URL}/${AI_CONFIG.MODEL}:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: contents,
-          systemInstruction: systemPrompt
-            ? {
-                parts: [{ text: systemPrompt }],
-              }
-            : undefined,
-          generationConfig: AI_CONFIG.GENERATION_CONFIG,
-        }),
+    const candidateModels = [
+      AI_CONFIG.MODEL, // 'gemini-3.8-flash'
+      'gemini-2.5-flash',
+      'gemini-flash-latest',
+    ];
+
+    let lastError = 'No response from AI models';
+    let lastStatus = 500;
+
+    for (const model of candidateModels) {
+      try {
+        const response = await fetch(
+          `${AI_CONFIG.BASE_URL}/${model}:generateContent?key=${GEMINI_API_KEY}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              contents: contents,
+              systemInstruction: systemPrompt
+                ? {
+                    parts: [{ text: systemPrompt }],
+                  }
+                : undefined,
+              generationConfig: AI_CONFIG.GENERATION_CONFIG,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          lastError =
+            errorData.error?.message || `Model ${model} responded with status ${response.status}`;
+          lastStatus = response.status;
+          console.warn(`[Gemini Chat] Model ${model} returned ${response.status}, attempting fallback...`);
+          continue;
+        }
+
+        const data = await response.json();
+
+        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+          const text = data.candidates[0].content.parts
+            .map((p: { text: string }) => p.text)
+            .join('');
+          return NextResponse.json({ 
+            text: text.replace(/\*/g, ''),
+            modelUsed: model,
+          });
+        }
+      } catch (err) {
+        lastError = err instanceof Error ? err.message : String(err);
+        console.warn(`[Gemini Chat] Request to ${model} failed, attempting next model:`, lastError);
       }
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      const errorMessage =
-        errorData.error?.message || `Gemini API responded with status ${response.status}`;
-      return NextResponse.json({ error: errorMessage }, { status: response.status });
     }
 
-    const data = await response.json();
-
-    if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-      const text = data.candidates[0].content.parts
-        .map((p: { text: string }) => p.text)
-        .join('');
-      return NextResponse.json({ text: text.replace(/\*/g, '') });
-    }
-
-    return NextResponse.json({ text: 'Không nhận được phản hồi hợp lệ từ AI.' });
+    return NextResponse.json({ error: lastError }, { status: lastStatus });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error('Error in /api/chat:', errorMessage);
