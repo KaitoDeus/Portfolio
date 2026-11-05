@@ -2,12 +2,8 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { 
-  Circle, 
   Search, 
-  Terminal, 
   Gamepad2, 
-  Globe, 
-  Smartphone,
   CheckCircle2
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -58,7 +54,7 @@ const SkillIcon = ({ skill }: { skill: ISkill }) => {
 const TerminalContent = () => {
   const [typedLength, setTypedLength] = useState(0);
   const [showOutput, setShowOutput] = useState(false);
-  const command = 'status --profile kaitodeus';
+  const command = 'status --profile kaitodeus --mode arcade';
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -71,7 +67,7 @@ const TerminalContent = () => {
           return prev;
         }
       });
-    }, 40);
+    }, 35);
 
     return () => clearInterval(interval);
   }, []);
@@ -79,39 +75,96 @@ const TerminalContent = () => {
   const typedText = command.slice(0, typedLength);
 
   return (
-    <div className="p-5 space-y-3 font-mono text-xs md:text-sm text-foreground/90 min-h-[170px]">
-      <div className="flex items-center gap-2 opacity-80">
-        <span className="text-emerald-500 font-bold">$</span>
-        <span className="font-semibold text-foreground">
+    <div className="relative p-6 sm:p-8 font-mono space-y-6 min-h-[260px] bg-black/85 dark:bg-black/95 select-none overflow-hidden text-emerald-400">
+      {/* Subtle CRT retro scanline overlay */}
+      <div 
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.35)_50%)] bg-[length:100%_4px] opacity-35 z-10" 
+      />
+
+      {/* Terminal prompt command line */}
+      <div className="relative z-20 flex flex-wrap items-center gap-2 text-sm sm:text-base md:text-lg">
+        <span className="text-emerald-500 font-extrabold select-none">
+          KAITO@ARCADE-ENGINE:~$
+        </span>
+        <span className="font-bold text-white tracking-wide">
           {typedText}
           {!showOutput && (
-            <span className="inline-block w-1.5 h-4 bg-foreground ml-1 align-middle animate-pulse" />
+            <span className="inline-block w-2.5 h-5 bg-emerald-400 ml-1.5 align-middle animate-pulse shadow-[0_0_10px_#10b981]" />
           )}
         </span>
       </div>
 
+      {/* Retro Pixel Gaming Stats Output */}
       {showOutput && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-border/40 text-xs animate-in fade-in-50 duration-500">
-          <div>
-            <span className="font-bold text-muted-foreground">Focus:</span>{' '}
-            <span className="text-foreground font-semibold">Software Developer</span>
+        <div className="relative z-20 space-y-5 pt-4 border-t-2 border-dashed border-emerald-500/30 text-xs sm:text-sm animate-in fade-in-50 duration-500">
+          
+          {/* Top Arcade Player Status Banner */}
+          <div className="flex flex-wrap items-center justify-between gap-3 bg-emerald-950/40 border border-emerald-500/40 px-4 py-2.5 rounded-lg text-emerald-300">
+            <div className="flex items-center gap-2 font-bold tracking-wider text-xs sm:text-sm">
+              <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span>[PLAYER 1: READY]</span>
+            </div>
+            <div className="flex items-center gap-4 text-xs font-semibold">
+              <span className="text-amber-400 font-bold">★ LVL: 99</span>
+              <span className="text-cyan-400 font-bold">♥ HP: 100%</span>
+              <span className="text-purple-400 font-bold">✦ MANA: FULL</span>
+            </div>
           </div>
-          <div>
-            <span className="font-bold text-muted-foreground">Role:</span>{' '}
-            <span className="text-foreground font-semibold">SE Intern @ FPT</span>
+
+          {/* Core System Specs Grid (Removed education, role, primary) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <div className="space-y-1.5 bg-secondary/10 p-3.5 rounded-lg border border-emerald-500/20">
+              <div className="text-[11px] uppercase tracking-widest text-emerald-500/70 font-bold flex items-center gap-1.5">
+                <span>▸</span> SPECIALIZATION
+              </div>
+              <div className="text-white font-bold text-sm sm:text-base">
+                Software &amp; Game Developer
+              </div>
+            </div>
+
+            <div className="space-y-1.5 bg-secondary/10 p-3.5 rounded-lg border border-emerald-500/20">
+              <div className="text-[11px] uppercase tracking-widest text-emerald-500/70 font-bold flex items-center gap-1.5">
+                <span>▸</span> SYSTEM ARCHITECTURE
+              </div>
+              <div className="text-cyan-300 font-bold text-sm sm:text-base">
+                Clean Architecture &amp; Production Standards
+              </div>
+            </div>
+
+            <div className="space-y-1.5 bg-secondary/10 p-3.5 rounded-lg border border-emerald-500/20">
+              <div className="text-[11px] uppercase tracking-widest text-emerald-500/70 font-bold flex items-center gap-1.5">
+                <span>▸</span> SYSTEM INTEGRITY
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="text-emerald-400 font-bold text-xs sm:text-sm tracking-widest">
+                  [████████████████████]
+                </div>
+                <span className="text-white font-bold text-xs">100%</span>
+              </div>
+            </div>
+
+            <div className="space-y-1.5 bg-secondary/10 p-3.5 rounded-lg border border-emerald-500/20">
+              <div className="text-[11px] uppercase tracking-widest text-emerald-500/70 font-bold flex items-center gap-1.5">
+                <span>▸</span> QUEST STATUS
+              </div>
+              <div className="text-amber-300 font-bold text-sm sm:text-base flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Ready for High-Impact Projects</span>
+              </div>
+            </div>
+
           </div>
-          <div>
-            <span className="font-bold text-muted-foreground">Education:</span>{' '}
-            <span className="text-foreground font-semibold">Senior IT @ UTH</span>
+
+          {/* Footer Terminal Bar */}
+          <div className="flex flex-wrap items-center justify-between text-[11px] text-emerald-400/80 pt-2 border-t border-emerald-500/20">
+            <span>&gt;&gt; PIXEL ENGINE LOADED // ALL MODULES OPERATIONAL</span>
+            <span className="text-muted-foreground hidden sm:inline animate-pulse">
+              EXPLORE TECH STACK BELOW ↓
+            </span>
           </div>
-          <div>
-            <span className="font-bold text-muted-foreground">Primary:</span>{' '}
-            <span className="text-foreground font-semibold">React, Unity, Spring</span>
-          </div>
-          <div className="sm:col-span-2 text-emerald-500 flex items-center gap-1.5 font-medium pt-1">
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            <span>Environment ready: Clean Architecture &amp; Production Standards</span>
-          </div>
+
         </div>
       )}
     </div>
@@ -162,89 +215,33 @@ export default function SkillsPage() {
         {/* Page Header */}
         <PageHeader title="Skills" />
 
-        {/* Top Section: Terminal & Core Pillars */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
-          {/* Terminal Console (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col">
-            <Card className="bg-card/70 border-border/60 shadow-xl overflow-hidden font-mono backdrop-blur-md h-full flex flex-col">
-              <div className="flex items-center gap-2 px-4 py-3 bg-secondary/60 border-b border-border/60 shrink-0">
-                <div className="flex gap-1.5">
-                  <Circle className="w-3 h-3 fill-red-500/80 text-red-500/80" />
-                  <Circle className="w-3 h-3 fill-yellow-500/80 text-yellow-500/80" />
-                  <Circle className="w-3 h-3 fill-green-500/80 text-green-500/80" />
+        {/* Top Section: Full-Width Retro Game Pixel Terminal Console */}
+        <div className="w-full">
+          <Card className="bg-black/90 border-2 border-emerald-500/40 shadow-[0_0_35px_rgba(16,185,129,0.15)] overflow-hidden font-mono backdrop-blur-md rounded-2xl">
+            {/* Retro Arcade Terminal Header */}
+            <div className="flex items-center justify-between px-5 py-3.5 bg-emerald-950/70 border-b-2 border-emerald-500/30 text-xs sm:text-sm">
+              <div className="flex items-center gap-3">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_6px_#ef4444]" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500 shadow-[0_0_6px_#eab308]" />
+                  <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_6px_#22c55e]" />
                 </div>
-                <span className="ml-2 text-muted-foreground text-xs flex items-center gap-1.5 font-medium">
-                  <Terminal className="w-3.5 h-3.5 text-foreground" />
-                  ~/system/architecture-specs
+                <span className="text-emerald-400 font-bold tracking-wider flex items-center gap-2">
+                  <Gamepad2 className="w-4 h-4 text-emerald-400" />
+                  <span>ARCADE://SYSTEM-SPEC.DAT</span>
                 </span>
               </div>
-              <TerminalContent />
-            </Card>
-          </div>
-
-          {/* Core Domains Overview (7 cols) */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="flex items-center gap-4 text-xs font-semibold text-emerald-400/80">
+                <span className="hidden sm:inline px-2 py-0.5 rounded bg-emerald-900/60 border border-emerald-500/40 text-emerald-300">
+                  60 FPS
+                </span>
+                <span className="text-emerald-400 font-bold">PIXEL-OS v2.6</span>
+              </div>
+            </div>
             
-            <Card className="border-border/60 bg-card/60 backdrop-blur-md hover:border-foreground/40 transition-all p-5 flex flex-col justify-between group shadow-sm">
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-foreground group-hover:scale-110 transition-transform">
-                  <Globe className="w-5 h-5" />
-                </div>
-                <h3 className="font-bold text-foreground text-base">Full-Stack Web</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  High-performance web apps built with Next.js 15, React 19, TypeScript, and Spring Boot.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-border/40 mt-3 flex flex-wrap gap-1">
-                {['Next.js', 'React', 'TS', 'Tailwind'].map((t) => (
-                  <span key={t} className="text-[10px] font-semibold px-2 py-0.5 rounded bg-secondary/80 text-foreground">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </Card>
-
-            <Card className="border-border/60 bg-card/60 backdrop-blur-md hover:border-foreground/40 transition-all p-5 flex flex-col justify-between group shadow-sm">
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-foreground group-hover:scale-110 transition-transform">
-                  <Gamepad2 className="w-5 h-5" />
-                </div>
-                <h3 className="font-bold text-foreground text-base">3D Simulation</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Physics engines, manual transmission, and realistic vehicles simulated in Unity &amp; C#.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-border/40 mt-3 flex flex-wrap gap-1">
-                {['Unity', 'C#', 'WebGL', 'Physics'].map((t) => (
-                  <span key={t} className="text-[10px] font-semibold px-2 py-0.5 rounded bg-secondary/80 text-foreground">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </Card>
-
-            <Card className="border-border/60 bg-card/60 backdrop-blur-md hover:border-foreground/40 transition-all p-5 flex flex-col justify-between group shadow-sm">
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-foreground group-hover:scale-110 transition-transform">
-                  <Smartphone className="w-5 h-5" />
-                </div>
-                <h3 className="font-bold text-foreground text-base">Mobile &amp; Backend</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Native Android with Kotlin, Room DB, PostgreSQL, and containerized Docker services.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-border/40 mt-3 flex flex-wrap gap-1">
-                {['Kotlin', 'Compose', 'Docker', 'Postgres'].map((t) => (
-                  <span key={t} className="text-[10px] font-semibold px-2 py-0.5 rounded bg-secondary/80 text-foreground">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </Card>
-
-          </div>
-
+            {/* Terminal Screen Body */}
+            <TerminalContent />
+          </Card>
         </div>
 
         {/* Filter & Search Bar */}
