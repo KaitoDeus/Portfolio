@@ -1,19 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { 
   ArrowRight, 
   FolderKanban, 
   User, 
-  Lightbulb, 
   Mail, 
   ExternalLink, 
   Github, 
   Briefcase, 
   GraduationCap, 
-  Sparkles,
-  Gamepad2,
+  Gamepad2, 
   Code
 } from 'lucide-react';
 import { portfolioService } from '@/core/services/PortfolioService';
@@ -22,43 +20,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { getImageSrc } from '@/shared/lib/utils';
 import { getDeviconSvgUrl } from '@/shared/lib/devicon';
 import { ISkill } from '@/core/models/PortfolioModels';
-
-const Typewriter = ({ texts, speed = 80, waitTime = 1800 }: { texts: string[]; speed?: number; waitTime?: number }) => {
-  const [displayText, setDisplayText] = useState('');
-  const [index, setIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    const currentText = texts[index] || '';
-
-    if (!isDeleting && displayText === currentText) {
-      timer = setTimeout(() => setIsDeleting(true), waitTime);
-    } else if (isDeleting && displayText === '') {
-      timer = setTimeout(() => {
-        setIsDeleting(false);
-        setIndex((prev) => (prev + 1) % texts.length);
-      }, 0);
-    } else {
-      timer = setTimeout(() => {
-        setDisplayText((prev) =>
-          isDeleting
-            ? currentText.substring(0, prev.length - 1)
-            : currentText.substring(0, prev.length + 1)
-        );
-      }, isDeleting ? speed / 2 : speed);
-    }
-
-    return () => clearTimeout(timer);
-  }, [displayText, isDeleting, index, texts, speed, waitTime]);
-
-  return (
-    <span className="text-foreground font-bold">
-      {displayText}
-      <span className="animate-pulse ml-0.5 border-r-2 border-foreground h-7 sm:h-8 inline-block align-middle" />
-    </span>
-  );
-};
 
 const SkillMiniIcon = ({ skill }: { skill: ISkill }) => {
   const [hasError, setHasError] = useState(false);
@@ -84,7 +45,7 @@ const SkillMiniIcon = ({ skill }: { skill: ISkill }) => {
 
 export default function HomePage() {
   const data = portfolioService.getRawData();
-  const { name, roles, bio, avatars, skills, projects } = data;
+  const { name, bio, avatars, skills, projects } = data;
   const avatarSrc = getImageSrc(avatars.hero);
   const featuredProjects = projects.slice(0, 3);
   const marqueeSkills = [...skills, ...skills];
@@ -92,18 +53,9 @@ export default function HomePage() {
   return (
     <div className="flex flex-col w-full space-y-24 sm:space-y-32">
       {/* 1. HERO SECTION */}
-      <section className="min-h-[78vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 relative">
+      <section className="min-h-[75vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 relative">
         <div className="max-w-4xl mx-auto flex flex-col items-center relative z-10">
           
-          {/* Availability Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm font-semibold mb-8 shadow-xs">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-            </span>
-            Available for Software Developer Roles (Intern / Fresher / Junior)
-          </div>
-
           {/* Profile Avatar with subtle glow */}
           <div className="relative mb-6">
             <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-2 border-border/80 shadow-2xl relative z-10">
@@ -118,16 +70,15 @@ export default function HomePage() {
           </div>
 
           {/* Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-3">
             <span className="text-muted-foreground font-normal">Hi, I am </span>
             <span className="text-foreground">{name}</span>
           </h1>
 
-          {/* Typewriter Effect */}
-          <div className="flex flex-wrap items-center justify-center gap-x-2 text-xl sm:text-2xl lg:text-3xl text-muted-foreground font-medium h-14 sm:h-16">
-            <span>I&apos;m a </span>
-            <Typewriter texts={roles} />
-          </div>
+          {/* Tagline / Role */}
+          <p className="text-xl sm:text-2xl lg:text-3xl text-muted-foreground font-medium mb-3">
+            I&apos;m a <span className="text-foreground font-bold">Software Developer</span>
+          </p>
 
           {/* Short Bio summary */}
           <p className="mt-2 text-muted-foreground text-base sm:text-lg lg:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
@@ -231,10 +182,6 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border/40 pb-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-secondary/80 border border-border/60 text-muted-foreground uppercase tracking-widest mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-foreground" />
-              Featured Work
-            </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground">
               Featured Projects
             </h2>
@@ -248,7 +195,7 @@ export default function HomePage() {
             className="text-foreground hover:bg-secondary font-semibold shrink-0 group self-start sm:self-auto"
           >
             <Link href="/projects" className="flex items-center gap-1.5">
-              <span>View All 5 Projects</span>
+              <span>View All Projects</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </Button>
@@ -269,11 +216,6 @@ export default function HomePage() {
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-3 left-3">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-background/80 backdrop-blur-md border border-border/60 text-foreground">
-                      {project.role}
-                    </span>
-                  </div>
                 </div>
 
                 <CardContent className="p-5 flex flex-col grow justify-between space-y-4">
@@ -328,10 +270,6 @@ export default function HomePage() {
       <section className="w-full space-y-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border/40 pb-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-secondary/80 border border-border/60 text-muted-foreground uppercase tracking-widest mb-3">
-              <Lightbulb className="w-3.5 h-3.5 text-foreground" />
-              Technical Stack
-            </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground">
               Core Skills &amp; Arsenal
             </h2>

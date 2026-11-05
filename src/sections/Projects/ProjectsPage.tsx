@@ -5,7 +5,6 @@ import {
   Github, 
   ExternalLink, 
   Search, 
-  CheckCircle2, 
   Download 
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -171,19 +170,6 @@ export default function ProjectsPage() {
                       decoding="async"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute top-3 left-3">
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-background/80 backdrop-blur-md border border-border/60 text-foreground shadow-xs">
-                        {project.role}
-                      </span>
-                    </div>
-                    {project.status && (
-                      <div className="absolute top-3 right-3">
-                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 backdrop-blur-md">
-                          <CheckCircle2 className="w-3 h-3" />
-                          <span>Done</span>
-                        </span>
-                      </div>
-                    )}
                   </div>
 
                   {/* Body Content */}

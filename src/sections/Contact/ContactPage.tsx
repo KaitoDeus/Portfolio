@@ -158,14 +158,7 @@ export default function ContactPage() {
           <div className="lg:col-span-5 space-y-6">
             
             {/* Status Card */}
-            <Card className="border-border/60 bg-card/60 backdrop-blur-md p-6 shadow-md space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                Active Job Seeker
-              </div>
+            <Card className="border-border/60 bg-card/60 backdrop-blur-md p-6 shadow-md space-y-2">
               <h3 className="text-xl font-bold text-foreground">
                 Open for Software Developer Roles
               </h3>
@@ -299,14 +292,15 @@ export default function ContactPage() {
                       <Sparkles className="w-3.5 h-3.5 text-foreground" />
                     </h3>
                     <p className="text-[11px] text-muted-foreground">
-                      Powered by Google Gemini 2.5 Flash
+                      Powered by Google Gemini 3.8 Flash
                     </p>
                   </div>
                 </div>
 
-                <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-secondary border border-border/60 text-muted-foreground">
-                  Online
-                </span>
+                <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span>Online</span>
+                </div>
               </div>
 
               {/* Chat Messages Body */}

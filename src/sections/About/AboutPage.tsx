@@ -83,11 +83,6 @@ export default function AboutPage() {
             </div>
 
             <div className="flex-1 text-center lg:text-left space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/80 border border-border/60 text-xs font-semibold text-foreground">
-                <Sparkles className="w-3.5 h-3.5 text-foreground" />
-                <span>Lifelong Learner &amp; Developer</span>
-              </div>
-
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-foreground tracking-tight">
                 &ldquo;Using technology to predict and build the future.&rdquo;
               </h2>
