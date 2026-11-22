@@ -14,19 +14,26 @@ The system emphasizes high code quality, strict TypeScript typing, optimized ass
 
 ## Core Capabilities
 
+### 3D Spatial Horizontal Navigation
+A Three.js WebGL spatial scene layered behind a CSS 3D perspective stage delivers smooth horizontal transitions across five landscape-oriented sections (`Home`, `About`, `Skills`, `Projects`, `Contact`) triggered by mouse wheel scrolling, keyboard arrows, touch swipes, or bottom slide controls.
+
+### Landscape Section Design & Zen Mode
+- **Widescreen-First Layouts**: Bento-grid profile overview, split terminal and skill matrix, 3-per-page paginated project gallery, and split communication hub designed to fit within desktop viewports without vertical page clutter.
+- **Full HD Ambient Layer & Zen Toggle**: Optimized 1080p looping background paired with a dedicated visibility toggle (`Eye` / `EyeOff`) that hides or restores all UI overlays and navigation.
+
 ### Interactive Terminal System
 A simulated terminal interface replicating retro-futuristic arcade operating system environments. It processes simulated diagnostic commands, renders real-time system specifications, and outlines development specializations.
 
 ### Contextual AI Assistant
-An integrated AI chat module powered by Google Gemini. The assistant is contextualized with profile, project, and background data, allowing visitors to inquire about technical capabilities, career milestones, and project implementations via natural language.
+An integrated AI chat module powered by Google Gemini with resilient model fallback. The assistant is contextualized with profile, project, and background data, allowing visitors to inquire about technical capabilities, career milestones, and project implementations via natural language.
 
 ### Verified Visitor Analytics
 A serverless analytics engine that tracks unique visits using cryptographic IP hashing and deduplication. Repeated reloads and automated requests within a 24-hour window are filtered out, preserving metric accuracy without compromising visitor privacy.
 
 ### Visual Architecture & Design
 - **Theme Synchronization**: Dual-mode (Light and Dark) architecture with persistent client-state hydration.
-- **Particle System**: Lightweight canvas-based particle dynamics responsive to cursor movement with minimal GPU and CPU overhead.
-- **Motion & Typography**: Hardware-accelerated transitions via Framer Motion paired with optimized Google Fonts delivery.
+- **Three.js 3D Graphics**: Hardware-accelerated 3D spatial particles, perspective depth grid, and wireframe polyhedra responding dynamically to camera flight and pointer parallax.
+- **Motion & Typography**: Hardware-accelerated transitions via Framer Motion paired with optimized Google Fonts delivery and viewport-adaptive typography scaling.
 
 ---
 
@@ -48,7 +55,7 @@ The codebase is structured following Clean Architecture principles, ensuring dec
 | **Core Framework** | Next.js (App Router, Server & Client Components) |
 | **Language** | TypeScript (Strict Mode) |
 | **User Interface** | React, Tailwind CSS, Radix UI Primitives, Lucide Icons |
-| **Animation & Graphics** | Framer Motion, HTML5 2D Canvas |
+| **Animation & Graphics** | Three.js (WebGL), Framer Motion, Full HD Video & Animated WebP |
 | **AI Integration** | Google Gemini API (Server Route Handler) |
 | **Data & Caching** | Upstash Redis (REST API), Structured JSON |
 | **Security Standards** | HMAC-SHA256 Token Verification, Edge Middleware Guards |

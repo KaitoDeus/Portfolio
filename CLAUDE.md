@@ -10,9 +10,9 @@ This file provides architectural context, coding standards, commands, security r
 - **Language**: TypeScript 5.9+ (Strict Mode)
 - **Styling**: Tailwind CSS v4 + `@tailwindcss/postcss` + Theme Tokens
 - **UI Components**: Radix UI primitives, Lucide React, React Icons (Si, Di, Fa)
-- **Animations**: Framer Motion 12, HTML5 Canvas 2D Particle System, CSS Marquee
+- **3D & Animations**: Three.js (WebGL), Framer Motion 12, CSS 3D Perspective Stage, Full HD Background Video
 - **Database & Cache**: Upstash Redis (`@upstash/redis`) with local JSON fallback
-- **AI Integration**: Google Gemini 3.8 Flash via Server Route Handler (`/api/chat`)
+- **AI Integration**: Google Gemini 3.8 Flash (with automatic fallback to `gemini-2.5-flash` / `gemini-flash-latest`) via Server Route Handler (`/api/chat`)
 - **Security**: HMAC-SHA256 session cookie tokens, Next.js Edge Middleware, IP Rate-limiting
 - **Architecture**: Clean Architecture (Core / Shared / Components / Sections / App)
 
@@ -55,16 +55,17 @@ src/
 │   ├── layout.tsx        # Root Layout with Font & SEO Metadata
 │   └── page.tsx          # Root Page assembling MainLayout and Sections
 ├── components/           # Reusable UI building blocks
-│   ├── common/           # Section, Pagination, ViewCounter, InteractiveParticles
-│   ├── layout/           # Header, MainLayout, Navigation
+│   ├── common/           # Section, Pagination, ViewCounter
+│   ├── layout/           # MainLayout, CosmicBackground, ThreeTransitionCanvas, Horizontal3DStage, Header
 │   └── ui/               # Badge, Button, Card, Input, Textarea, Separator
 ├── core/                 # Domain logic and data layer (Clean Architecture)
 │   ├── config/           # AI system prompt & configuration constants
 │   ├── data/             # Static portfolio data, analytics.json, security_logs.json
 │   ├── models/           # TypeScript interfaces & types (PortfolioModels.ts)
 │   └── services/         # Services (PortfolioService Singleton, ChatService)
-├── sections/             # Page sections (Home, About, Skills, Projects, Contact)
-├── shared/               # Global utilities and custom hooks
+├── sections/             # Landscape-oriented horizontal sections (Home, About, Skills, Projects, Contact)
+├── shared/               # Global utilities, context, and custom hooks
+│   ├── context/          # Portfolio3DContext (activeIndex, history sync, Zen mode UI toggle)
 │   ├── hooks/            # Custom hooks (useProjects, usePagination)
 │   └── lib/              # Utility functions (analytics.ts, auth.ts, utils.ts)
 └── assets/               # Static images, logos, avatars, certs
@@ -95,7 +96,12 @@ src/
 - **Rate-Limiting**: IP-based rate limiting in `src/shared/lib/auth.ts` limits failed attempts to 5, then temporarily locks out the IP for 15 minutes.
 - **Never expose sensitive keys**: Gemini API keys, Admin passwords, and Redis tokens must never be exposed to client-side bundles or committed to git.
 
-### Styling & Design System
+### Styling, 3D Layering & Design System
+- **Root Z-Index Layer Order** in `MainLayout.tsx`:
+  - `CosmicBackground` (`z-0`): 1080p looping MP4 + animated WebP/GIF fallback.
+  - `ThreeTransitionCanvas` (`z-10`): WebGL particles, depth grid, and 3D wireframe landmarks strictly behind all UI cards.
+  - `<main>` (`z-20`): Horizontal 3D perspective stage (`Horizontal3DStage.tsx`) and landscape sections.
+  - Floating Controls (`z-40`/`z-50`): Top-right Zen Eye toggle + Theme Switcher, Desktop bottom slide rail, Mobile bottom nav.
 - Use semantic Tailwind tokens defined in `src/app/globals.css` (`bg-background`, `text-foreground`, `bg-card`, `border-border`, `text-muted-foreground`).
 - Support both Light and Dark themes seamlessly.
 - Use `cn()` helper from `@/shared/lib/utils` for conditional class joining with `clsx` and `tailwind-merge`.
