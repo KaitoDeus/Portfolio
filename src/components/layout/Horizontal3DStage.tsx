@@ -87,7 +87,7 @@ function canAncestorScroll(
 }
 
 export default function Horizontal3DStage() {
-  const { activeIndex, direction, navigateTo, nextTab, prevTab } =
+  const { activeIndex, direction, isUiHidden, navigateTo, nextTab, prevTab } =
     usePortfolio3D();
 
   const stageRef = useRef<HTMLDivElement>(null);
@@ -265,7 +265,12 @@ export default function Horizontal3DStage() {
       </div>
 
       {/* Desktop Bottom Horizontal Progress Rail */}
-      <div className="hidden lg:flex fixed bottom-7 left-1/2 -translate-x-1/2 z-40 items-center gap-3 px-4 py-2 rounded-full bg-card/80 backdrop-blur-2xl border border-border/50 shadow-2xl scale-110">
+      <div
+        className={cn(
+          'hidden lg:flex fixed bottom-7 left-1/2 -translate-x-1/2 z-40 items-center gap-3 px-4 py-2 rounded-full bg-card/80 backdrop-blur-2xl border border-border/50 shadow-2xl scale-110 transition-all duration-500',
+          isUiHidden ? 'opacity-0 pointer-events-none translate-y-4' : 'opacity-100 translate-y-0'
+        )}
+      >
         <button
           type="button"
           onClick={prevTab}

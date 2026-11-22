@@ -3,7 +3,7 @@
 import { useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, User, Lightbulb, FolderKanban, Mail, Sun, Moon } from 'lucide-react';
+import { Home, User, Lightbulb, FolderKanban, Mail, Sun, Moon, Eye, EyeOff } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { usePortfolio3D } from '@/shared/context/Portfolio3DContext';
 
@@ -35,7 +35,7 @@ const getMountedServerSnapshot = () => false;
 
 export default function Header() {
   const pathname = usePathname();
-  const { activeIndex, isDeckRoute, navigateTo } = usePortfolio3D();
+  const { activeIndex, isDeckRoute, isUiHidden, toggleUiHidden, navigateTo } = usePortfolio3D();
   const mounted = useSyncExternalStore(subscribeMounted, getMountedSnapshot, getMountedServerSnapshot);
   const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, getThemeServerSnapshot);
 
@@ -69,11 +69,35 @@ export default function Header() {
 
   return (
     <>
-      {/* 1. TOP-RIGHT THEME SWITCHER */}
-      <div className="fixed top-4 right-4 sm:top-6 sm:right-8 z-40">
+      {/* 1. TOP-RIGHT CONTROLS: ZEN EYE TOGGLE + THEME SWITCHER */}
+      <div
+        className={cn(
+          'fixed top-4 right-4 sm:top-6 sm:right-8 z-50 flex items-center gap-2.5 transition-opacity duration-300',
+          isUiHidden ? 'opacity-45 hover:opacity-100' : 'opacity-100'
+        )}
+      >
+        {/* Hide / Show All Content Button */}
         <button
+          type="button"
+          onClick={toggleUiHidden}
+          aria-label={isUiHidden ? 'Show page content' : 'Hide page content'}
+          aria-pressed={isUiHidden}
+          title={isUiHidden ? 'Show interface' : 'Hide interface'}
+          className="p-3.5 rounded-full bg-card/80 backdrop-blur-2xl border border-border/40 text-foreground hover:bg-foreground/10 hover:scale-105 transition-all duration-300 shadow-xl flex items-center justify-center cursor-pointer"
+        >
+          {isUiHidden ? (
+            <EyeOff className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/85 transition-transform duration-300" />
+          ) : (
+            <Eye className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/85 transition-transform duration-300" />
+          )}
+        </button>
+
+        {/* Light / Dark Mode Switcher */}
+        <button
+          type="button"
           onClick={toggleTheme}
           aria-label="Toggle Theme"
+          title="Toggle Theme"
           className="p-3.5 rounded-full bg-card/80 backdrop-blur-2xl border border-border/40 text-foreground hover:bg-foreground/10 hover:scale-105 transition-all duration-300 shadow-xl flex items-center justify-center cursor-pointer"
         >
           {mounted && theme === 'dark' ? (
@@ -87,7 +111,10 @@ export default function Header() {
       {/* 2. MOBILE & TABLET BOTTOM NAV (Hidden on lg screens) */}
       <nav
         aria-label="Mobile Navigation"
-        className="fixed z-40 left-1/2 -translate-x-1/2 w-[92%] max-w-md lg:hidden bottom-6"
+        className={cn(
+          'fixed z-40 left-1/2 -translate-x-1/2 w-[92%] max-w-md lg:hidden bottom-6 transition-all duration-500',
+          isUiHidden ? 'opacity-0 pointer-events-none translate-y-4' : 'opacity-100 translate-y-0'
+        )}
       >
         <div className="bg-card/90 backdrop-blur-3xl border border-border/40 p-1.5 rounded-[2rem] shadow-[0_10px_30px_rgba(0,0,0,0.2)] flex items-center justify-around">
           {navItems.map((item, index) => {

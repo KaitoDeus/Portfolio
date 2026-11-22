@@ -27,6 +27,8 @@ interface Portfolio3DContextValue {
   direction: 1 | -1;
   isTransitioning: boolean;
   isDeckRoute: boolean;
+  isUiHidden: boolean;
+  toggleUiHidden: () => void;
   navigateTo: (hrefOrIndex: string | number) => void;
   nextTab: () => void;
   prevTab: () => void;
@@ -46,6 +48,11 @@ export function Portfolio3DProvider({ children }: { children: React.ReactNode })
   const [activeIndex, setActiveIndex] = useState<number>(() => (routeIndex >= 0 ? routeIndex : 0));
   const [direction, setDirection] = useState<1 | -1>(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isUiHidden, setIsUiHidden] = useState(false);
+
+  const toggleUiHidden = useCallback(() => {
+    setIsUiHidden((prev) => !prev);
+  }, []);
 
   const transitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const activeIndexRef = useRef(activeIndex);
@@ -153,6 +160,8 @@ export function Portfolio3DProvider({ children }: { children: React.ReactNode })
         direction,
         isTransitioning,
         isDeckRoute,
+        isUiHidden,
+        toggleUiHidden,
         navigateTo,
         nextTab,
         prevTab,
