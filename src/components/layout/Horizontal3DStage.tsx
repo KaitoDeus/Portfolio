@@ -293,12 +293,7 @@ export default function Horizontal3DStage() {
                     : 'w-2.5 h-2.5 bg-muted-foreground/35 hover:bg-foreground/65 hover:scale-125'
                 )}
               >
-                {isActive && (
-                  <>
-                    <span className="opacity-65 font-mono">0{idx + 1}</span>
-                    <span>{tab.label}</span>
-                  </>
-                )}
+                {isActive && <span>{tab.label}</span>}
               </button>
             );
           })}
