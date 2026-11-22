@@ -4,6 +4,7 @@ import { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 import Header from './Header';
 import CosmicBackground from './CosmicBackground';
+import ThreeTransitionCanvas from './ThreeTransitionCanvas';
 import Horizontal3DStage from './Horizontal3DStage';
 import { Portfolio3DProvider, usePortfolio3D } from '@/shared/context/Portfolio3DContext';
 
@@ -12,13 +13,20 @@ interface MainLayoutProps {
 }
 
 function LayoutShell({ children }: MainLayoutProps) {
-  const { isDeckRoute } = usePortfolio3D();
+  const { activeIndex, direction, isTransitioning, isDeckRoute } = usePortfolio3D();
 
   return (
     <div className="flex flex-col h-screen w-screen relative overflow-hidden bg-background text-foreground transition-colors duration-300">
       <CosmicBackground />
+      {isDeckRoute && (
+        <ThreeTransitionCanvas
+          activeIndex={activeIndex}
+          direction={direction}
+          isTransitioning={isTransitioning}
+        />
+      )}
       <Header />
-      <main className="grow relative z-10 flex flex-col overflow-hidden h-full">
+      <main className="grow relative z-20 flex flex-col overflow-hidden h-full">
         {isDeckRoute ? <Horizontal3DStage /> : <div className="h-full overflow-y-auto pt-20 lg:pt-28 pb-16">{children}</div>}
       </main>
     </div>

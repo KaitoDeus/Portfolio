@@ -115,7 +115,7 @@ export default function ThreeTransitionCanvas({
           color: idx % 2 === 0 ? palette.wireColorPrimary : palette.wireColorSecondary,
           wireframe: true,
           transparent: true,
-          opacity: getIsDark() ? 0.22 : 0.15,
+          opacity: getIsDark() ? 0.18 : 0.12,
         });
         const mesh = new THREE.Mesh(geom, mat);
         // Offset landmarks cleanly behind each tab plane
@@ -149,7 +149,7 @@ export default function ThreeTransitionCanvas({
         particleMaterial.opacity = isDark ? 0.55 : 0.38;
         landmarkMaterials.forEach((mat, idx) => {
           mat.color.setHex(idx % 2 === 0 ? palette.wireColorPrimary : palette.wireColorSecondary);
-          mat.opacity = isDark ? 0.22 : 0.15;
+          mat.opacity = isDark ? 0.18 : 0.12;
         });
         gridMaterials.forEach((m) => {
           m.opacity = isDark ? 0.12 : 0.08;
@@ -257,7 +257,7 @@ export default function ThreeTransitionCanvas({
     <div
       ref={containerRef}
       aria-hidden="true"
-      className="fixed inset-0 w-full h-full pointer-events-none z-[1] overflow-hidden"
+      className="fixed inset-0 w-full h-full pointer-events-none z-10 overflow-hidden"
     />
   );
 }

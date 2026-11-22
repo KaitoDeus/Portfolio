@@ -4,7 +4,6 @@ import React, { useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { usePortfolio3D, PORTFOLIO_TABS } from '@/shared/context/Portfolio3DContext';
-import ThreeTransitionCanvas from './ThreeTransitionCanvas';
 import HomePage from '@/sections/Home/HomePage';
 import AboutPage from '@/sections/About/AboutPage';
 import SkillsPage from '@/sections/Skills/SkillsPage';
@@ -88,7 +87,7 @@ function canAncestorScroll(
 }
 
 export default function Horizontal3DStage() {
-  const { activeIndex, direction, isTransitioning, navigateTo, nextTab, prevTab } =
+  const { activeIndex, direction, navigateTo, nextTab, prevTab } =
     usePortfolio3D();
 
   const stageRef = useRef<HTMLDivElement>(null);
@@ -239,13 +238,6 @@ export default function Horizontal3DStage() {
 
   return (
     <>
-      {/* Three.js 3D WebGL Spatial Scene */}
-      <ThreeTransitionCanvas
-        activeIndex={activeIndex}
-        direction={direction}
-        isTransitioning={isTransitioning}
-      />
-
       {/* 3D Perspective Stage */}
       <div
         ref={stageRef}
