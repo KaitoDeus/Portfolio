@@ -74,12 +74,12 @@ export default function Header() {
         <button
           onClick={toggleTheme}
           aria-label="Toggle Theme"
-          className="p-3 rounded-full bg-card/80 backdrop-blur-2xl border border-border/40 text-foreground hover:bg-foreground/10 hover:scale-105 transition-all duration-300 shadow-xl flex items-center justify-center cursor-pointer"
+          className="p-3.5 rounded-full bg-card/80 backdrop-blur-2xl border border-border/40 text-foreground hover:bg-foreground/10 hover:scale-105 transition-all duration-300 shadow-xl flex items-center justify-center cursor-pointer"
         >
           {mounted && theme === 'dark' ? (
-            <Sun className="w-5 h-5 text-yellow-400 transition-transform duration-300 hover:rotate-45" />
+            <Sun className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400 transition-transform duration-300 hover:rotate-45" />
           ) : (
-            <Moon className="w-5 h-5 text-indigo-600 transition-transform duration-300 hover:-rotate-12" />
+            <Moon className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600 transition-transform duration-300 hover:-rotate-12" />
           )}
         </button>
       </div>

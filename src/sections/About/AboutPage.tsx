@@ -62,7 +62,7 @@ export default function AboutPage() {
   };
 
   return (
-    <section id="about" className="w-full max-w-[1380px] mx-auto flex flex-col gap-5 relative z-10">
+    <section id="about" className="w-full max-w-[1520px] mx-auto flex flex-col gap-5 relative z-10">
       {/* Compact Horizontal Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 px-1">
         <div>
@@ -98,7 +98,7 @@ export default function AboutPage() {
       </div>
 
       {/* Horizontal 3-Column Widescreen Bento Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:h-[calc(100vh-14.5rem)] lg:max-h-[580px]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:h-[calc(100vh-13rem)] lg:max-h-[700px]">
         {/* Column 1: Profile, Bio, Personal Info & Hobbies */}
         <Card className="lg:col-span-4 border-border/60 bg-card/65 backdrop-blur-xl shadow-lg flex flex-col overflow-hidden py-0 gap-0">
           <div className="p-5 overflow-y-auto space-y-4 grow">

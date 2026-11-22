@@ -138,7 +138,7 @@ export default function SkillsPage() {
   }, [allSkills]);
 
   return (
-    <section id="skills" className="w-full max-w-[1380px] mx-auto flex flex-col gap-5 relative z-10">
+    <section id="skills" className="w-full max-w-[1520px] mx-auto flex flex-col gap-5 relative z-10">
       {/* Compact Horizontal Header + Search */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 px-1">
         <div>
@@ -163,7 +163,7 @@ export default function SkillsPage() {
       </div>
 
       {/* Horizontal Split Workbench */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:h-[calc(100vh-14.5rem)] lg:max-h-[560px]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:h-[calc(100vh-13rem)] lg:max-h-[680px]">
         {/* Left Sidebar: Terminal + Category Filters */}
         <div className="lg:col-span-4 flex flex-col gap-4 lg:h-full">
           {/* Interactive Terminal */}

@@ -138,7 +138,7 @@ export default function ContactPage() {
   const phone = personalInfo.phone || '0902316248';
 
   return (
-    <section id="contact" className="w-full max-w-[1380px] mx-auto flex flex-col gap-5 relative z-10">
+    <section id="contact" className="w-full max-w-[1520px] mx-auto flex flex-col gap-5 relative z-10">
       {/* Compact Horizontal Header */}
       <div className="px-1">
         <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground">
@@ -149,7 +149,7 @@ export default function ContactPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch lg:h-[calc(100vh-14.5rem)] lg:max-h-[540px]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch lg:h-[calc(100vh-13rem)] lg:max-h-[650px]">
         {/* Left Column: Direct Info & Social Cards (5 cols) */}
         <div className="lg:col-span-5 flex flex-col justify-between gap-4">
           {/* Direct Channels */}

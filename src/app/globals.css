@@ -90,6 +90,18 @@ html, body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+@media (min-width: 1440px) and (min-height: 820px) {
+  html {
+    font-size: 17.5px;
+  }
+}
+
+@media (min-width: 1760px) and (min-height: 920px) {
+  html {
+    font-size: 18.5px;
+  }
+}
+
 button {
   cursor: pointer;
 }

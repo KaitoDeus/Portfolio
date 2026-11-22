@@ -69,7 +69,7 @@ export default function ProjectsPage() {
   };
 
   return (
-    <section id="projects" className="w-full max-w-[1400px] mx-auto flex flex-col gap-5 relative z-10">
+    <section id="projects" className="w-full max-w-[1540px] mx-auto flex flex-col gap-5 relative z-10">
       {/* Compact Top Header + Filter Toolbar */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 px-1">
         <div className="flex items-center justify-between gap-4">
@@ -193,11 +193,11 @@ export default function ProjectsPage() {
             return (
               <Card
                 key={project.id}
-                className="p-0 gap-0 overflow-hidden border-border/60 bg-card/70 backdrop-blur-xl text-card-foreground transition-all duration-300 hover:border-foreground/50 hover:shadow-2xl flex flex-col group shrink-0 snap-start w-[82vw] sm:w-[360px] lg:w-[390px] h-[420px] lg:h-[445px] rounded-2xl"
+                className="p-0 gap-0 overflow-hidden border-border/60 bg-card/70 backdrop-blur-xl text-card-foreground transition-all duration-300 hover:border-foreground/50 hover:shadow-2xl flex flex-col group shrink-0 snap-start w-[82vw] sm:w-[370px] lg:w-[420px] h-[440px] lg:h-[485px] rounded-2xl"
               >
                 {/* Thumbnail */}
                 <div
-                  className={`overflow-hidden bg-secondary/30 relative h-48 shrink-0 border-b border-border/40 flex items-center justify-center ${
+                  className={`overflow-hidden bg-secondary/30 relative h-48 lg:h-56 shrink-0 border-b border-border/40 flex items-center justify-center ${
                     isHabitFlow ? 'p-2' : ''
                   }`}
                 >
