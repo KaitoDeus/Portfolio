@@ -69,50 +69,20 @@ export default function Header() {
 
   return (
     <>
-      {/* 1. DESKTOP HEADER (Visible only on lg screens) */}
-      <header className="fixed top-0 left-0 right-0 z-40 px-10 py-6 hidden lg:flex items-center justify-center pointer-events-none">
-        <div className="flex items-center gap-3 pointer-events-auto">
-          {/* Center: Nav Pill */}
-          <nav
-            aria-label="Main Navigation"
-            className="flex items-center bg-card/80 backdrop-blur-2xl border border-border/40 p-1.5 rounded-full shadow-xl"
-          >
-            {navItems.map((item, index) => {
-              const active = isItemActive(item.href, index);
-              return (
-                <Link
-                  key={item.id}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  aria-label={item.label}
-                  aria-current={active ? 'page' : undefined}
-                  className={cn(
-                    'px-6 py-2 rounded-full text-sm font-medium transition-all duration-300',
-                    active
-                      ? 'bg-foreground text-background font-semibold shadow-md scale-105'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-foreground/5'
-                  )}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Theme Switcher Button (Desktop) */}
-          <button
-            onClick={toggleTheme}
-            aria-label="Toggle Theme"
-            className="p-3 rounded-full bg-card/80 backdrop-blur-2xl border border-border/40 text-foreground hover:bg-foreground/10 transition-all duration-300 shadow-xl flex items-center justify-center cursor-pointer"
-          >
-            {mounted && theme === 'dark' ? (
-              <Sun className="w-5 h-5 text-yellow-400 transition-transform duration-300 hover:rotate-45" />
-            ) : (
-              <Moon className="w-5 h-5 text-indigo-600 transition-transform duration-300 hover:-rotate-12" />
-            )}
-          </button>
-        </div>
-      </header>
+      {/* 1. TOP-RIGHT THEME SWITCHER */}
+      <div className="fixed top-4 right-4 sm:top-6 sm:right-8 z-40">
+        <button
+          onClick={toggleTheme}
+          aria-label="Toggle Theme"
+          className="p-3 rounded-full bg-card/80 backdrop-blur-2xl border border-border/40 text-foreground hover:bg-foreground/10 hover:scale-105 transition-all duration-300 shadow-xl flex items-center justify-center cursor-pointer"
+        >
+          {mounted && theme === 'dark' ? (
+            <Sun className="w-5 h-5 text-yellow-400 transition-transform duration-300 hover:rotate-45" />
+          ) : (
+            <Moon className="w-5 h-5 text-indigo-600 transition-transform duration-300 hover:-rotate-12" />
+          )}
+        </button>
+      </div>
 
       {/* 2. MOBILE & TABLET BOTTOM NAV (Hidden on lg screens) */}
       <nav
@@ -148,19 +118,6 @@ export default function Header() {
               </Link>
             );
           })}
-
-          {/* Theme Switcher Button (Mobile) */}
-          <button
-            onClick={toggleTheme}
-            aria-label="Toggle Theme"
-            className="p-2.5 rounded-full text-foreground hover:bg-foreground/10 transition-all flex items-center justify-center cursor-pointer"
-          >
-            {mounted && theme === 'dark' ? (
-              <Sun className="w-5 h-5 text-yellow-400" />
-            ) : (
-              <Moon className="w-5 h-5 text-indigo-600" />
-            )}
-          </button>
         </div>
       </nav>
     </>

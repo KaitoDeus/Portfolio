@@ -256,7 +256,7 @@ export default function Horizontal3DStage() {
               duration: 0.68,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="w-full h-full overflow-y-auto lg:overflow-hidden flex flex-col justify-start lg:justify-center px-4 sm:px-6 lg:px-10 pt-20 pb-24 lg:pt-24 lg:pb-16 will-change-transform"
+            className="w-full h-full overflow-y-auto lg:overflow-hidden flex flex-col justify-start lg:justify-center px-4 sm:px-6 lg:px-10 pt-16 pb-24 lg:pt-12 lg:pb-24 will-change-transform"
             style={{ transformStyle: 'preserve-3d', backfaceVisibility: 'hidden' }}
           >
             {renderTabContent(activeIndex)}
@@ -265,18 +265,18 @@ export default function Horizontal3DStage() {
       </div>
 
       {/* Desktop Bottom Horizontal Progress Rail */}
-      <div className="hidden lg:flex fixed bottom-5 left-1/2 -translate-x-1/2 z-40 items-center gap-2 px-3 py-1.5 rounded-full bg-card/75 backdrop-blur-2xl border border-border/40 shadow-xl">
+      <div className="hidden lg:flex fixed bottom-6 left-1/2 -translate-x-1/2 z-40 items-center gap-3 px-4 py-2 rounded-full bg-card/80 backdrop-blur-2xl border border-border/50 shadow-2xl scale-105">
         <button
           type="button"
           onClick={prevTab}
           disabled={activeIndex === 0}
           aria-label="Previous section"
-          className="p-1.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-foreground/10 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
+          className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-foreground/10 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="w-5 h-5" />
         </button>
 
-        <div className="flex items-center gap-1.5 px-1">
+        <div className="flex items-center gap-2.5 px-1.5">
           {PORTFOLIO_TABS.map((tab, idx) => {
             const isActive = idx === activeIndex;
             return (
@@ -284,12 +284,13 @@ export default function Horizontal3DStage() {
                 key={tab.id}
                 type="button"
                 onClick={() => navigateTo(idx)}
+                title={tab.label}
                 aria-label={`Go to ${tab.label}`}
                 className={cn(
-                  'flex items-center gap-1.5 rounded-full transition-all duration-300 cursor-pointer',
+                  'flex items-center gap-2 rounded-full transition-all duration-300 cursor-pointer',
                   isActive
-                    ? 'px-3 py-1 bg-foreground text-background text-[11px] font-bold shadow-xs'
-                    : 'w-2 h-2 bg-muted-foreground/35 hover:bg-foreground/60'
+                    ? 'px-4 py-1.5 bg-foreground text-background text-xs sm:text-sm font-bold shadow-sm'
+                    : 'w-2.5 h-2.5 bg-muted-foreground/35 hover:bg-foreground/65 hover:scale-125'
                 )}
               >
                 {isActive && (
@@ -308,9 +309,9 @@ export default function Horizontal3DStage() {
           onClick={nextTab}
           disabled={activeIndex === PORTFOLIO_TABS.length - 1}
           aria-label="Next section"
-          className="p-1.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-foreground/10 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
+          className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-foreground/10 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
         >
-          <ChevronRight className="w-4 h-4" />
+          <ChevronRight className="w-5 h-5" />
         </button>
       </div>
     </>
