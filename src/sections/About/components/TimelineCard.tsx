@@ -58,6 +58,85 @@ interface ITimelineCardProps {
   icon: React.ElementType;
   items: ITimelineItem[];
   colorClass: string;
+  embedded?: boolean;
+}
+
+export function TimelineItemList({
+  icon: Icon,
+  items,
+}: {
+  icon: React.ElementType;
+  items: ITimelineItem[];
+}) {
+  return (
+    <div className="space-y-6">
+      {items.map((item, index) => {
+        const logoSrc = getImageSrc(item.logo);
+
+        return (
+          <div key={index} className="flex gap-3.5 group">
+            <div className="shrink-0">
+              <div
+                className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors overflow-hidden ${
+                  item.logo
+                    ? 'bg-transparent'
+                    : 'bg-secondary/40 border border-border/40 group-hover:border-foreground/40'
+                }`}
+              >
+                {logoSrc ? (
+                  <img
+                    src={logoSrc}
+                    alt={item.title || ''}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-contain"
+                  />
+                ) : (
+                  <Icon className="w-6 h-6 text-muted-foreground group-hover:text-foreground transition-colors" />
+                )}
+              </div>
+            </div>
+
+            <div className="grow min-w-0 space-y-1">
+              <h4 className="text-sm sm:text-base font-bold group-hover:text-foreground transition-colors leading-tight">
+                {item.title}
+              </h4>
+
+              {item.subtitle && (
+                <p className="text-muted-foreground text-xs font-medium">
+                  {item.subtitle}
+                </p>
+              )}
+
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span className="font-semibold">{item.year}</span>
+              </div>
+
+              {item.extra && (
+                <div className="text-xs font-medium text-foreground/85 whitespace-pre-wrap leading-relaxed pt-1">
+                  {renderTextWithLinks(item.extra)}
+                </div>
+              )}
+
+              {item.details && item.details.length > 0 && (
+                <ul className="mt-2 space-y-1">
+                  {item.details.map((detail: string, dIdx: number) => (
+                    <li
+                      key={dIdx}
+                      className="text-xs text-muted-foreground flex items-center gap-2"
+                    >
+                      <div className="w-1 h-1 rounded-full bg-foreground/50 shrink-0" />
+                      {detail}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export function TimelineCard({
@@ -65,7 +144,12 @@ export function TimelineCard({
   icon: Icon,
   items,
   colorClass,
+  embedded = false,
 }: ITimelineCardProps) {
+  if (embedded) {
+    return <TimelineItemList icon={Icon} items={items} />;
+  }
+
   return (
     <div>
       <Card className="h-full border-border/60 bg-card/60 backdrop-blur-md">
@@ -75,72 +159,8 @@ export function TimelineCard({
             <span>{title}</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-8">
-          {items.map((item, index) => {
-            const logoSrc = getImageSrc(item.logo);
-
-            return (
-              <div key={index} className="flex gap-4 group">
-                <div className="shrink-0">
-                  <div
-                    className={`w-16 h-16 rounded-xl flex items-center justify-center transition-colors overflow-hidden ${
-                      item.logo
-                        ? 'bg-transparent'
-                        : 'bg-secondary/40 border border-border/40 group-hover:border-foreground/40'
-                    }`}
-                  >
-                    {logoSrc ? (
-                      <img
-                        src={logoSrc}
-                        alt={item.title || ''}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-contain"
-                      />
-                    ) : (
-                      <Icon className="w-8 h-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                    )}
-                  </div>
-                </div>
-
-                <div className="grow space-y-1">
-                  <h4 className="text-lg font-bold group-hover:text-foreground transition-colors leading-tight">
-                    {item.title}
-                  </h4>
-
-                  {item.subtitle && (
-                    <p className="text-muted-foreground text-sm font-medium">
-                      {item.subtitle}
-                    </p>
-                  )}
-
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <span className="font-semibold">{item.year}</span>
-                  </div>
-
-                  {item.extra && (
-                    <div className="text-sm font-medium text-foreground/90 whitespace-pre-wrap">
-                      {renderTextWithLinks(item.extra)}
-                    </div>
-                  )}
-
-                  {item.details && item.details.length > 0 && (
-                    <ul className="mt-3 space-y-1">
-                      {item.details.map((detail: string, dIdx: number) => (
-                        <li
-                          key={dIdx}
-                          className="text-sm text-muted-foreground flex items-center gap-2"
-                        >
-                          <div className="w-1 h-1 rounded-full bg-foreground/50 shrink-0" />
-                          {detail}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+        <CardContent>
+          <TimelineItemList icon={Icon} items={items} />
         </CardContent>
       </Card>
     </div>

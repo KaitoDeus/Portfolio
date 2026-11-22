@@ -16,8 +16,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { portfolioService } from '@/core/services/PortfolioService';
-import Section from '@/components/common/Section';
-import PageHeader from '@/components/common/PageHeader';
 import { chatService, IChatHistory } from '@/core/services/ChatService';
 import modelAvatar from '@/assets/img/avt/model.webp';
 import { getImageSrc } from '@/shared/lib/utils';
@@ -140,19 +138,22 @@ export default function ContactPage() {
   const phone = personalInfo.phone || '0902316248';
 
   return (
-    <Section id="contact">
-      <div className="max-w-7xl mx-auto space-y-12">
-        
-        {/* Page Header */}
-        <PageHeader title="Contact" />
+    <section id="contact" className="w-full max-w-[1380px] mx-auto flex flex-col gap-5 relative z-10">
+      {/* Compact Horizontal Header */}
+      <div className="px-1">
+        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground">
+          Contact
+        </h1>
+        <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
+          Direct channels or live Q&amp;A with my AI portfolio assistant.
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          
-          {/* Left Column: Direct Info & Social Cards (5 cols) */}
-          <div className="lg:col-span-5 space-y-6">
-            
-            {/* Direct Channels */}
-            <div className="space-y-3">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch lg:h-[calc(100vh-14.5rem)] lg:max-h-[540px]">
+        {/* Left Column: Direct Info & Social Cards (5 cols) */}
+        <div className="lg:col-span-5 flex flex-col justify-between gap-4">
+          {/* Direct Channels */}
+          <div className="space-y-3">
               
               {/* Email */}
               <div className="flex items-center justify-between p-4 rounded-2xl bg-card/60 border border-border/60 backdrop-blur-md hover:border-foreground/30 transition-all">
@@ -256,8 +257,8 @@ export default function ContactPage() {
           </div>
 
           {/* Right Column: AI Chat Assistant (7 cols) */}
-          <div className="lg:col-span-7">
-            <Card className="border-border/60 bg-card/70 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden flex flex-col h-[580px]">
+          <div className="lg:col-span-7 h-[460px] lg:h-full min-h-0">
+            <Card className="border-border/60 bg-card/70 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden flex flex-col h-full py-0 gap-0">
               {/* Chat Messages Body */}
               <div className="p-4 sm:p-6 overflow-y-auto grow space-y-4">
                 {messages.length === 0 ? (
@@ -339,10 +340,7 @@ export default function ContactPage() {
 
             </Card>
           </div>
-
-        </div>
-
       </div>
-    </Section>
+    </section>
   );
 }

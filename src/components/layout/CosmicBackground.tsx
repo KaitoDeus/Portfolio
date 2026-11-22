@@ -36,7 +36,7 @@ export default function CosmicBackground() {
         />
       </picture>
 
-      {/* 2. Looping 4K HTML5 Video Layer */}
+      {/* 2. Looping Full HD (1080p) HTML5 Video Layer */}
       <video
         ref={videoRef}
         autoPlay

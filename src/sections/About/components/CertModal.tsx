@@ -39,6 +39,7 @@ export function CertModal({ selectedCert, onClose }: ICertModalProps) {
     <AnimatePresence>
       {selectedCert && (
         <motion.div
+          data-cert-modal="true"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

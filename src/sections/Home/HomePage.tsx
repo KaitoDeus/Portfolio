@@ -1,27 +1,35 @@
 'use client';
 
 import Link from 'next/link';
-import { 
-  ArrowRight, 
-  FolderKanban, 
-  User, 
-  Mail 
+import {
+  ArrowRight,
+  FolderKanban,
+  User,
+  Mail,
+  MoveRight,
 } from 'lucide-react';
 import { portfolioService } from '@/core/services/PortfolioService';
 import { Button } from '@/components/ui/button';
 import ViewCounter from '@/components/common/ViewCounter';
+import { usePortfolio3D } from '@/shared/context/Portfolio3DContext';
 
 export default function HomePage() {
   const data = portfolioService.getRawData();
   const { name } = data;
+  const { navigateTo } = usePortfolio3D();
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    navigateTo(href);
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-14rem)] sm:min-h-[calc(100vh-16rem)] px-4 sm:px-6 relative text-center">
+    <div className="flex flex-col items-center justify-center w-full h-full min-h-[calc(100vh-12rem)] px-4 sm:px-6 relative text-center">
       {/* Subtle Ambient Radial Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[620px] h-[340px] sm:h-[460px] bg-foreground/[0.03] dark:bg-foreground/[0.04] rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-4xl mx-auto flex flex-col items-center relative z-10 space-y-6 sm:space-y-8 my-auto">
-        
         {/* Main Typography Headline */}
         <div className="space-y-3 sm:space-y-4">
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-tight sm:leading-none">
@@ -42,7 +50,11 @@ export default function HomePage() {
             size="lg"
             className="bg-foreground text-background hover:bg-foreground/80 font-bold text-base py-6 px-8 rounded-full shadow-xl hover:scale-105 transition-all"
           >
-            <Link href="/projects" className="flex items-center gap-2">
+            <Link
+              href="/projects"
+              onClick={(e) => handleLinkClick(e, '/projects')}
+              className="flex items-center gap-2"
+            >
               <FolderKanban className="w-5 h-5" />
               <span>Explore Projects</span>
               <ArrowRight className="w-4 h-4" />
@@ -55,7 +67,11 @@ export default function HomePage() {
             size="lg"
             className="font-bold text-base py-6 px-8 rounded-full border-border/70 hover:bg-foreground/5 hover:border-foreground/40 transition-all"
           >
-            <Link href="/about" className="flex items-center gap-2">
+            <Link
+              href="/about"
+              onClick={(e) => handleLinkClick(e, '/about')}
+              className="flex items-center gap-2"
+            >
               <User className="w-5 h-5" />
               <span>About Me</span>
             </Link>
@@ -67,7 +83,11 @@ export default function HomePage() {
             size="lg"
             className="font-bold text-base py-6 px-8 rounded-full bg-secondary/80 hover:bg-secondary transition-all"
           >
-            <Link href="/contact" className="flex items-center gap-2">
+            <Link
+              href="/contact"
+              onClick={(e) => handleLinkClick(e, '/contact')}
+              className="flex items-center gap-2"
+            >
               <Mail className="w-5 h-5" />
               <span>Get in Touch</span>
             </Link>
@@ -75,10 +95,18 @@ export default function HomePage() {
         </div>
 
         {/* Unique Visitor View Counter */}
-        <div className="pt-2 sm:pt-3 flex justify-center">
+        <div className="pt-2 sm:pt-3 flex flex-col items-center gap-3">
           <ViewCounter />
-        </div>
 
+          <button
+            type="button"
+            onClick={() => navigateTo('/about')}
+            className="hidden lg:inline-flex items-center gap-2 text-xs text-muted-foreground/80 hover:text-foreground transition-colors pt-1 cursor-pointer group"
+          >
+            <span>Scroll to glide across sections</span>
+            <MoveRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+          </button>
+        </div>
       </div>
     </div>
   );

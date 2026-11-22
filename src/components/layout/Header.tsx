@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, User, Lightbulb, FolderKanban, Mail, Sun, Moon } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
+import { usePortfolio3D } from '@/shared/context/Portfolio3DContext';
 
 const navItems = [
   { id: 'home', label: 'Home', icon: Home, href: '/' },
@@ -34,6 +35,7 @@ const getMountedServerSnapshot = () => false;
 
 export default function Header() {
   const pathname = usePathname();
+  const { activeIndex, isDeckRoute, navigateTo } = usePortfolio3D();
   const mounted = useSyncExternalStore(subscribeMounted, getMountedSnapshot, getMountedServerSnapshot);
   const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, getThemeServerSnapshot);
 
@@ -42,11 +44,20 @@ export default function Header() {
     return null;
   }
 
-  const isItemActive = (href: string) => {
+  const isItemActive = (href: string, index: number) => {
+    if (isDeckRoute) {
+      return activeIndex === index;
+    }
     if (href === '/') {
       return pathname === '/';
     }
     return pathname === href || pathname?.startsWith(href + '/');
+  };
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    navigateTo(href);
   };
 
   const toggleTheme = () => {
@@ -66,12 +77,13 @@ export default function Header() {
             aria-label="Main Navigation"
             className="flex items-center bg-card/80 backdrop-blur-2xl border border-border/40 p-1.5 rounded-full shadow-xl"
           >
-            {navItems.map((item) => {
-              const active = isItemActive(item.href);
+            {navItems.map((item, index) => {
+              const active = isItemActive(item.href, index);
               return (
                 <Link
                   key={item.id}
                   href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   aria-label={item.label}
                   aria-current={active ? 'page' : undefined}
                   className={cn(
@@ -108,13 +120,14 @@ export default function Header() {
         className="fixed z-40 left-1/2 -translate-x-1/2 w-[92%] max-w-md lg:hidden bottom-6"
       >
         <div className="bg-card/90 backdrop-blur-3xl border border-border/40 p-1.5 rounded-[2rem] shadow-[0_10px_30px_rgba(0,0,0,0.2)] flex items-center justify-around">
-          {navItems.map((item) => {
+          {navItems.map((item, index) => {
             const Icon = item.icon;
-            const active = isItemActive(item.href);
+            const active = isItemActive(item.href, index);
             return (
               <Link
                 key={item.id}
                 href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
                 aria-label={item.label}
                 aria-current={active ? 'page' : undefined}
                 className={cn(
