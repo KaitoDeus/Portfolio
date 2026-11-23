@@ -115,9 +115,9 @@ export default function ProjectsPage() {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5 p-2 rounded-2xl bg-card/65 border border-border/60 backdrop-blur-xl shadow-xs">
+        <div className="flex flex-wrap items-center gap-2.5 p-2.5 rounded-2xl bg-card/65 border border-border/60 backdrop-blur-xl shadow-xs w-full lg:w-auto max-w-full">
           {/* Category Pills */}
-          <div className="flex items-center gap-1 overflow-x-auto scrollbar-none">
+          <div className="flex items-center gap-1 overflow-x-auto scrollbar-none w-full lg:w-auto max-w-full">
             {FILTER_TAGS.map((tag) => {
               const isActive = selectedFilter === tag.id;
               return (
@@ -128,7 +128,7 @@ export default function ProjectsPage() {
                     setSelectedFilter(tag.id);
                     setCurrentPage(0);
                   }}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
                     isActive
                       ? 'bg-foreground text-background shadow-xs font-bold'
                       : 'bg-secondary/60 text-muted-foreground hover:text-foreground hover:bg-secondary'
@@ -140,8 +140,8 @@ export default function ProjectsPage() {
             })}
           </div>
 
-          <div className="flex items-center gap-2 ml-auto">
-            <div className="relative w-40 sm:w-52">
+          <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 w-full lg:w-auto lg:ml-auto min-w-0">
+            <div className="relative flex-1 min-w-[130px] sm:flex-none sm:w-52">
               <Search className="w-3.5 h-3.5 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <Input
                 type="text"
@@ -151,46 +151,48 @@ export default function ProjectsPage() {
                   setSearchQuery(e.target.value);
                   setCurrentPage(0);
                 }}
-                className="pl-8 h-8 text-xs rounded-full bg-background/60 border-border/60"
+                className="pl-8 h-8 text-xs rounded-full bg-background/60 border-border/60 w-full"
               />
             </div>
 
-            <select
-              value={sortOrder}
-              onChange={(e) => {
-                setSortOrder(e.target.value as 'newest' | 'oldest');
-                setCurrentPage(0);
-              }}
-              className="h-8 px-2.5 text-xs rounded-full bg-secondary/80 border border-border/60 text-foreground font-semibold cursor-pointer outline-none shrink-0"
-              aria-label="Sort order"
-            >
-              <option value="newest">Newest</option>
-              <option value="oldest">Oldest</option>
-            </select>
+            <div className="flex items-center gap-1.5 shrink-0">
+              <select
+                value={sortOrder}
+                onChange={(e) => {
+                  setSortOrder(e.target.value as 'newest' | 'oldest');
+                  setCurrentPage(0);
+                }}
+                className="h-8 px-2.5 text-xs rounded-full bg-secondary/80 border border-border/60 text-foreground font-semibold cursor-pointer outline-none shrink-0"
+                aria-label="Sort order"
+              >
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+              </select>
 
-            {/* Pagination Arrows (3 projects per page) */}
-            <div className="flex items-center gap-1.5 pl-2 border-l border-border/50">
-              <button
-                type="button"
-                onClick={handlePrevPage}
-                disabled={safePage === 0}
-                aria-label="Previous 3 projects"
-                className="p-1.5 rounded-full bg-secondary/80 hover:bg-foreground hover:text-background text-foreground disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <span className="text-xs font-mono font-semibold text-muted-foreground min-w-[2.5rem] text-center select-none">
-                {safePage + 1} / {totalPages}
-              </span>
-              <button
-                type="button"
-                onClick={handleNextPage}
-                disabled={safePage >= totalPages - 1}
-                aria-label="Next 3 projects"
-                className="p-1.5 rounded-full bg-secondary/80 hover:bg-foreground hover:text-background text-foreground disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
+              {/* Pagination Arrows (3 projects per page) */}
+              <div className="flex items-center gap-1 pl-2 border-l border-border/50 shrink-0">
+                <button
+                  type="button"
+                  onClick={handlePrevPage}
+                  disabled={safePage === 0}
+                  aria-label="Previous 3 projects"
+                  className="p-1.5 rounded-full bg-secondary/80 hover:bg-foreground hover:text-background text-foreground disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <span className="text-xs font-mono font-semibold text-muted-foreground min-w-[2.2rem] text-center select-none">
+                  {safePage + 1}/{totalPages}
+                </span>
+                <button
+                  type="button"
+                  onClick={handleNextPage}
+                  disabled={safePage >= totalPages - 1}
+                  aria-label="Next 3 projects"
+                  className="p-1.5 rounded-full bg-secondary/80 hover:bg-foreground hover:text-background text-foreground disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
