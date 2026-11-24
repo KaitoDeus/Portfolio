@@ -8,6 +8,7 @@ import projectUthwm from './project_uthwm.webp';
 import projectVietnamB2 from './project_vietnam_b2.png';
 import projectHabitFlow from './project_habitflow.png';
 import project8Puzzle from './project_8puzzle.png';
+import projectHeartOfClassy from './project_heart_of_classy.webp';
 
 export {
   projectCaro,
@@ -20,4 +21,5 @@ export {
   projectVietnamB2,
   projectHabitFlow,
   project8Puzzle,
+  projectHeartOfClassy,
 };

@@ -264,7 +264,7 @@ export default function ProjectsPage() {
                       className={
                         isHabitFlow
                           ? 'h-full w-auto max-w-full object-contain mx-auto drop-shadow-md rounded-lg group-hover:scale-105 transition-transform duration-500'
-                          : 'w-full h-full object-fill group-hover:scale-105 transition-transform duration-500'
+                          : 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-500'
                       }
                     />
                   </div>

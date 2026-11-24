@@ -20,6 +20,7 @@ import {
   projectVietnamB2,
   projectHabitFlow,
   project8Puzzle,
+  projectHeartOfClassy,
 } from '@/assets/img/proj';
 
 const staticAssetMap: Record<string, ImageSource> = {
@@ -41,6 +42,7 @@ const staticAssetMap: Record<string, ImageSource> = {
   '/src/assets/img/proj/project_vietnam_b2.png': projectVietnamB2,
   '/src/assets/img/proj/project_habitflow.png': projectHabitFlow,
   '/src/assets/img/proj/project_8puzzle.png': project8Puzzle,
+  '/src/assets/img/proj/project_heart_of_classy.webp': projectHeartOfClassy,
 
   // Public /assets/
   '/assets/img/avt/avatar.webp': avatar,
@@ -60,6 +62,7 @@ const staticAssetMap: Record<string, ImageSource> = {
   '/assets/img/proj/project_vietnam_b2.png': projectVietnamB2,
   '/assets/img/proj/project_habitflow.png': projectHabitFlow,
   '/assets/img/proj/project_8puzzle.png': project8Puzzle,
+  '/assets/img/proj/project_heart_of_classy.webp': projectHeartOfClassy,
 };
 
 const resolveAsset = (pathOrUrl: ImageSource | string): ImageSource => {

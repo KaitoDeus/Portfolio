@@ -287,6 +287,40 @@
   ],
   "projects": [
     {
+      "id": "heart-of-classy",
+      "title": "HEART of CLASSY",
+      "image": "/assets/img/proj/project_heart_of_classy.webp",
+      "role": "Luxury Handbag E-Commerce Website",
+      "link": "https://heartofclassy.com/",
+      "githubLink": "",
+      "status": "completed",
+      "technologies": [
+        "Next.js 15",
+        "TypeScript",
+        "Tailwind CSS",
+        "Sanity CMS",
+        "Framer Motion"
+      ],
+      "startDate": "2026-06-01"
+    },
+    {
+      "id": "teli-viettel",
+      "title": "TELI Viettel",
+      "image": "/assets/img/proj/project_teli-viettel.webp",
+      "role": "AI-Powered Digital Learning Web Platform",
+      "link": "https://teli-viettel.vercel.app/",
+      "githubLink": "https://github.com/KaitoDeus/TELI_Viettel",
+      "status": "completed",
+      "technologies": [
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "Gemini AI",
+        "Vite"
+      ],
+      "startDate": "2026-03-14"
+    },
+    {
       "id": "vietnam-b2-driving-simulator",
       "title": "Vietnam B2 Driving Simulator",
       "image": "/assets/img/proj/project_vietnam_b2.png",
