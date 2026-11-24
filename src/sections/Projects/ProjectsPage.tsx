@@ -244,6 +244,7 @@ export default function ProjectsPage() {
               );
               const hasLiveDemo = Boolean(project.link && !isGithubFallback) || isSimulator;
               const isHabitFlow = project.id === 'habitflow';
+              const isVinFast = project.id === 'vinfast-ev-platform';
 
               return (
                 <Card
@@ -252,8 +253,12 @@ export default function ProjectsPage() {
                 >
                   {/* Thumbnail */}
                   <div
-                    className={`overflow-hidden bg-secondary/30 relative h-48 lg:h-56 shrink-0 border-b border-border/40 flex items-center justify-center ${
-                      isHabitFlow ? 'p-2' : ''
+                    className={`overflow-hidden relative h-48 lg:h-56 shrink-0 border-b border-border/40 flex items-center justify-center ${
+                      isVinFast
+                        ? 'bg-white p-2'
+                        : isHabitFlow
+                        ? 'bg-secondary/30 p-2'
+                        : 'bg-secondary/30'
                     }`}
                   >
                     <img
@@ -262,7 +267,7 @@ export default function ProjectsPage() {
                       loading="lazy"
                       decoding="async"
                       className={
-                        isHabitFlow
+                        isHabitFlow || isVinFast
                           ? 'h-full w-auto max-w-full object-contain mx-auto drop-shadow-md rounded-lg group-hover:scale-105 transition-transform duration-500'
                           : 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-500'
                       }
@@ -301,16 +306,20 @@ export default function ProjectsPage() {
                     </div>
 
                     {/* Action Links */}
-                    <div className="grid grid-cols-2 gap-2 pt-3 border-t border-border/40">
+                    <div
+                      className={`grid gap-2 pt-3 border-t border-border/40 ${
+                        project.backendGithubLink ? 'grid-cols-3' : 'grid-cols-2'
+                      }`}
+                    >
                       {project.githubLink ? (
                         <a
                           href={project.githubLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-foreground py-2 px-3 rounded-xl text-xs font-semibold transition-colors border border-border/40"
+                          className="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-foreground py-2 px-2.5 rounded-xl text-xs font-semibold transition-colors border border-border/40"
                         >
-                          <Github className="w-3.5 h-3.5" />
-                          <span>Source Code</span>
+                          <Github className="w-3.5 h-3.5 shrink-0" />
+                          <span>{project.backendGithubLink ? 'FE Code' : 'Source Code'}</span>
                         </a>
                       ) : (
                         <div className="flex items-center justify-center gap-1.5 bg-muted text-muted-foreground py-2 px-3 rounded-xl text-xs font-semibold cursor-not-allowed border border-border/30">
@@ -319,22 +328,34 @@ export default function ProjectsPage() {
                         </div>
                       )}
 
+                      {project.backendGithubLink && (
+                        <a
+                          href={project.backendGithubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-foreground py-2 px-2.5 rounded-xl text-xs font-semibold transition-colors border border-border/40"
+                        >
+                          <Github className="w-3.5 h-3.5 shrink-0" />
+                          <span>BE Code</span>
+                        </a>
+                      )}
+
                       {hasLiveDemo ? (
                         <a
                           href={project.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-1.5 bg-foreground text-background hover:bg-foreground/90 py-2 px-3 rounded-xl text-xs font-semibold transition-colors shadow-xs"
+                          className="flex items-center justify-center gap-1.5 bg-foreground text-background hover:bg-foreground/90 py-2 px-2.5 rounded-xl text-xs font-semibold transition-colors shadow-xs"
                         >
                           {isSimulator ? (
                             <>
-                              <Download className="w-3.5 h-3.5" />
+                              <Download className="w-3.5 h-3.5 shrink-0" />
                               <span>Get Installer</span>
                             </>
                           ) : (
                             <>
-                              <ExternalLink className="w-3.5 h-3.5" />
-                              <span>Live Demo</span>
+                              <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                              <span>{project.backendGithubLink ? 'Demo' : 'Live Demo'}</span>
                             </>
                           )}
                         </a>

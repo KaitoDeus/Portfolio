@@ -25,6 +25,7 @@ export interface IProject {
   role: string;
   link: string;
   githubLink: string;
+  backendGithubLink?: string;
   status: 'completed' | 'in-progress';
   technologies: string[];
   startDate: string;

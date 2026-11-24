@@ -287,6 +287,41 @@
   ],
   "projects": [
     {
+      "id": "vinfast-ev-platform",
+      "title": "VinFast EV Platform",
+      "image": "/assets/img/proj/project_vinfast.webp",
+      "role": "Full-Stack EV & Warranty Web Platform (FE + BE)",
+      "link": "https://vinfast-platform.vercel.app/",
+      "githubLink": "https://github.com/KaitoDeus/VinFast-FE",
+      "backendGithubLink": "https://github.com/KaitoDeus/VinFast-BE",
+      "status": "completed",
+      "technologies": [
+        "Next.js",
+        "TypeScript",
+        "Java 21",
+        "Spring Boot",
+        "Docker"
+      ],
+      "startDate": "2026-04-25"
+    },
+    {
+      "id": "photo-palette",
+      "title": "Photo-Palette",
+      "image": "/assets/img/proj/project_photopalette.webp",
+      "role": "Online Photobooth Web Application",
+      "link": "https://photo-pallete.vercel.app/",
+      "githubLink": "https://github.com/KaitoDeus/Photo-Palette",
+      "status": "completed",
+      "technologies": [
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "HTML5 Canvas",
+        "Vite"
+      ],
+      "startDate": "2026-01-12"
+    },
+    {
       "id": "heart-of-classy",
       "title": "HEART of CLASSY",
       "image": "/assets/img/proj/project_heart_of_classy.webp",
