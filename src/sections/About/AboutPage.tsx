@@ -18,6 +18,7 @@ import {
   ArrowRight,
   ExternalLink,
   Sparkles,
+  ZoomIn,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -103,14 +104,31 @@ export default function AboutPage() {
         <Card className="lg:col-span-4 border-border/60 bg-card/65 backdrop-blur-xl shadow-lg flex flex-col overflow-hidden py-0 gap-0">
           <div className="p-5 overflow-y-auto space-y-4 grow">
             <div className="flex items-center gap-4">
-              <div className="relative shrink-0">
+              <button
+                type="button"
+                onClick={() =>
+                  setSelectedCert({
+                    title: personalInfo.fullname,
+                    image: avatarSrc,
+                    rating: 1,
+                    status: '',
+                  })
+                }
+                aria-label="View full size avatar"
+                title="Click to enlarge photo"
+                className="relative shrink-0 group/avatar rounded-2xl overflow-hidden border-2 border-border/80 hover:border-foreground/50 shadow-md transition-all cursor-pointer bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground"
+              >
                 <img
                   src={avatarSrc}
-                  alt="Profile"
+                  alt={personalInfo.fullname}
                   loading="eager"
-                  className="w-20 h-20 rounded-2xl object-cover border-2 border-border/80 shadow-md"
+                  decoding="sync"
+                  className="w-24 h-24 object-cover object-top transition-transform duration-300 group-hover/avatar:scale-105"
                 />
-              </div>
+                <span className="absolute inset-0 bg-black/0 group-hover/avatar:bg-black/25 transition-colors flex items-center justify-center">
+                  <ZoomIn className="w-5 h-5 text-white opacity-0 group-hover/avatar:opacity-100 transition-opacity drop-shadow-md" />
+                </span>
+              </button>
               <div className="min-w-0">
                 <h2 className="text-lg font-extrabold text-foreground truncate">
                   {personalInfo.fullname}

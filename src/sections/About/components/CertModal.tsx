@@ -67,9 +67,9 @@ export function CertModal({ selectedCert, onClose }: ICertModalProps) {
               <img
                 src={getImageSrc(selectedCert.image)}
                 alt={selectedCert.title}
-                loading="lazy"
+                loading="eager"
                 decoding="async"
-                className="w-full h-auto max-h-[75vh] object-contain mx-auto rounded-lg shadow-md"
+                className="w-auto max-w-full h-auto max-h-[75vh] object-contain mx-auto rounded-lg shadow-md"
               />
             </div>
           </motion.div>

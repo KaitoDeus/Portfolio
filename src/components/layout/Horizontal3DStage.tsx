@@ -87,7 +87,7 @@ function canAncestorScroll(
 }
 
 export default function Horizontal3DStage() {
-  const { activeIndex, direction, isUiHidden, navigateTo, nextTab, prevTab } =
+  const { activeIndex, direction, isTransitioning, isUiHidden, navigateTo, nextTab, prevTab } =
     usePortfolio3D();
 
   const stageRef = useRef<HTMLDivElement>(null);
@@ -242,7 +242,7 @@ export default function Horizontal3DStage() {
       <div
         ref={stageRef}
         className="relative w-full h-full flex-1 flex items-center justify-center overflow-hidden"
-        style={{ perspective: '1800px', transformStyle: 'preserve-3d' }}
+        style={isTransitioning ? { perspective: '1800px', transformStyle: 'preserve-3d' } : undefined}
       >
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.div
@@ -256,8 +256,8 @@ export default function Horizontal3DStage() {
               duration: 0.68,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="w-full h-full overflow-y-auto lg:overflow-hidden flex flex-col justify-start lg:justify-center px-4 sm:px-6 lg:px-10 pt-16 pb-24 lg:pt-8 lg:pb-24 will-change-transform"
-            style={{ transformStyle: 'preserve-3d', backfaceVisibility: 'hidden' }}
+            className="w-full h-full overflow-y-auto lg:overflow-hidden flex flex-col justify-start lg:justify-center px-4 sm:px-6 lg:px-10 pt-16 pb-24 lg:pt-8 lg:pb-24"
+            style={isTransitioning ? { transformStyle: 'preserve-3d', backfaceVisibility: 'hidden' } : undefined}
           >
             {renderTabContent(activeIndex)}
           </motion.div>
