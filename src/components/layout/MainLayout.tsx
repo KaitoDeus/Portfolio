@@ -33,7 +33,13 @@ function LayoutShell({ children }: MainLayoutProps) {
           isUiHidden ? 'opacity-0 pointer-events-none scale-[0.98]' : 'opacity-100 scale-100'
         )}
       >
-        {isDeckRoute ? <Horizontal3DStage /> : <div className="h-full overflow-y-auto pt-20 lg:pt-28 pb-16">{children}</div>}
+        {isDeckRoute ? (
+          <Horizontal3DStage />
+        ) : (
+          <div className="h-full overflow-y-auto pt-16 pb-24 lg:pt-16 lg:pb-16 flex items-center justify-center">
+            {children}
+          </div>
+        )}
       </main>
     </div>
   );
