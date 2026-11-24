@@ -244,7 +244,6 @@ export default function ProjectsPage() {
               );
               const hasLiveDemo = Boolean(project.link && !isGithubFallback) || isSimulator;
               const isHabitFlow = project.id === 'habitflow';
-              const isVinFast = project.id === 'vinfast-ev-platform';
 
               return (
                 <Card
@@ -253,12 +252,8 @@ export default function ProjectsPage() {
                 >
                   {/* Thumbnail */}
                   <div
-                    className={`overflow-hidden relative h-48 lg:h-56 shrink-0 border-b border-border/40 flex items-center justify-center ${
-                      isVinFast
-                        ? 'bg-white p-2'
-                        : isHabitFlow
-                        ? 'bg-secondary/30 p-2'
-                        : 'bg-secondary/30'
+                    className={`overflow-hidden bg-secondary/30 relative h-48 lg:h-56 shrink-0 border-b border-border/40 flex items-center justify-center ${
+                      isHabitFlow ? 'p-2' : ''
                     }`}
                   >
                     <img
@@ -267,7 +262,7 @@ export default function ProjectsPage() {
                       loading="lazy"
                       decoding="async"
                       className={
-                        isHabitFlow || isVinFast
+                        isHabitFlow
                           ? 'h-full w-auto max-w-full object-contain mx-auto drop-shadow-md rounded-lg group-hover:scale-105 transition-transform duration-500'
                           : 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-500'
                       }
