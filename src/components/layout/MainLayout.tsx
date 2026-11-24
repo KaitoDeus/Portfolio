@@ -6,6 +6,7 @@ import Header from './Header';
 import CosmicBackground from './CosmicBackground';
 import ThreeTransitionCanvas from './ThreeTransitionCanvas';
 import Horizontal3DStage from './Horizontal3DStage';
+import CustomCursor from '@/components/common/CustomCursor';
 import { Portfolio3DProvider, usePortfolio3D } from '@/shared/context/Portfolio3DContext';
 import { cn } from '@/shared/lib/utils';
 
@@ -27,6 +28,7 @@ function LayoutShell({ children }: MainLayoutProps) {
         />
       )}
       <Header />
+      <CustomCursor />
       <main
         className={cn(
           'grow relative z-20 flex flex-col overflow-hidden h-full transition-all duration-500',
