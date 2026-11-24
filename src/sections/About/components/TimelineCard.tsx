@@ -77,10 +77,10 @@ export function TimelineItemList({
           <div key={index} className="flex gap-3.5 group">
             <div className="shrink-0">
               <div
-                className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors overflow-hidden ${
+                className={`w-12 h-12 flex items-center justify-center transition-colors ${
                   item.logo
-                    ? 'bg-transparent'
-                    : 'bg-secondary/40 border border-border/40 group-hover:border-foreground/40'
+                    ? 'bg-transparent p-0.5'
+                    : 'rounded-xl overflow-hidden bg-secondary/40 border border-border/40 group-hover:border-foreground/40'
                 }`}
               >
                 {logoSrc ? (
