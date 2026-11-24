@@ -311,6 +311,7 @@ export default function ProjectsPage() {
                           href={project.githubLink}
                           target="_blank"
                           rel="noopener noreferrer"
+                          data-cursor-text="GitHub"
                           className="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-foreground py-2 px-2.5 rounded-xl text-xs font-semibold transition-colors border border-border/40"
                         >
                           <Github className="w-3.5 h-3.5 shrink-0" />
@@ -328,6 +329,7 @@ export default function ProjectsPage() {
                           href={project.backendGithubLink}
                           target="_blank"
                           rel="noopener noreferrer"
+                          data-cursor-text="GitHub"
                           className="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-foreground py-2 px-2.5 rounded-xl text-xs font-semibold transition-colors border border-border/40"
                         >
                           <Github className="w-3.5 h-3.5 shrink-0" />
@@ -340,6 +342,7 @@ export default function ProjectsPage() {
                           href={project.link}
                           target="_blank"
                           rel="noopener noreferrer"
+                          data-cursor-text={isSimulator ? 'Download' : 'Live Demo'}
                           className="flex items-center justify-center gap-1.5 bg-foreground text-background hover:bg-foreground/90 py-2 px-2.5 rounded-xl text-xs font-semibold transition-colors shadow-xs"
                         >
                           {isSimulator ? (

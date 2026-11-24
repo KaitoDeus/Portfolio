@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useEffect, useRef, useSyncExternalStore } from 'react';
+import React, { useEffect, useState, useSyncExternalStore } from 'react';
+import { AnimatePresence, motion, useMotionValue, useSpring } from 'framer-motion';
 
 const subscribePointerCapability = (callback: () => void) => {
   const hoverMq = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -22,32 +23,29 @@ const getPointerSnapshot = () => {
 
 const getPointerServerSnapshot = () => false;
 
-type CursorMode = 'default' | 'pointer' | 'text';
+interface CursorHoverState {
+  active: boolean;
+  text: string;
+}
 
-function detectCursorMode(target: EventTarget | null): CursorMode {
-  let node = target instanceof Element ? target : null;
-  while (node) {
-    const tag = node.tagName;
-    if (
-      tag === 'INPUT' ||
-      tag === 'TEXTAREA' ||
-      tag === 'SELECT' ||
-      (node instanceof HTMLElement && node.isContentEditable)
-    ) {
-      return 'text';
+function getHoverState(target: EventTarget | null): CursorHoverState {
+  const el = target instanceof Element ? target : null;
+  if (!el) return { active: false, text: '' };
+
+  const textTrigger = el.closest('[data-cursor-text]');
+  if (textTrigger) {
+    const label = textTrigger.getAttribute('data-cursor-text') || '';
+    if (label) {
+      return { active: true, text: label };
     }
-    if (
-      tag === 'A' ||
-      tag === 'BUTTON' ||
-      node.getAttribute('role') === 'button' ||
-      node.getAttribute('data-cursor') === 'pointer' ||
-      node.classList.contains('cursor-pointer')
-    ) {
-      return 'pointer';
-    }
-    node = node.parentElement;
   }
-  return 'default';
+
+  const interactive = el.closest('a, button, [role="button"], .cursor-pointer');
+  if (interactive) {
+    return { active: true, text: '' };
+  }
+
+  return { active: false, text: '' };
 }
 
 export default function CustomCursor() {
@@ -57,140 +55,105 @@ export default function CustomCursor() {
     getPointerServerSnapshot
   );
 
-  const ringRef = useRef<HTMLDivElement>(null);
-  const dotRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+
+  const springX = useSpring(mouseX, { stiffness: 180, damping: 18, mass: 0.2 });
+  const springY = useSpring(mouseY, { stiffness: 180, damping: 18, mass: 0.2 });
+
+  const [visible, setVisible] = useState(false);
+  const [pressed, setPressed] = useState(false);
+  const [hoverState, setHoverState] = useState<CursorHoverState>({ active: false, text: '' });
 
   useEffect(() => {
-    if (!enabled) {
-      document.documentElement.classList.remove('custom-cursor-active');
-      return;
-    }
-
-    document.documentElement.classList.add('custom-cursor-active');
-
-    const pointer = { x: -100, y: -100 };
-    const ringPos = { x: -100, y: -100 };
-    let visible = false;
-    let isPressed = false;
-    let mode: CursorMode = 'default';
-    let rafId = 0;
-
-    const applyVisualState = () => {
-      const ring = ringRef.current;
-      const dot = dotRef.current;
-      if (!ring || !dot) return;
-
-      if (!visible) {
-        ring.style.opacity = '0';
-        dot.style.opacity = '0';
-        return;
-      }
-
-      if (mode === 'text') {
-        ring.style.opacity = '0.35';
-        dot.style.opacity = '0';
-        ring.dataset.mode = 'text';
-      } else if (mode === 'pointer') {
-        ring.style.opacity = '1';
-        dot.style.opacity = isPressed ? '0.9' : '0.45';
-        ring.dataset.mode = 'pointer';
-      } else {
-        ring.style.opacity = '1';
-        dot.style.opacity = '1';
-        ring.dataset.mode = 'default';
-      }
-
-      ring.dataset.pressed = isPressed ? 'true' : 'false';
-      dot.dataset.pressed = isPressed ? 'true' : 'false';
-    };
+    if (!enabled) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      pointer.x = e.clientX;
-      pointer.y = e.clientY;
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+      setVisible((prev) => (prev ? prev : true));
 
-      if (!visible) {
-        ringPos.x = pointer.x;
-        ringPos.y = pointer.y;
-        visible = true;
-      }
-
-      mode = detectCursorMode(e.target);
-      applyVisualState();
+      const next = getHoverState(e.target);
+      setHoverState((prev) =>
+        prev.active === next.active && prev.text === next.text ? prev : next
+      );
     };
 
-    const handleMouseDown = () => {
-      isPressed = true;
-      applyVisualState();
+    const handleMouseOver = (e: MouseEvent) => {
+      const next = getHoverState(e.target);
+      setHoverState((prev) =>
+        prev.active === next.active && prev.text === next.text ? prev : next
+      );
     };
 
-    const handleMouseUp = () => {
-      isPressed = false;
-      applyVisualState();
-    };
-
+    const handleMouseDown = () => setPressed(true);
+    const handleMouseUp = () => setPressed(false);
     const handleMouseLeave = () => {
-      visible = false;
-      applyVisualState();
-    };
-
-    const tick = () => {
-      rafId = requestAnimationFrame(tick);
-
-      // Smooth exponential follow for the outer ring
-      ringPos.x += (pointer.x - ringPos.x) * 0.18;
-      ringPos.y += (pointer.y - ringPos.y) * 0.18;
-
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ringPos.x}px, ${ringPos.y}px, 0)`;
-      }
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${pointer.x}px, ${pointer.y}px, 0)`;
-      }
+      setVisible(false);
+      setPressed(false);
+      setHoverState({ active: false, text: '' });
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mouseover', handleMouseOver, { passive: true });
     window.addEventListener('mousedown', handleMouseDown, { passive: true });
     window.addEventListener('mouseup', handleMouseUp, { passive: true });
     document.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('blur', handleMouseLeave);
 
-    rafId = requestAnimationFrame(tick);
-
     return () => {
-      cancelAnimationFrame(rafId);
-      document.documentElement.classList.remove('custom-cursor-active');
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseover', handleMouseOver);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('blur', handleMouseLeave);
     };
-  }, [enabled]);
+  }, [enabled, mouseX, mouseY]);
 
   if (!enabled) return null;
 
-  return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[999999] overflow-hidden">
-      {/* Trailing Outer Circle Ring */}
-      <div
-        ref={ringRef}
-        data-mode="default"
-        data-pressed="false"
-        style={{ opacity: 0 }}
-        className="fixed top-0 left-0 -ml-[18px] -mt-[18px] w-9 h-9 rounded-full border-[1.5px] border-foreground/75 bg-foreground/[0.03] backdrop-blur-[1px] transition-[width,height,margin,background-color,border-color,scale,opacity] duration-200 ease-out will-change-transform
-          data-[mode=pointer]:w-14 data-[mode=pointer]:h-14 data-[mode=pointer]:-ml-7 data-[mode=pointer]:-mt-7 data-[mode=pointer]:bg-foreground/10 data-[mode=pointer]:border-foreground
-          data-[mode=text]:w-6 data-[mode=text]:h-6 data-[mode=text]:-ml-3 data-[mode=text]:-mt-3
-          data-[pressed=true]:scale-75"
-      />
+  const hasText = Boolean(hoverState.text);
+  const isHovered = hoverState.active && !hasText;
 
-      {/* Precision Center Core Dot */}
+  return (
+    <motion.div
+      aria-hidden="true"
+      className="pointer-events-none fixed top-0 left-0 z-[999999]"
+      style={{
+        x: springX,
+        y: springY,
+        mixBlendMode: 'difference',
+        opacity: visible ? 1 : 0,
+      }}
+    >
       <div
-        ref={dotRef}
-        data-pressed="false"
-        style={{ opacity: 0 }}
-        className="fixed top-0 left-0 -ml-1 -mt-1 w-2 h-2 rounded-full bg-foreground shadow-[0_0_8px_rgba(0,0,0,0.2)] dark:shadow-[0_0_8px_rgba(255,255,255,0.35)] transition-[scale,opacity] duration-150 will-change-transform
-          data-[pressed=true]:scale-50"
-      />
-    </div>
+        className="flex items-center justify-center bg-white rounded-full select-none -translate-x-1/2 -translate-y-1/2 transition-[width,height,padding,top,left,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        style={{
+          position: 'absolute',
+          top: hasText ? '28px' : isHovered ? '24px' : '16px',
+          left: hasText ? '28px' : isHovered ? '24px' : '16px',
+          width: hasText ? 'max-content' : isHovered ? '32px' : '16px',
+          height: hasText ? '34px' : isHovered ? '32px' : '16px',
+          padding: hasText ? '0 14px' : '0',
+          transform: `translate(-50%, -50%) scale(${pressed ? 0.78 : 1})`,
+        }}
+      >
+        <AnimatePresence mode="wait">
+          {hasText && (
+            <motion.span
+              key={hoverState.text}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.15 }}
+              className="text-black text-[12px] font-semibold tracking-tight whitespace-nowrap"
+            >
+              {hoverState.text}
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
   );
 }

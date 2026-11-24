@@ -80,6 +80,7 @@ export default function Header() {
         <button
           type="button"
           onClick={toggleUiHidden}
+          data-cursor-text={isUiHidden ? 'Show UI' : 'Zen Mode'}
           aria-label={isUiHidden ? 'Show page content' : 'Hide page content'}
           aria-pressed={isUiHidden}
           title={isUiHidden ? 'Show interface' : 'Hide interface'}
@@ -96,6 +97,7 @@ export default function Header() {
         <button
           type="button"
           onClick={toggleTheme}
+          data-cursor-text={mounted && theme === 'dark' ? 'Light' : 'Dark'}
           aria-label="Toggle Theme"
           title="Toggle Theme"
           className="p-3.5 rounded-full bg-card/80 backdrop-blur-2xl border border-border/40 text-foreground hover:bg-foreground/10 hover:scale-105 transition-all duration-300 shadow-xl flex items-center justify-center cursor-pointer"

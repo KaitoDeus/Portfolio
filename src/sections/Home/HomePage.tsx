@@ -52,6 +52,7 @@ export default function HomePage() {
           >
             <Link
               href="/projects"
+              data-cursor-text="Explore →"
               onClick={(e) => handleLinkClick(e, '/projects')}
               className="flex items-center gap-2"
             >
@@ -100,6 +101,7 @@ export default function HomePage() {
 
           <button
             type="button"
+            data-cursor-text="Scroll →"
             onClick={() => navigateTo('/about')}
             className="hidden lg:inline-flex items-center gap-2 text-xs text-muted-foreground/80 hover:text-foreground transition-colors pt-1 cursor-pointer group"
           >

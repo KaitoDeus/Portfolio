@@ -106,6 +106,7 @@ export default function AboutPage() {
             <div className="flex items-center gap-4">
               <button
                 type="button"
+                data-cursor-text="View Photo"
                 onClick={() =>
                   setSelectedCert({
                     title: personalInfo.fullname,
@@ -293,6 +294,7 @@ export default function AboutPage() {
                 return (
                   <div
                     key={index}
+                    data-cursor-text="View Cert"
                     className="flex items-center gap-3 p-2.5 rounded-xl bg-secondary/40 border border-border/40 hover:bg-secondary/80 hover:border-foreground/30 transition-all cursor-pointer group/cert"
                     onClick={() => setSelectedCert(cert)}
                   >
