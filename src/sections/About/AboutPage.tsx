@@ -255,7 +255,7 @@ export default function AboutPage() {
                   <span className="w-2 h-2 rounded-full bg-emerald-500" />
                   Short-Term Goal
                 </div>
-                <p className="leading-relaxed text-foreground/85 pl-3 border-l-2 border-emerald-500/40 line-clamp-3">
+                <p className="leading-relaxed text-foreground/85 pl-3 border-l-2 border-emerald-500/40">
                   {careerGoals?.shortTerm ||
                     'Secure a Software Developer position to apply practical full-stack experience and contribute to production applications.'}
                 </p>
@@ -266,7 +266,7 @@ export default function AboutPage() {
                   <span className="w-2 h-2 rounded-full bg-blue-500" />
                   Long-Term Goal
                 </div>
-                <p className="leading-relaxed text-foreground/85 pl-3 border-l-2 border-blue-500/40 line-clamp-2">
+                <p className="leading-relaxed text-foreground/85 pl-3 border-l-2 border-blue-500/40">
                   {careerGoals?.longTerm ||
                     'Advance into a Senior Full-Stack Engineer / Technical Lead and master scalable cloud architectures.'}
                 </p>
